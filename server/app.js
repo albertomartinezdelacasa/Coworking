@@ -1,6 +1,5 @@
 // Añadimos al proceso actual la lista de variables de entorno del fichero ".env".
 import 'dotenv/config';
-console.log('holi');
 
 // Importamos las dependencias necesarias.
 import express from 'express';
