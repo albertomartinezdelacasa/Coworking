@@ -2,7 +2,7 @@ import express from 'express';
 
 // Aqui se importan los controladores.
 
-const router = express.Routes();
+const router = express.Router();
 
 // Aqui van los endpoints.
 
