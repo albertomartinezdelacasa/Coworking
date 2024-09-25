@@ -13,7 +13,9 @@ const main = async () => {
         console.log('Borrando tablas...');
 
         // Borramos las tablas.
-        await pool.query('DROP TABLE IF EXISTS users');
+        await pool.query(
+            'DROP TABLE IF EXISTS users, offices, bookings, votes',
+        );
 
         console.log('Creando tablas...');
 
@@ -55,10 +57,10 @@ const main = async () => {
 
         // Creamos la tabla de Reservas.
         await pool.query(`
-            CREATE TABLE IF NOT EXISTS Bookings (
+            CREATE TABLE IF NOT EXISTS bookings (
                 id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT ,
-                idUser INT,
-                idOffice INT,
+                idUser INT UNSIGNED,
+                idOffice INT UNSIGNED,
 	            checkIn DATETIME NOT NULL,
 	            checkOut DATETIME NOT NULL,
                 guests INT NOT NULL,
@@ -74,8 +76,8 @@ const main = async () => {
             CREATE TABLE IF NOT EXISTS votes (
                 id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
                 value TINYINT UNSIGNED NOT NULL,
-                userId INT UNSIGNED NOT NULL,
-                entryId INT UNSIGNED NOT NULL,
+                idUser INT UNSIGNED NOT NULL,
+                idOffice INT UNSIGNED NOT NULL,
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (idUser) REFERENCES users(id),
                 FOREIGN KEY (idOffice) REFERENCES offices(id)

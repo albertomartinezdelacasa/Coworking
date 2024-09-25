@@ -1,6 +1,6 @@
 {
     "type": "module",
-    "name": "server",
+    "name": "coworking",
     "version": "1.0.0",
     "main": "app.js",
     "scripts": {
@@ -16,13 +16,13 @@
         "dotenv": "^16.4.5",
         "express": "^4.21.0",
         "morgan": "^1.10.0",
-        "mysql2": "^3.11.3",
-        "nodemon": "^3.1.7"
+        "mysql2": "^3.11.3"
     },
     "devDependencies": {
         "@eslint/js": "^9.11.1",
         "eslint": "^9.11.1",
         "globals": "^15.9.0",
+        "nodemon": "^3.1.7",
         "prettier": "^3.3.3"
     }
 }
