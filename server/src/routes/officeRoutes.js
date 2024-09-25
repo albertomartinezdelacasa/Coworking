@@ -3,13 +3,13 @@ import express from 'express';
 
 // Importamos las funciones controladoras finales.**
 import {
-    createOfficeController,
-    updateOfficeController,
-    listOfficeController,
-    getOfficeByIdController,
-    bookOfficeByIdController,
-    adminAprovalBookingController,
-    deleteOfficeController,
+    createOfficeController, //Alex
+    updateOfficeController, //Alex
+    listOfficeController, //Alex
+    getOfficeByIdController, //Claudio
+    bookOfficeByIdController, //Claudio
+    adminAprovalBookingController, //Claudio
+    deleteOfficeController, //Mauro
 } from '../controllers/offices/index.js';
 
 import authUserController from '../middlewares/authUserController.js';
