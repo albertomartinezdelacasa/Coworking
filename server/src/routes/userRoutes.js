@@ -2,16 +2,16 @@ import express from 'express';
 
 // Importamos las funciones controladores finales
 import {
-    newUserController,
-    activateUserController,
-    loginUserController,
-    getProfileUserController,
-    userAvatarController,
-    getUserBookingsListController,
+    newUserController, //Alberto
+    activateUserController, //Mauro
+    loginUserController, //Alberto
+    getProfileUserController, //Alberto
+    userAvatarController, //Joseba
+    getUserBookingsListController, //Joseba
 } from '../controllers/users/index.js';
 
 // importamos las funciones controladoras intermedias
-import authUserController from '../middlewares/authUserController.js';
+import authUserController from '../middlewares/authUserController.js'; //Mauro
 
 // Aqui se importan los controladores.
 
