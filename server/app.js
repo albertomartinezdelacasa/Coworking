@@ -6,6 +6,10 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 
+// Importamos las rutas.
+import userRoutes from './src/routes/userRoutes.js';
+import coworkRoutes from './src/routes/coworkRoutes.js';
+
 // Importamos las variables de entorno necesarias.
 const { PORT, UPLOADS_DIR } = process.env;
 
@@ -22,16 +26,17 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 // Middleware que permite leer un body en formato "form-data" (para archivos).
-app.use(fileUpload());
+//app.use(fileUpload());
 
 // Middleware que indica a Express cuál es el directorio de ficheros estáticos.
 app.use(express.static(UPLOADS_DIR));
 
 // Middleware que indica a Express dónde están las rutas.
 app.use('/api', userRoutes);
-app.use('/api', entryRoutes);
+app.use('/api', coworkRoutes);
 
 // Middleware de manejo de errores.
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
     console.error(err);
 

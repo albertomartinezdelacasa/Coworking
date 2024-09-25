@@ -1,10 +1,11 @@
 {
     "type": "module",
-    "name": "server",
+    "name": "coworking",
     "version": "1.0.0",
     "main": "app.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "initdb": "node ./src/db/initDb.js",
+        "dev": "nodemon ./app.js"
     },
     "keywords": [],
     "author": "",
@@ -21,6 +22,7 @@
         "@eslint/js": "^9.11.1",
         "eslint": "^9.11.1",
         "globals": "^15.9.0",
+        "nodemon": "^3.1.7",
         "prettier": "^3.3.3"
     }
 }

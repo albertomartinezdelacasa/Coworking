@@ -13,7 +13,9 @@ const main = async () => {
         console.log('Borrando tablas...');
 
         // Borramos las tablas.
-        await pool.query('DROP TABLE IF EXISTS users');
+        await pool.query(
+            'DROP TABLE IF EXISTS users, offices, bookings, votes',
+        );
 
         console.log('Creando tablas...');
 
@@ -75,18 +77,18 @@ const main = async () => {
 
         // Creamos la tabla de Reservas.
         await pool.query(`
-            CREATE TABLE IF NOT EXISTS Bookings (
-              id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT ,
-              idUser INT UNSIGNED,
-              idOffice INT UNSIGNED,
-	          checkIn DATETIME NOT NULL,
-	          checkOut DATETIME NOT NULL,
-              guests INT NOT NULL,
-              status ENUM('PENDING', 'CONFIRMED', 'REJECTED', 'CANCELED') DEFAULT 'PENDING',
-              createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-              FOREIGN KEY (idUser) REFERENCES users(id),
-              FOREIGN KEY (idOffice) REFERENCES offices(id)
-            )
+
+            CREATE TABLE IF NOT EXISTS bookings (
+                id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT ,
+                idUser INT UNSIGNED,
+                idOffice INT UNSIGNED,
+	            checkIn DATETIME NOT NULL,
+	            checkOut DATETIME NOT NULL,
+                guests INT NOT NULL,
+                status ENUM('PENDING', 'CONFIRMED', 'REJECTED', 'CANCELED') DEFAULT 'PENDING',
+                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (idUser) REFERENCES users(id),
+                FOREIGN KEY (idOffice) REFERENCES offices(id)
             `);
 
         // Tabla de votos.
@@ -94,9 +96,9 @@ const main = async () => {
             CREATE TABLE IF NOT EXISTS votes (
                 id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
                 value TINYINT UNSIGNED NOT NULL,
-                comment VARCH
                 idUser INT UNSIGNED NOT NULL,
-                idBooking INT UNSIGNED NOT NULL,
+                idOffice INT UNSIGNED NOT NULL,
+                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (idUser) REFERENCES users(id),
                 FOREIGN KEY (idBooking) REFERENCES bookings(id),
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
