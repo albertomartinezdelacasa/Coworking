@@ -73,7 +73,18 @@ const main = async () => {
           createdAt DATETIME DEFAULT CURRENT_TIMESTAMP    
           )
           `);
-
+        // --------------------------- tabla creada por Alex ------------------
+        // Tabla de fotos.
+        await pool.query(`
+            CREATE TABLE IF NOT EXISTS officePhotos (
+                id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+                IdOffice INT UNSIGNED NOT NULL,
+                FOREIGN KEY(IdOffice) REFERENCES office(id),
+                name VARCHAR(100) NOT NULL,
+                createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
+            )
+        `);
+        // ---------------------------------------------------------------
         // Creamos la tabla de Reservas.
         await pool.query(`
             CREATE TABLE IF NOT EXISTS bookings (
