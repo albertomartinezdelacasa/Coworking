@@ -1,8 +1,8 @@
 // Importamos las dependencias necesarias
-import getPool from '../../../db/getPool.js'; // Función para obtener la conexión a la base de datos
+import getPool from '../../db/getPool.js'; // Función para obtener la conexión a la base de datos
 import bcrypt from 'bcrypt'; // Librería para encriptar contraseñas
 import crypto from 'crypto'; // Módulo para generar valores aleatorios
-import sendMailUtil from '../../../utils/sendMailUtil.js'; // Función para enviar correos electrónicos
+import sendMailUtil from '../../utils/sendMailUtil.js'; // Función para enviar correos electrónicos
 import generateErrorUtil from '../../utils/generateErrorUtil.js';
 
 // Definimos el controlador para crear un nuevo usuario
@@ -10,7 +10,7 @@ const newUserController = async (req, res, next) => {
     try {
         // Extraemos los datos del cuerpo de la petición
         const { username, email, password } = req.body;
-        
+
         // Verificamos que todos los campos requeridos estén presentes
         if (!username || !email || !password) {
             generateErrorUtil('Faltan campos', 400);

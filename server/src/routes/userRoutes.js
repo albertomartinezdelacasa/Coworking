@@ -7,7 +7,7 @@ import {
     loginUserController, //Alberto
     getProfileUserController, //Alberto
     userAvatarController, //Joseba
-    getUserBookingsListController, //Joseba
+    getUserBookingListController, //Joseba
 } from '../controllers/users/index.js';
 
 // importamos las funciones controladoras intermedias
@@ -39,7 +39,7 @@ router.put('/users/avatar', authUserController, userAvatarController);
 router.get(
     '/users/bookingsList',
     authUserController,
-    getUserBookingsListController,
+    getUserBookingListController,
 );
 
 export default router;
