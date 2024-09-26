@@ -78,8 +78,8 @@ const main = async () => {
         await pool.query(`
             CREATE TABLE IF NOT EXISTS officePhotos (
                 id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-                IdOffice INT UNSIGNED NOT NULL,
-                FOREIGN KEY(IdOffice) REFERENCES office(id),
+                idOffice INT UNSIGNED NOT NULL,
+                FOREIGN KEY(idOffice) REFERENCES offices(id),
                 name VARCHAR(100) NOT NULL,
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
             )
