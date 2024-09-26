@@ -21,12 +21,9 @@
         "jsonwebtoken": "^9.0.2",
         "morgan": "^1.10.0",
         "mysql2": "^3.11.3",
-
-        "nodemailer": "^6.9.15"
-
+        "nodemailer": "^6.9.15",
         "path": "^0.12.7",
         "sharp": "^0.33.5"
-
     },
     "devDependencies": {
         "@eslint/js": "^9.11.1",
