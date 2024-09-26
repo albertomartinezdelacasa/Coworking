@@ -41,9 +41,9 @@ const newUserController = async (req, res, next) => {
         // Insertamos el nuevo usuario en la base de datos
         await pool.query(
             `
-            INSERT INTO users (username, email, password, registrationCode) VALUES (?, ?, ?, ?)
+            INSERT INTO users (username, email, name, lastname, password, registrationCode) VALUES (?, ?, ?, ?, ?, ?)
             `,
-            [username, email, hashedPassword, registrationCode],
+            [username, email, name, lastname, hashedPassword, registrationCode],
         );
 
         // Preparamos el asunto del correo de activación
@@ -51,7 +51,7 @@ const newUserController = async (req, res, next) => {
 
         // Preparamos el cuerpo del correo de activación
         const emailBody = `
-        ¡Bienvenid@ ${email.split('@')[0]}! 
+        ¡Bienvenid@ ${name}! 
 
         Gracias por registrarte en THE COWORKING. Para activar tu cuenta, haz click en el siguiente enlace:
 
