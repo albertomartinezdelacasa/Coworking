@@ -3,7 +3,7 @@ import getPool from '../../../db/getPool.js';
 // Esta línea importa la función getPool desde el archivo getPool.js ubicado en la carpeta db. Esta función se utiliza para obtener una conexión a la base de datos.
 
 // Función que genera un error.
-import generateError from '../../helpers/generateError.js';
+import generateErrorUtil from '../../utils/generateErrorUtil.js';
 // Aquí importamos la función generateError desde el archivo generateError.js en la carpeta helpers. Esta función se usa para generar errores personalizados.
 
 // Función que retorna info privada del usuario.
@@ -27,7 +27,7 @@ const getProfileUserController = async (req, res, next) => {
 
         // Si no existe ningún usuario lanzamos un error.
         if (users.length < 1) {
-            generateError('Usuario no encontrado', 404);
+            generateErrorUtil('Usuario no encontrado', 404);
         }
         // Verificamos si se encontró algún usuario. Si no, generamos un error con un mensaje y código de estado 404.
 

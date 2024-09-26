@@ -1,7 +1,7 @@
 // Importamos las dependencias necesarias
 import bcrypt from 'bcrypt'; // Para comparar contraseñas encriptadas
 import jwt from 'jsonwebtoken'; // Para generar tokens JWT
-import generateError from '../../../helpers/generateError.js'; // Función para generar errores personalizados
+import generateErrorUtil from '../../utils/generateErrorUtil.js';
 import getPool from '../../../db/getPool.js'; // Función para obtener la conexión a la base de datos
 
 // Definimos el controlador para el inicio de sesión de usuarios
@@ -12,7 +12,7 @@ const loginUserController = async (req, res, next) => {
         
         // Verificamos que todos los campos requeridos estén presentes
         if (!username || !email || !password) {
-            generateError('Faltan campos', 400);
+            generateErrorUtil('Faltan campos', 400);
         }
 
         // Obtenemos la conexión a la base de datos
@@ -32,7 +32,7 @@ const loginUserController = async (req, res, next) => {
 
         // Si la contraseña no es válida, generamos un error
         if (!validPass) {
-            generateError('Contraseña incorrecta', 401);
+            generateErrorUtil('Contraseña incorrecta', 401);
         }
         
         // Verificamos si el usuario está activo

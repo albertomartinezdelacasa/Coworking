@@ -2,8 +2,8 @@
 import getPool from '../../../db/getPool.js'; // Función para obtener la conexión a la base de datos
 import bcrypt from 'bcrypt'; // Librería para encriptar contraseñas
 import crypto from 'crypto'; // Módulo para generar valores aleatorios
-import generateError from '../../../helpers/generateError.js'; // Función para generar errores personalizados
 import sendMailUtil from '../../../utils/sendMailUtil.js'; // Función para enviar correos electrónicos
+import generateErrorUtil from '../../utils/generateErrorUtil.js';
 
 // Definimos el controlador para crear un nuevo usuario
 const newUserController = async (req, res, next) => {
@@ -13,7 +13,7 @@ const newUserController = async (req, res, next) => {
         
         // Verificamos que todos los campos requeridos estén presentes
         if (!username || !email || !password) {
-            generateError('Faltan campos', 400);
+            generateErrorUtil('Faltan campos', 400);
         }
 
         // Obtenemos la conexión a la base de datos
@@ -29,7 +29,7 @@ const newUserController = async (req, res, next) => {
 
         // Si ya existe un usuario con ese email, lanzamos un error
         if (user.length > 0) {
-            generateError('El usuario ya existe', 400);
+            generateErrorUtil('El usuario ya existe', 400);
         }
 
         // Generamos un código de registro aleatorio
@@ -53,7 +53,7 @@ const newUserController = async (req, res, next) => {
         const emailBody = `
         ¡Bienvenid@ ${email.split('@')[0]}! 
 
-        Gracias por registrarte en Wallapof. Para activar tu cuenta, haz click en el siguiente enlace:
+        Gracias por registrarte en THE COWORKING. Para activar tu cuenta, haz click en el siguiente enlace:
 
         <a href="${process.env.CLIENT_URL}/users/validate/${registrationCode}">¡Activa tu usuario!</a>`;
 
