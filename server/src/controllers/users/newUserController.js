@@ -9,10 +9,10 @@ import generateErrorUtil from '../../utils/generateErrorUtil.js';
 const newUserController = async (req, res, next) => {
     try {
         // Extraemos los datos del cuerpo de la petición
-        const { username, email, password } = req.body;
+        const { username, name, lastname, email, password } = req.body;
 
         // Verificamos que todos los campos requeridos estén presentes
-        if (!username || !email || !password) {
+        if (!username || !email || !name || !lastname || !password) {
             generateErrorUtil('Faltan campos', 400);
         }
 
