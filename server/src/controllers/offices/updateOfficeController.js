@@ -9,7 +9,7 @@ import generateErrorUtil from '../../utils/generateErrorUtil.js';
 const updateOfficeController = async (req, res, next) => {
     try {
         // obtenemos el ID de la officina a editar
-        const { IdOffice } = req.params;
+        const { idOffice } = req.params;
 
         // obtenemos los datos del body .
 
@@ -36,7 +36,7 @@ const updateOfficeController = async (req, res, next) => {
         // si somos los dueños.
         const [offices] = await pool.query(
             `SELECT IdUser FROM offices WHERE id = ?`,
-            [IdOffice],
+            [idOffice],
         );
 
         // Si la officina  no existe lanzamos un error.
@@ -53,7 +53,7 @@ const updateOfficeController = async (req, res, next) => {
         if (name) {
             await pool.query(`UPDATE offices SET name = ? WHERE id = ?`, [
                 name,
-                IdOffice,
+                idOffice,
             ]);
         }
 
@@ -61,14 +61,14 @@ const updateOfficeController = async (req, res, next) => {
         if (price) {
             await pool.query(`UPDATE offices SET price = ? WHERE id = ?`, [
                 price,
-                IdOffice,
+                idOffice,
             ]);
         }
         // Si el Admin ha enviado un descripcion lo actualizamos.
         if (description) {
             await pool.query(
                 `UPDATE offices SET description = ? WHERE id = ?`,
-                [description, IdOffice],
+                [description, idOffice],
             );
         }
 
@@ -76,7 +76,7 @@ const updateOfficeController = async (req, res, next) => {
         if (address) {
             await pool.query(`UPDATE offices SET address = ? WHERE id = ?`, [
                 address,
-                IdOffice,
+                idOffice,
             ]);
         }
 
@@ -84,14 +84,14 @@ const updateOfficeController = async (req, res, next) => {
         if (workspace) {
             await pool.query(`UPDATE offices SET workspace = ? WHERE id = ?`, [
                 workspace,
-                IdOffice,
+                idOffice,
             ]);
         }
         // Si el Admin ha modifiado la capacidad del escpacio la actualizamos.
         if (capacity) {
             await pool.query(`UPDATE offices SET capacity = ? WHERE id = ?`, [
                 capacity,
-                IdOffice,
+                idOffice,
             ]);
         }
 
