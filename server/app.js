@@ -19,6 +19,9 @@ const app = express();
 // Middleware que evita problemas de conexión entre cliente y servidor.
 app.use(cors());
 
+// Middleware que indica a Express cuál es el directorio de ficheros estáticos.
+app.use(express.static(UPLOADS_DIR));
+
 // Middleware que muestra por consola info sobre la petición entrante.
 app.use(morgan('dev'));
 
@@ -29,8 +32,6 @@ app.use(express.json());
 // Se instala fileupload para luego poder usarlo en el client.
 app.use(fileUpload());
 
-// Middleware que indica a Express cuál es el directorio de ficheros estáticos.
-app.use(express.static(UPLOADS_DIR));
 
 // Middleware que indica a Express dónde están las rutas.
 app.use('/api', userRoutes);
