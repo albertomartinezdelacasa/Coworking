@@ -90,7 +90,7 @@ const main = async () => {
             )
             `);
 
-        // Tabla de votos.
+        // Tabla de votos. Se cambio el idBooking por idOffice
         await pool.query(`
             CREATE TABLE IF NOT EXISTS votes (
                 id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
