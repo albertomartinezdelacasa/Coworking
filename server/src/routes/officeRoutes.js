@@ -8,7 +8,7 @@ import {
     listOfficeController, //Alex
     getOfficeByIdController, //Claudio
     bookOfficeByIdController, //Claudio
-    adminAprovalBookingController, //Claudio
+    adminBookingsController, //Claudio
     deleteOfficeController, //Mauro
 } from '../controllers/offices/index.js';
 
@@ -46,7 +46,7 @@ router.post(
 router.put(
     '/office/:idOffice/booking/:idBooking',
     authUserController,
-    adminAprovalBookingController,
+    adminBookingsController,
 );
 
 // Middleware que elimina un producto concreto por ID.
