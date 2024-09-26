@@ -1,5 +1,5 @@
 // Importamos la función que retorna una conexión con la base de datos.
-import getPool from '../../../db/getPool.js';
+import getPool from '../../db/getPool.js';
 // Esta línea importa la función getPool desde el archivo getPool.js ubicado en la carpeta db. Esta función se utiliza para obtener una conexión a la base de datos.
 
 // Función que genera un error.

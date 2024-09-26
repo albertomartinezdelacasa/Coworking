@@ -2,7 +2,7 @@
 import getPool from '../../db/getPool.js';
 
 // Función controladora que retorna el listado de reservas.
-const listUserBookingsController = async (req, res, next) => {
+const getUserBookingListController = async (req, res, next) => {
     try {
         // Obtenemos los datos del usuario necesarios.
         let searchingUser = req.user.id;
@@ -50,4 +50,4 @@ const listUserBookingsController = async (req, res, next) => {
     }
 };
 
-export default listUserBookingsController;
+export default getUserBookingListController;
