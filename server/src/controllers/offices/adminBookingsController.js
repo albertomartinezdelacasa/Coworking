@@ -1,16 +1,16 @@
-// Importamos la función que retorna la conexión con la base de datos. 
+// Importamos la función que retorna la conexión con la base de datos.
 
-import getPool from "../../db/getPool.js";
+import getPool from '../../db/getPool.js';
 
 //Función que genera un error.
 
 import generateErrorUtil from '../../utils/generateErrorUtil.js';
 
-//Funcion controladora que permite acepatr o rechazar una reserva 
+//Funcion controladora que permite acepatr o rechazar una reserva
 
-//Importar el middleware de autentificación e integrarla 
+//Importar el middleware de autentificación e integrarla
 
-const adminApprovalBookingConfirmationController = async (req, res, next) => {
+const adminBookingsController = async (req, res, next) => {
     try {
         // Obtenemos el id de la reserva y la acción (aprobar o rechazar) de los parámetros de la solicitud
         const { idBooking } = req.params;
@@ -27,7 +27,7 @@ const adminApprovalBookingConfirmationController = async (req, res, next) => {
         // Verificamos si la reserva existe
         const [booking] = await pool.query(
             'SELECT status FROM Bookings WHERE id = ?',
-            [idBooking]
+            [idBooking],
         );
 
         if (booking.length === 0) {
@@ -41,10 +41,10 @@ const adminApprovalBookingConfirmationController = async (req, res, next) => {
 
         // Actualizamos el estado de la reserva según la acción
         const newStatus = action === 'aprobar' ? 'CONFIRMED' : 'REJECTED';
-        await pool.query(
-            'UPDATE Bookings SET status = ? WHERE id = ?',
-            [newStatus, idBooking]
-        );
+        await pool.query('UPDATE Bookings SET status = ? WHERE id = ?', [
+            newStatus,
+            idBooking,
+        ]);
 
         // Enviamos la respuesta
         res.send({
@@ -52,13 +52,12 @@ const adminApprovalBookingConfirmationController = async (req, res, next) => {
             message: `Reserva ${action === 'aprobar' ? 'aprobada' : 'rechazada'} con éxito`,
             data: {
                 idBooking,
-                status: newStatus
-            }
+                status: newStatus,
+            },
         });
-
     } catch (error) {
         next(error);
     }
 };
 
-export default adminApprovalBookingConfirmationController;
+export default adminBookingsController;
