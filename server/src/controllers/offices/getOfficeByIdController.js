@@ -2,8 +2,7 @@
 
 import getPool from '../../db/getPool.js';
 
-// Función que genera un error.
-// import generateErrorUtil from '../../utils/generateErrorUtil.js';
+import generateErrorUtil from '../../utils/generateErrorUtil.js';
 
 // funcion controladora que nos va a devolver la lista de officinas
 
@@ -11,7 +10,7 @@ const getOfficeByIdController = async (req, res, next) => {
     try {
         // Obtenemos el id de la officina
 
-        const { IdOffice } = req.params;
+        const { idOffice } = req.params;
 
         // obtenemos un conexion co la base de datos.
 
@@ -39,18 +38,17 @@ const getOfficeByIdController = async (req, res, next) => {
             LEFT JOIN officeVotes v ON v.IdOffice = o.id
             WHERE o.id = ?
             `,
-            [IdOffice],
+            [idOffice],
 
-            // no estoy seguro del workspace ya que es enum, y el avg vote ahora que tenems una tabla votes no se si hace hace falta el ratingAvarage
+            // no estoy seguro del workspace ya que es enum, y el avg vote ahora que
+            // tenems una tabla votes no se si hace hace falta el ratingAvarage
         );
 
         // Si no hay productos lanzamos un error.
 
-        //  cuando este creado el generate error desmarcar esto
-
-        // if (offices.length < 1) {
-        //     generateErrorUtil('Producto no encontrado', 404);
-        // }
+        if (offices.length < 1) {
+            generateErrorUtil('Producto no encontrado', 404);
+        }
 
         // buscamos las fotos de la officina
 
