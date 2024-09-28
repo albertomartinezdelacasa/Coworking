@@ -5,7 +5,7 @@ import 'dotenv/config';
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-
+import fileUpload from 'express-fileupload';
 // Importamos las rutas.
 import userRoutes from './src/routes/userRoutes.js';
 import officeRoutes from './src/routes/officeRoutes.js';
@@ -19,6 +19,9 @@ const app = express();
 // Middleware que evita problemas de conexión entre cliente y servidor.
 app.use(cors());
 
+// Middleware que indica a Express cuál es el directorio de ficheros estáticos.
+app.use(express.static(UPLOADS_DIR));
+
 // Middleware que muestra por consola info sobre la petición entrante.
 app.use(morgan('dev'));
 
@@ -26,10 +29,9 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 // Middleware que permite leer un body en formato "form-data" (para archivos).
-//app.use(fileUpload());
+// Se instala fileupload para luego poder usarlo en el client.
+app.use(fileUpload());
 
-// Middleware que indica a Express cuál es el directorio de ficheros estáticos.
-app.use(express.static(UPLOADS_DIR));
 
 // Middleware que indica a Express dónde están las rutas.
 app.use('/api', userRoutes);

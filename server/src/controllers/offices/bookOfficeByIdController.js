@@ -1,10 +1,10 @@
 // Importamos la funcion que retorna una conexion a la base de datos
 
-import getPool from "../../db/getPool.js";
+import getPool from '../../db/getPool.js';
 
 // Importamos la función que genera un error
 
-import generateErrorUtil from "../../utils/generateError.js";
+import generateErrorUtil from '../../utils/generateErrorUtil.js';
 
 //Función Controladora que crea una reserva de una oficina por su id y usuario
 
@@ -16,7 +16,10 @@ const bookOfficeByIdController = async (req, res, next) => {
 
         // Verificamos que se haya proporcionado el idUser
         if (!idUser) {
-            generateErrorUtil('Se requiere el ID del usuario para hacer la reserva', 400);
+            generateErrorUtil(
+                'Se requiere el ID del usuario para hacer la reserva',
+                400,
+            );
         }
 
         //Obtenemos una conexión con la base de datos
@@ -25,7 +28,7 @@ const bookOfficeByIdController = async (req, res, next) => {
         // Verificamos si la oficina existe
         const [office] = await pool.query(
             'SELECT id FROM offices WHERE id = ?',
-            [idOffice]
+            [idOffice],
         );
 
         if (office.length === 0) {
@@ -36,7 +39,7 @@ const bookOfficeByIdController = async (req, res, next) => {
         const [bookings] = await pool.query(
             `SELECT id FROM Bookings 
              WHERE idOffice = ? AND status = 'CONFIRMED'`,
-            [idOffice]
+            [idOffice],
         );
 
         // Si ya existe una reserva confirmada, lanzamos un error
@@ -48,7 +51,7 @@ const bookOfficeByIdController = async (req, res, next) => {
         await pool.query(
             `INSERT INTO bookings (idUser, idOffice, status, createdAt) 
              VALUES (?, ?, 'CONFIRMED', NOW())`,
-            [idUser, idOffice]
+            [idUser, idOffice],
         );
 
         // Enviamos la respuesta
@@ -58,11 +61,12 @@ const bookOfficeByIdController = async (req, res, next) => {
             data: {
                 idUser,
                 idOffice,
-                status: 'CONFIRMED'
-            }
+                status: 'CONFIRMED',
+            },
         });
-
     } catch (error) {
         next(error);
     }
 };
+
+export default bookOfficeByIdController;
