@@ -12,6 +12,7 @@ import {
 
 // importamos las funciones controladoras intermedias
 import authUserController from '../middlewares/authUserController.js'; //Mauro
+import authAdminController from '../middlewares/authAdminController.js'; // Claudio
 
 // Aqui se importan los controladores.
 
@@ -46,7 +47,7 @@ router.get(
 router.get(
     '/users/bookingsList',
     authUserController,
-    // authAdminController,
+    authAdminController,
     getUserBookingListController,
 );
 
