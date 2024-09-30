@@ -20,9 +20,6 @@ import authAdminController from '../middlewares/authAdminController.js';
 
 const router = express.Router();
 
-// Middleware que permite crear un office ( office o desk )
-router.post('/office/create', authUserController, authAdminController, createOfficeController);
-
 // Middleware que permite editar los detalles de un Office
 router.put(
     '/office/edit/:idOffice',
@@ -31,6 +28,8 @@ router.put(
     updateOfficeController,
 );
 
+// Middleware que crea un una officina.
+router.post('/office/create', authUserController, createOfficeController);
 // Middleware que retorna el listado de offices.
 router.get('/office/list', listOfficeController);
 
@@ -53,6 +52,11 @@ router.put(
 );
 
 // Middleware que elimina una officina concreto por ID.
-router.delete('/office/:idOffice', authUserController, authAdminController, deleteOfficeController);
+router.delete(
+    '/office/:idOffice',
+    authUserController,
+    authAdminController,
+    deleteOfficeController,
+);
 
 export default router;
