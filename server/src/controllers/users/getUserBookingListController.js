@@ -1,6 +1,7 @@
 // Importamos la función que retorna una conexión con la base de datos.
 import getPool from '../../db/getPool.js';
 
+import generateErrorUtil from '../../utils/generateErrorUtil.js';
 // Función controladora que retorna el listado de reservas.
 const getUserBookingListController = async (req, res, next) => {
     try {
@@ -22,7 +23,7 @@ const getUserBookingListController = async (req, res, next) => {
                 b.guests,
                 b.status,
                 b.createdAt,
-                u.username AS searchingUser,
+                u.username AS searchingUser
 
             FROM bookings b
             INNER JOIN users u ON u.id = b.idUser
@@ -37,7 +38,10 @@ const getUserBookingListController = async (req, res, next) => {
                 */
             [searchingUser],
         );
-
+        // Si no hay ninguna reserva , lanzamos un error
+        if (bookings.length < 1) {
+            generateErrorUtil('No tienes reservas', 400);
+        }
         // Enviamos una respuesta al cliente.
         res.send({
             status: 'ok',

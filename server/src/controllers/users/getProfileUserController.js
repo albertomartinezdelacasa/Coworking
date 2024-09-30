@@ -20,7 +20,7 @@ const getProfileUserController = async (req, res, next) => {
 
         // Obtenemos los datos del usuario.
         const [users] = await pool.query(
-            `SELECT id, email, avatar FROM users WHERE id = ?`,
+            `SELECT id, username, email, role ,avatar FROM users WHERE id = ?`,
             [userId],
         );
         // Ejecutamos una consulta SQL para obtener el id, email y avatar del usuario con el ID especificado. El resultado se desestructura para obtener el primer elemento del array retornado.

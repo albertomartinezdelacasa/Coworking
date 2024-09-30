@@ -21,6 +21,19 @@ const createOfficeController = async (req, res, next) => {
             equipments,
         } = req.body;
 
+        // comprobamos que eres un admin para poder crear una officina
+        // Obtenemos los datos del user.
+        const { role } = req.user;
+
+        // Verificamos que el usuario sea un admin.
+
+        if (role !== 'ADMIN') {
+            throw generateErrorUtil(
+                'No tienes permisos para crear una oficina,solo admin pueden crearla',
+                403,
+            );
+        }
+
         // Verificamos que el equipamiento sea un array.
         if (!Array.isArray(equipments) || equipments.length === 0) {
             throw generateErrorUtil(
