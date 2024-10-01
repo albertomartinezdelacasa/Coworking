@@ -47,8 +47,6 @@ const main = async () => {
           workspace ENUM ("OFFICE", "DESK"),
           capacity INT UNSIGNED NOT NULL,
           price DECIMAL(10, 2) NOT NULL,
-          ratingAverage DECIMAL(3, 2) DEFAULT 0,
-          totalRatings INT DEFAULT 0,
           createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
         )
         `);
@@ -101,18 +99,20 @@ const main = async () => {
             )
             `);
 
-        // Tabla de votos. Se cambio el idBooking por idOffice
+        // Tabla de votos.
         await pool.query(`
             CREATE TABLE IF NOT EXISTS votes (
                 id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
                 value TINYINT UNSIGNED NOT NULL,
                 comment VARCHAR(255),
                 idUser INT UNSIGNED NOT NULL,
+                idBooking INT UNSIGNED NOT NULL,
                 idOffice INT UNSIGNED NOT NULL,
                 FOREIGN KEY (idUser) REFERENCES users(id),
+                FOREIGN KEY (idBooking) REFERENCES bookings(id),
                 FOREIGN KEY (idOffice) REFERENCES offices(id),
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-                UNIQUE(idUser, idOffice)
+                UNIQUE(idUser, idBooking)
             )
             `);
 

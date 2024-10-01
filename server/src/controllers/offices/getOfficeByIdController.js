@@ -29,9 +29,13 @@ const getOfficeByIdController = async (req, res, next) => {
               o.price,
               o.ratingAverage,
               o.totalRatings,
-              o.createdAt
-         FROM offices o
+              o.createdAt,
+              e.name AS equipment
+         FROM officesEquipments oe
+            INNER JOIN offices o ON oe.id = o.id
+            INNER JOIN equipments e ON oe.id = e.id
          WHERE o.id = ?
+         GROUP BY o.id
          `,
             [idOffice],
         );
@@ -53,8 +57,7 @@ const getOfficeByIdController = async (req, res, next) => {
 
         offices[0].photos = photos;
 
-        //Enviamos una respuesta al usu
-
+        //Enviamos una respuesta al usuario
         res.send({
             status: 'ok',
             data: {
