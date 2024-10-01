@@ -24,7 +24,7 @@ const bookOfficeByIdController = async (req, res, next) => {
 
         // Verificamos si la oficina existe
         const [office] = await pool.query(
-            'SELECT id FROM offices WHERE id = ?',
+            'SELECT id, capacity FROM offices WHERE id = ?',
             [idOffice],
         );
 
@@ -58,10 +58,14 @@ const bookOfficeByIdController = async (req, res, next) => {
         );
 
         if (existingBookings.length > 0) {
-            generateErrorUtil(
+            throw generateErrorUtil(
                 'La oficina no está disponible en las fechas seleccionadas',
                 400,
             );
+        }
+
+        if (guests > office[0].capacity) {
+            throw generateErrorUtil('Capacidad menor', 400);
         }
 
         // Creamos la reserva con estado 'PENDING'

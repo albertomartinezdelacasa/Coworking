@@ -5,7 +5,7 @@ import getPool from '../../db/getPool.js';
 import generateErrorUtil from '../../utils/generateErrorUtil.js';
 
 // Funcion controladora que retorna el listado de equipamientos de la oficina segun Id
-const [getEquipmentsController] = async (req, res, next) => {
+const getEquipmentsController = async (req, res, next) => {
     try {
         // Obtenemos los Id del equipamiento que buscamos de los path params
         let { idEquipment } = req.params;
