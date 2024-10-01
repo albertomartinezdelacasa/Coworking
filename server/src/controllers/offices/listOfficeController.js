@@ -27,10 +27,13 @@ const listOfficeController = async (req, res, next) => {
                     o.totalRatings,
                     o.address,
                     o.createdAt,
-                    u.email AS userEmail
+                    u.email AS userEmail,
+                    AVG(v) AS votesAvg
                 FROM offices o
                 INNER JOIN users u ON u.id = o.id
+                INNER JOIN votes v ON v.id = o.id
                 WHERE o.name LIKE ?
+                GROUP BY o.id
             `,
             [`%${keyword}%`],
         );
