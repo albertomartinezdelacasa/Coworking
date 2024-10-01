@@ -14,7 +14,7 @@ const authAdminController = (req, res, next) => {
         if (role !== 'ADMIN') {
             throw generateErrorUtil(
                 'Acceso denegado. Se requieren permisos de administrador.',
-                403
+                403,
             );
         }
 

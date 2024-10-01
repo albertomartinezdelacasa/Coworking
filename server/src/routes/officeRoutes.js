@@ -29,7 +29,12 @@ router.put(
 );
 
 // Middleware que crea un una officina.
-router.post('/office/create', authUserController, createOfficeController);
+router.post(
+    '/office/create',
+    authUserController,
+    authAdminController,
+    createOfficeController,
+);
 // Middleware que retorna el listado de offices.
 router.get('/office/list', listOfficeController);
 
