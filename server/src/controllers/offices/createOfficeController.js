@@ -7,41 +7,23 @@ import savePhotoUtil from '../../utils/savePhotoUtil.js';
 // Función que genera un error.
 import generateErrorUtil from '../../utils/generateErrorUtil.js';
 
-// Importamos el middleware de autenticación de admin
-import authAdminController from '../../middlewares/authAdminController.js'; 
-
 // Función controladora que permite registrar una oficina.
 const createOfficeController = async (req, res, next) => {
     try {
         // Obtenemos los datos del body.
-        const {
-            name,
-            price,
-            description,
-            address,
-            workspace,
-            capacity,
-            equipments,
-        } = req.body;
+        const { name, price, description, address, workspace, capacity } =
+            req.body;
 
         // comprobamos que eres un admin para poder crear una officina
         // Obtenemos los datos del user.
-        //const { role } = req.user;
+        const { role } = req.user;
 
         // Verificamos que el usuario sea un admin.
 
-       // if (role !== 'ADMIN') {
-        //    throw generateErrorUtil(
-        //        'No tienes permisos para crear una oficina,solo admin pueden crearla',
-        //        403,
-        //    );
-       // }
-
-        // Verificamos que el equipamiento sea un array.
-        if (!Array.isArray(equipments) || equipments.length === 0) {
+        if (role !== 'ADMIN') {
             throw generateErrorUtil(
-                'Se requiere al menos un equipamiento.',
-                400,
+                'No tienes permisos para crear una oficina,solo admin pueden crearla',
+                403,
             );
         }
 
@@ -72,7 +54,7 @@ const createOfficeController = async (req, res, next) => {
         );
 
         // Obtenemos el ID de la nueva oficina.
-        const idOffice = newOffice.idInsert;
+        const idOffice = newOffice.insertId;
 
         // Guardamos las fotos de la oficina.
         for (const photo of photosArr) {
@@ -82,28 +64,6 @@ const createOfficeController = async (req, res, next) => {
             await pool.query(
                 `INSERT INTO officePhotos (name, idOffice) VALUES (?, ?)`,
                 [photoName, idOffice],
-            );
-        }
-
-        // Guardamos los equipamientos asociados a la oficina en `officesEquipments`.
-        for (const idEquipment of equipments) {
-            // Validamos que el equipamiento exista en la tabla `equipments`.
-            const [equipmentExists] = await pool.query(
-                `SELECT id FROM equipments WHERE id = ?`,
-                [idEquipment],
-            );
-
-            if (equipmentExists.length === 0) {
-                throw generateErrorUtil(
-                    `El equipamiento con ID ${idEquipment} no existe`,
-                    404,
-                );
-            }
-
-            // Insertamos la relación entre la oficina y el equipamiento en `officesEquipments`.
-            await pool.query(
-                `INSERT INTO officesEquipments (idOffice, idEquipment) VALUES (?, ?)`,
-                [idOffice, idEquipment],
             );
         }
 
@@ -118,4 +78,4 @@ const createOfficeController = async (req, res, next) => {
     }
 };
 
-export default [authAdminController ,createOfficeController];
+export default createOfficeController;
