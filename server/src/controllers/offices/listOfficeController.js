@@ -1,5 +1,6 @@
 // Importamos la función que retorna una conexión con la base de datos.
 import getPool from '../../db/getPool.js';
+import generateErrorUtil from '../../utils/generateErrorUtil.js';
 
 // Función controladora que retorna el listado de oficinas. Se puede filtrar por palabra clave.
 const listOfficeController = async (req, res, next) => {
@@ -45,7 +46,10 @@ const listOfficeController = async (req, res, next) => {
             // Agregamos el array de fotos a la oficina.
             office.photos = photos;
         }
-
+        // Si no hay ninguna officina coworking space , lanzamos un error
+        if (offices.length < 1) {
+            generateErrorUtil('No hay oficinas', 400);
+        }
         // Enviamos una respuesta al cliente.
         await res.send({
             status: 'ok',

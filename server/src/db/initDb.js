@@ -14,7 +14,7 @@ const main = async () => {
 
         // Borramos las tablas.
         await pool.query(
-            'DROP TABLE IF EXISTS users, offices, equipments, officesEquipments, bookings, votes',
+            'DROP TABLE IF EXISTS users, offices, equipments, officesEquipments, officePhotos, bookings, votes',
         );
 
         console.log('Creando tablas...');
@@ -26,13 +26,13 @@ const main = async () => {
           email VARCHAR(255) UNIQUE NOT NULL,
           username VARCHAR(255) UNIQUE NOT NULL,
           password VARCHAR(255) NOT NULL,
-          name VARCHAR(255) NOT NULL,
-          lastName VARCHAR(255) NOT NULL,
+          name VARCHAR(255) NOT NULL ,
+          lastName VARCHAR(255)NOT NULL,
           avatar VARCHAR(255),
           role ENUM('CLIENT', 'ADMIN') DEFAULT 'CLIENT',
           active BOOLEAN DEFAULT FALSE, 
-          registrationCode CHAR(30),
-          recoverPassCode CHAR(30),
+          registrationCode CHAR(50),
+          recoverPassCode CHAR(50),
           createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
         )
         `);
@@ -91,8 +91,8 @@ const main = async () => {
               id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT ,
               idUser INT UNSIGNED,
               idOffice INT UNSIGNED,
-	          checkIn DATETIME NOT NULL,
-	          checkOut DATETIME NOT NULL,
+	            checkIn DATETIME NOT NULL,
+	            checkOut DATETIME NOT NULL,
               guests INT NOT NULL,
               status ENUM('PENDING', 'CONFIRMED', 'REJECTED', 'CANCELED') DEFAULT 'PENDING',
               createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,

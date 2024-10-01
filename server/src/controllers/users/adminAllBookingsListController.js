@@ -2,16 +2,22 @@
 import getPool from '../../db/getPool.js';
 
 import generateErrorUtil from '../../utils/generateErrorUtil.js';
-// Función controladora que retorna el listado de reservas.
-const getUserBookingListController = async (req, res, next) => {
+
+// Función controladora que retorna el listado de todas las reservas (solo para admin).
+const adminAllBookingsListController = async (req, res, next) => {
     try {
-        // Obtenemos los datos del usuario necesarios.
-        let searchingUser = req.user.id;
+        // Comprobamos si el usuario tiene permisos de administrador.
+        if (req.user.role !== 'ADMIN') {
+            throw generateErrorUtil(
+                'No tienes permisos, Solo los ADMIN pueden ver el listado de todos los bookings',
+                403,
+            );
+        }
 
         // Obtenemos una conexión con la base de datos.
         const pool = await getPool();
 
-        // Obtenemos el listado de reservas.
+        // Obtenemos el listado de todas las reservas.
         const [bookings] = await pool.query(
             `
             SELECT  
@@ -23,26 +29,23 @@ const getUserBookingListController = async (req, res, next) => {
                 b.guests,
                 b.status,
                 b.createdAt,
-                u.username AS searchingUser
+                u.username AS userName,
+                o.name AS officeName
 
             FROM bookings b
             INNER JOIN users u ON u.id = b.idUser
             INNER JOIN offices o ON o.id = b.idOffice
-            WHERE u.username LIKE ?
             GROUP BY b.id 
+            ORDER BY b.createdAt DESC
             `,
-            /*
-                INNER JOIN officeEquipments oe ON oe.id = o.idOffice
-                    INNER JOIN equipments e ON e.id = oe.idEquipment
-                INNER JOIN officePhotos op ON op.id = o.idOffice
-                */
-            [searchingUser],
         );
-        // Si no hay ninguna reserva , lanzamos un error
+
+        // Si no hay ninguna reserva, lanzamos un error
         if (bookings.length < 1) {
-            generateErrorUtil('No tienes reservas', 400);
+            throw generateErrorUtil('No hay ninguna reserva disponible', 400);
         }
-        // Enviamos una respuesta al cliente.
+
+        // Enviamos una respuesta al cliente con el listado de reservas.
         res.send({
             status: 'ok',
             data: {
@@ -54,4 +57,4 @@ const getUserBookingListController = async (req, res, next) => {
     }
 };
 
-export default getUserBookingListController;
+export default adminAllBookingsListController;

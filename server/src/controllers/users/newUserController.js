@@ -9,10 +9,10 @@ import generateErrorUtil from '../../utils/generateErrorUtil.js';
 const newUserController = async (req, res, next) => {
     try {
         // Extraemos los datos del cuerpo de la petición
-        const { username, email, password } = req.body;
+        const { username, name, lastname, email, password } = req.body;
 
         // Verificamos que todos los campos requeridos estén presentes
-        if (!username || !email || !password) {
+        if (!username || !email || !name || !lastname || !password) {
             generateErrorUtil('Faltan campos', 400);
         }
 
@@ -41,9 +41,9 @@ const newUserController = async (req, res, next) => {
         // Insertamos el nuevo usuario en la base de datos
         await pool.query(
             `
-            INSERT INTO users (username, email, password, registrationCode) VALUES (?, ?, ?, ?)
+            INSERT INTO users (username, email, name, lastname, password, registrationCode) VALUES (?, ?, ?, ?, ?, ?)
             `,
-            [username, email, hashedPassword, registrationCode],
+            [username, email, name, lastname, hashedPassword, registrationCode],
         );
 
         // Preparamos el asunto del correo de activación
@@ -51,7 +51,7 @@ const newUserController = async (req, res, next) => {
 
         // Preparamos el cuerpo del correo de activación
         const emailBody = `
-        ¡Bienvenid@ ${email.split('@')[0]}! 
+        ¡Bienvenid@ ${name}! 
 
         Gracias por registrarte en THE COWORKING. Para activar tu cuenta, haz click en el siguiente enlace:
 
@@ -66,6 +66,7 @@ const newUserController = async (req, res, next) => {
             message: 'Usuario registrado correctamente',
         });
     } catch (err) {
+        console.log(err);
         // Si ocurre algún error, lo pasamos al siguiente middleware
         next(err);
     }
