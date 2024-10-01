@@ -27,13 +27,9 @@ const getOfficeByIdController = async (req, res, next) => {
               o.address,
               o.capacity,
               o.price,
-              o.ratingAverage,
-              o.totalRatings,
-              o.createdAt,
-              e.name AS equipment
-         FROM officesEquipments oe
-            INNER JOIN offices o ON oe.id = o.id
-            INNER JOIN equipments e ON oe.id = e.id
+              o.createdAt
+          
+         FROM offices o  
          WHERE o.id = ?
          GROUP BY o.id
          `,
@@ -49,7 +45,7 @@ const getOfficeByIdController = async (req, res, next) => {
         // Buscamos la foto de la oficina   (crear tabla fotos)
 
         const [photos] = await pool.query(
-            `SELECT id, name FROM officePhotos WHERE idOffce = ?`,
+            `SELECT id, name FROM officePhotos WHERE idOffice = ?`,
             [offices[0].id],
         );
 

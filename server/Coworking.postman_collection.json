@@ -1,22 +1,22 @@
 {
 	"info": {
-		"_postman_id": "884c0d0b-bf63-4dc5-9f38-9900e51988b2",
+		"_postman_id": "d3c40a25-db1e-4278-ac09-e2febb26b214",
 		"name": "Coworking",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "37787457"
+		"_exporter_id": "37787486"
 	},
 	"item": [
 		{
 			"name": "Users",
 			"item": [
 				{
-					"name": "New User",
+					"name": "Create New User",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\n    \"username\":\"Alcachominator\",\n    \"email\":\"Alcachofo@gmail.com\",\n    \"password\":\"1234\",\n    \"name\":\"Robo\",\n    \"lastname\":\"Cop\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -40,12 +40,18 @@
 					"response": []
 				},
 				{
-					"name": "Activar Usuario",
+					"name": "Activate New User",
 					"request": {
-						"method": "PUT",
-						"header": [],
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "2e2b692bdd365359962572c8013687",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "http://localhost:8000/api/users/activate/:registrationCode",
+							"raw": "http://localhost:8000/api/users/activate/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -55,12 +61,13 @@
 								"api",
 								"users",
 								"activate",
-								":registrationCode"
+								""
 							],
-							"variable": [
+							"query": [
 								{
-									"key": "registrationCode",
-									"value": ""
+									"key": "",
+									"value": "",
+									"disabled": true
 								}
 							]
 						}
@@ -72,6 +79,15 @@
 					"request": {
 						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\n    \"email\":\"AdminCOOL@mail.com\",\n    \"password\":\"1234\"\n    \n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "http://localhost:8000/api/users/login",
 							"protocol": "http",
@@ -90,9 +106,28 @@
 				},
 				{
 					"name": "User Profile",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzI3Nzc1OTU1LCJleHAiOjE3MjgzODA3NTV9.n0EKYrFFjFmTjPJAKRC4WhlTAB0pwVQwUo2kNzXPIB8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/Users/alejandroperezbanks/Desktop/imagenes para prubas clase/Avatar de Avatar.jpg"
+								}
+							]
+						},
 						"url": {
 							"raw": "http://localhost:8000/api/users/profile",
 							"protocol": "http",
@@ -104,16 +139,45 @@
 								"api",
 								"users",
 								"profile"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Avatar Update",
+					"name": "Avatar Upload / Change",
 					"request": {
-						"method": "PUT",
-						"header": [],
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzI3Njg1MzU4LCJleHAiOjE3MjgyOTAxNTh9.Cd6mXAdYxXdPzMTzFZOixVnzFNpI6jQfLgiGXt6bOxA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/Users/alejandroperezbanks/Desktop/imagenes para prubas clase/perfil meme.jpeg"
+								}
+							]
+						},
 						"url": {
 							"raw": "http://localhost:8000/api/users/avatar",
 							"protocol": "http",
@@ -131,10 +195,24 @@
 					"response": []
 				},
 				{
-					"name": "Booking's List",
+					"name": "Edit User Profile",
+					"request": {
+						"method": "PATCH",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "User Booking's List",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzI3NDM1NjgxLCJleHAiOjE3MjgwNDA0ODF9.1tTlm82mcdhVgferiHdUoXDAgX_aKIvvVMe1DRq2Ies",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "http://localhost:8000/api/users/bookingsList",
 							"protocol": "http",
@@ -150,6 +228,14 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "resetPassword",
+					"request": {
+						"method": "PUT",
+						"header": []
+					},
+					"response": []
 				}
 			]
 		},
@@ -157,28 +243,7 @@
 			"name": "Offices",
 			"item": [
 				{
-					"name": "Office List",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8000/api/office/list",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"office",
-								"list"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Office por ID",
+					"name": "individual Office",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -205,10 +270,43 @@
 					"response": []
 				},
 				{
-					"name": "Book Office By ID",
+					"name": "Office List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzI3Nzc1OTU1LCJleHAiOjE3MjgzODA3NTV9.n0EKYrFFjFmTjPJAKRC4WhlTAB0pwVQwUo2kNzXPIB8",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/office/list",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"office",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Book an Office",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6IkNMSUVOVCIsImlhdCI6MTcyNzc3ODE4OSwiZXhwIjoxNzI4MzgyOTg5fQ.QQAekEfJ1bGNII_sgB-hcNxUtOMozs2W2PXV2Fdgz8w",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "http://localhost:8000/api/office/:idOffice/booking",
 							"protocol": "http",
@@ -229,6 +327,14 @@
 								}
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Booking ADMIN",
+					"request": {
+						"method": "DELETE",
+						"header": []
 					},
 					"response": []
 				},
@@ -266,7 +372,81 @@
 					"response": []
 				},
 				{
-					"name": "Delete Office",
+					"name": "Create Office ADMIN",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzI3Nzc1OTU1LCJleHAiOjE3MjgzODA3NTV9.n0EKYrFFjFmTjPJAKRC4WhlTAB0pwVQwUo2kNzXPIB8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "oficina 01",
+									"type": "text"
+								},
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "/Users/alejandroperezbanks/Desktop/imagenes para prubas clase/jaca.jpg"
+								},
+								{
+									"key": "equipments",
+									"value": "lapiz",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "price",
+									"value": "120",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "dasdklsadjladjkadsaj",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "calle guai",
+									"type": "text"
+								},
+								{
+									"key": "workspace",
+									"value": "Office",
+									"type": "text"
+								},
+								{
+									"key": "capacity",
+									"value": "10",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api//office/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"",
+								"office",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Office ADMIN",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -289,6 +469,22 @@
 								}
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Office ADMIN",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "All Bookings List ADMIN",
+					"request": {
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				}
