@@ -8,10 +8,10 @@ import getPool from '../../db/getPool.js'; // Función para obtener la conexión
 const loginUserController = async (req, res, next) => {
     try {
         // Extraemos los datos del cuerpo de la petición
-        const { username, email, password } = req.body;
+        const { email, password } = req.body;
 
         // Verificamos que todos los campos requeridos estén presentes
-        if (!username || !email || !password) {
+        if (!email || !password) {
             generateErrorUtil('Faltan campos', 400);
         }
 
@@ -33,7 +33,7 @@ const loginUserController = async (req, res, next) => {
 
         // Si la contraseña no es válida, generamos un error
         if (!validPass) {
-            generateErrorUtil('Contraseña incorrecta', 401);
+            generateErrorUtil('Credenciales incorrectas', 401);
         }
 
         // Verificamos si el usuario está activo
