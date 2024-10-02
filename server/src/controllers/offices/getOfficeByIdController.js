@@ -27,11 +27,11 @@ const getOfficeByIdController = async (req, res, next) => {
               o.address,
               o.capacity,
               o.price,
-              o.ratingAverage,
-              o.totalRatings,
               o.createdAt
-         FROM offices o
+          
+         FROM offices o  
          WHERE o.id = ?
+         GROUP BY o.id
          `,
             [idOffice],
         );
@@ -45,7 +45,7 @@ const getOfficeByIdController = async (req, res, next) => {
         // Buscamos la foto de la oficina   (crear tabla fotos)
 
         const [photos] = await pool.query(
-            `SELECT id, name FROM officePhotos WHERE idOffce = ?`,
+            `SELECT id, name FROM officePhotos WHERE idOffice = ?`,
             [offices[0].id],
         );
 
@@ -53,8 +53,7 @@ const getOfficeByIdController = async (req, res, next) => {
 
         offices[0].photos = photos;
 
-        //Enviamos una respuesta al usu
-
+        //Enviamos una respuesta al usuario
         res.send({
             status: 'ok',
             data: {

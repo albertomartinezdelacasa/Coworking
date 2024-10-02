@@ -15,23 +15,23 @@ const listOfficeController = async (req, res, next) => {
         const pool = await getPool();
 
         // Obtenemos las oficinas.
+
         const [offices] = await pool.query(
             `
-                SELECT 
-                    o.id,
-                    o.name,
-                    o.price,
-                    o.workspace,
-                    o.capacity,
-                    o.ratingAverage,
-                    o.totalRatings,
-                    o.address,
-                    o.createdAt,
-                    u.email AS userEmail
-                FROM offices o
-                INNER JOIN users u ON u.id = o.id
-                WHERE o.name LIKE ?
-            `,
+        SELECT 
+            o.id,
+            o.name,
+            o.price,
+            o.workspace,
+            o.capacity,
+            o.address,
+            o.createdAt,
+            AVG(v.value) AS votesAvg
+        FROM offices o
+        LEFT JOIN votes v ON v.idOffice = o.id  
+        WHERE o.name LIKE ?
+        GROUP BY o.id
+    `,
             [`%${keyword}%`],
         );
 
@@ -46,6 +46,7 @@ const listOfficeController = async (req, res, next) => {
             // Agregamos el array de fotos a la oficina.
             office.photos = photos;
         }
+        console.log(offices);
         // Si no hay ninguna officina coworking space , lanzamos un error
         if (offices.length < 1) {
             generateErrorUtil('No hay oficinas', 400);

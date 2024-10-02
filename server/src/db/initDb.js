@@ -26,8 +26,8 @@ const main = async () => {
           email VARCHAR(255) UNIQUE NOT NULL,
           username VARCHAR(255) UNIQUE NOT NULL,
           password VARCHAR(255) NOT NULL,
-          name VARCHAR(255) ,
-          lastName VARCHAR(255),
+          name VARCHAR(255) NOT NULL ,
+          lastName VARCHAR(255)NOT NULL,
           avatar VARCHAR(255),
           role ENUM('CLIENT', 'ADMIN') DEFAULT 'CLIENT',
           active BOOLEAN DEFAULT FALSE, 
@@ -47,8 +47,6 @@ const main = async () => {
           workspace ENUM ("OFFICE", "DESK"),
           capacity INT UNSIGNED NOT NULL,
           price DECIMAL(10, 2) NOT NULL,
-          ratingAverage DECIMAL(3, 2) DEFAULT 0,
-          totalRatings INT DEFAULT 0,
           createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
         )
         `);
@@ -95,28 +93,41 @@ const main = async () => {
 	            checkOut DATETIME NOT NULL,
               guests INT NOT NULL,
               status ENUM('PENDING', 'CONFIRMED', 'REJECTED', 'CANCELED') DEFAULT 'PENDING',
+              -- vote TINYINT UNSIGNED,
+              -- comment VARCHAR(255),
               createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
               FOREIGN KEY (idUser) REFERENCES users(id),
               FOREIGN KEY (idOffice) REFERENCES offices(id)
             )
             `);
 
-        // Tabla de votos. Se cambio el idBooking por idOffice
+        // Tabla de votos.
         await pool.query(`
             CREATE TABLE IF NOT EXISTS votes (
                 id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
                 value TINYINT UNSIGNED NOT NULL,
                 comment VARCHAR(255),
                 idUser INT UNSIGNED NOT NULL,
+                idBooking INT UNSIGNED NOT NULL,
                 idOffice INT UNSIGNED NOT NULL,
                 FOREIGN KEY (idUser) REFERENCES users(id),
+                FOREIGN KEY (idBooking) REFERENCES bookings(id),
                 FOREIGN KEY (idOffice) REFERENCES offices(id),
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-                UNIQUE(idUser, idOffice)
+                UNIQUE(idUser, idBooking)
             )
             `);
 
         console.log('¡Tablas creadas!');
+
+        console.log('Insert equipamientos');
+
+        /* await pool.query(`
+            INSERT INTO equipments (name) VALUES
+         ("A"), ("B"), ("C")
+            )
+            `);
+*/
 
         // Cerramos el proceso con código 0 indicando que todo ha ido bien.
         process.exit(0);

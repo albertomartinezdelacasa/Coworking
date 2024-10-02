@@ -13,22 +13,28 @@ import {
 } from '../controllers/offices/index.js';
 
 import authUserController from '../middlewares/authUserController.js';
+import authAdminController from '../middlewares/authAdminController.js';
 // Importamos las funciones controladoras intermedias.**
 
 // Creamos un router.
 
 const router = express.Router();
 
-// Middleware que permite crear un office ( office o desk )
-router.post('/office/create', authUserController, createOfficeController);
-
 // Middleware que permite editar los detalles de un Office
 router.put(
     '/office/edit/:idOffice',
     authUserController,
+    authAdminController,
     updateOfficeController,
 );
 
+// Middleware que crea un una officina.
+router.post(
+    '/office/create',
+    authUserController,
+    authAdminController,
+    createOfficeController,
+);
 // Middleware que retorna el listado de offices.
 router.get('/office/list', listOfficeController);
 
@@ -46,10 +52,23 @@ router.post(
 router.put(
     '/office/:idOffice/booking/:idBooking',
     authUserController,
+    authAdminController,
     adminBookingsController,
 );
 
-// Middleware que elimina un producto concreto por ID.
-router.delete('/office/:idOffice', authUserController, deleteOfficeController);
+// Middleware que elimina una officina concreto por ID.
+router.delete(
+    '/office/:idOffice',
+    authUserController,
+    authAdminController,
+    deleteOfficeController,
+);
+
+//Middleware que elimina una reserva.
+router.delete(
+    '/office/:idOffice/booking',
+    authUserController,
+    deleteOfficeController,
+);
 
 export default router;

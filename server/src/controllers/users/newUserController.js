@@ -66,6 +66,7 @@ const newUserController = async (req, res, next) => {
             message: 'Usuario registrado correctamente',
         });
     } catch (err) {
+        console.log(err);
         // Si ocurre algún error, lo pasamos al siguiente middleware
         next(err);
     }
