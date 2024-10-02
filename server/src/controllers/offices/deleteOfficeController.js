@@ -1,9 +1,10 @@
 // Importamos la función que retorna una conexión con la base de datos.
 import getPool from '../../db/getPool.js';
 
-// Importamos la función que guarda una foto.
-//import removePhotoUtil from '../../utils/removePhotoUtil.js';
+// Importamos la función que borra una foto.
+import removePhotoUtil from '../../utils/removePhotoUtil.js';
 
+// Importamos el middleware de errores
 import generateErrorUtil from '../../utils/generateErrorUtil.js';
 
 // Función controladora que elimina una entrada concreta por ID.
@@ -25,23 +26,20 @@ const deleteOfficeController = async (req, res, next) => {
         }
 
         // Localizamos las fotos vinculadas a la entrada.
-        /* const [photos] = await pool.query(
+        const [photos] = await pool.query(
             `SELECT name FROM officePhotos WHERE idOffice = ?`,
             [idOffice],
-        ); */
+        );
 
         // Si hay alguna foto las eliminamos del disco.
-        /* for (const photo of photos) {
+        for (const photo of photos) {
             await removePhotoUtil(photo.name);
-        } */
+        }
 
         // Eliminamos las fotos de la base de datos.
-        /* await pool.query(`DELETE FROM officePhotos WHERE idOffice = ?`, [
+        await pool.query(`DELETE FROM officePhotos WHERE idOffice = ?`, [
             idOffice,
-        ]); */
-
-        // Eliminamos los votos de la entrada.
-        await pool.query(`DELETE FROM votes WHERE idOffice = ?`, [idOffice]);
+        ]);
 
         // Eliminamos la entrada.
         await pool.query(`DELETE FROM offices WHERE id = ?`, [idOffice]);

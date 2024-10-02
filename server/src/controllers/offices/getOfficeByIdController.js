@@ -27,9 +27,11 @@ const getOfficeByIdController = async (req, res, next) => {
               o.address,
               o.capacity,
               o.price,
-              o.createdAt
+              o.createdAt,
+              AVG(b.vote) AS votesAvg
           
-         FROM offices o  
+         FROM offices o
+         LEFT JOIN bookings b ON o.id = b.idOffice  
          WHERE o.id = ?
          GROUP BY o.id
          `,
