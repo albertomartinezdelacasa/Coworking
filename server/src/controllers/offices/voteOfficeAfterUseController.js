@@ -7,11 +7,14 @@ import generateErrorUtil from '../../utils/generateErrorUtil.js';
 // Función controladora que permite votar una oficina con un valor del 1 al 5, tras usarla.
 const voteOfficeAfterUseController = async (req, res, next) => {
     try {
-        // Obtenemos el ID de la reserva que queremos votar.
-        const { idBooking } = req.params;
+        // Obtenemos el ID de la reserva y el ID de la oficina que queremos votar.
+        const { idBooking, idOffice } = req.params;
 
         // Obtenemos los datos del body.
         const { vote, comment } = req.body;
+
+        // Convertimos en número el valor del voto
+        vote = parseInt(vote);
 
         // Si voto no tiene valor lanzamos un error.
         if (!vote) {
@@ -50,21 +53,21 @@ const voteOfficeAfterUseController = async (req, res, next) => {
 
         // Insertamos el voto
         await pool.query(
-            `INSERT INTO booking(vote, COMMENT) WHERE idBooking = ? VALUES(?, ?)`,
+            `INSERT INTO booking(vote, comment) WHERE idBooking = ? VALUES(?, ?)`,
             [idBooking, vote, comment],
         );
 
-        // Obtenemos la nueva media de votos de la entrada para poder actualizar el State
+        // Obtenemos la nueva media de votos de la oficina para poder actualizar el State
         // en el cliente.
-        const [votesAvg] = await pool.query(
-            `SELECT AVG(vote) AS avg FROM bookings WHERE idBooking = ?`,
-            [idBooking],
+        const votesAvg = await pool.query(
+            `SELECT AVG(vote) AS avg FROM bookings WHERE idOffice = ?`,
+            [idOffice],
         );
 
         //Obtenemos la cantidad de votos de la oficina para poder actualizar el State
         // en el cliente
         const [totalVotes] = await pool.query(
-            'SELECT Count(*) FROM bookings WHERE NOT VOTE = 0',
+            'SELECT Count(*) FROM bookings WHERE NOT vote = 0',
         );
 
         // Enviamos una respuesta al cliente.
@@ -72,7 +75,8 @@ const voteOfficeAfterUseController = async (req, res, next) => {
             status: 'ok',
             message: 'Voto agregado',
             data: {
-                votesAvg: Number(votes[0].avg),
+                votesAvg: votesAvg,
+                totalVotes: totalVotes,
             },
         });
     } catch (err) {

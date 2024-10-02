@@ -14,7 +14,7 @@ const main = async () => {
 
         // Borramos las tablas.
         await pool.query(
-            'DROP TABLE IF EXISTS users, offices, equipments, officesEquipments, officePhotos, bookings, votes',
+            'DROP TABLE IF EXISTS users, offices, equipments, officesEquipments, officePhotos, bookings',
         );
 
         console.log('Creando tablas...');
