@@ -13,6 +13,7 @@ import {
     deleteBookingController,
     getEquipmentsController,
     getOfficeEquipmentController,
+    voteOfficeAfterUseController,
 } from '../controllers/offices/index.js';
 
 import authUserController from '../middlewares/authUserController.js';
@@ -86,6 +87,12 @@ router.delete(
     '/office/:idBooking/booking',
     authUserController,
     deleteBookingController,
+);
+
+router.put(
+    '/office/:idOffice/:idBooking',
+    authUserController,
+    voteOfficeAfterUseController,
 );
 
 export default router;

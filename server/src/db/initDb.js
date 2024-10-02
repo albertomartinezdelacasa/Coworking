@@ -90,7 +90,7 @@ const main = async () => {
                 idUser INT UNSIGNED,
                     FOREIGN KEY (idUser) REFERENCES users(id),
                 idOffice INT UNSIGNED,
-                    FOREIGN KEY (idOffice) REFERENCES offices(id)
+                    FOREIGN KEY (idOffice) REFERENCES offices(id),
                 checkIn DATETIME NOT NULL,
                 checkOut DATETIME NOT NULL,
                 guests INT NOT NULL,
@@ -103,17 +103,10 @@ const main = async () => {
 
         console.log('¡Tablas creadas!');
 
-        console.log('Insertando el usuario administrador...');
-        await pool.query(
-            'INSERT INTO users(email, username, password, name, lastname, role, active) VALUES ("admin@coworking.com", "admin", "admin123", "admin", "coworking", "ADMIN", TRUE)',
-        );
-        console.log('¡Cuenta de administrador añadida!');
-
         console.log('Insertamos equipamientos');
         await pool.query(`
             INSERT INTO equipments (name) VALUES
                 ("Pizarra"), ("Proyector"), ("Wi-fi")
-            )
             `);
         console.log('¡Equipamientos añadidos!');
 
