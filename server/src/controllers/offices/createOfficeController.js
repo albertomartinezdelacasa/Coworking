@@ -27,8 +27,8 @@ const createOfficeController = async (req, res, next) => {
             );
         }
 
-        // Obtenemos el array de fotos, limitamos a 3 fotos.
-        const photosArr = Object.values(req.files).slice(0, 3);
+        // Verificamos si req.files existe, y si no, lo establecemos como un array vacío.
+        const photosArr = req.files ? Object.values(req.files).slice(0, 3) : [];
 
         // Si faltan campos lanzamos un error. Como mínimo es obligatoria una foto.
         if (
