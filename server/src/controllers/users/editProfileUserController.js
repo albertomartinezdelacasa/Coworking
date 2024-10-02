@@ -10,7 +10,7 @@ const editProfileUserController = async (req, res, next) => {
     try {
         // Obtenemos el ID del usuario que queremos editar
 
-        const { idUser } = req.params;
+        const idUser = req.user.id;
 
         // obtenemos los datos del body que permitimos modificar
 
@@ -28,7 +28,7 @@ const editProfileUserController = async (req, res, next) => {
         // obtenemos la informacion del usuar que queremos editar
 
         const [users] = await pool.query(
-            ` SELECT idUser FROM users WHERE id = ? `,
+            ` SELECT id FROM users WHERE id = ? `,
             [idUser],
         );
 
