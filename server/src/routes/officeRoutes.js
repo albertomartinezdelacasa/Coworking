@@ -24,14 +24,6 @@ import authAdminController from '../middlewares/authAdminController.js';
 
 const router = express.Router();
 
-// Middleware que permite editar los detalles de un Office
-router.put(
-    '/office/edit/:idOffice',
-    authUserController,
-    authAdminController,
-    updateOfficeController,
-);
-
 // Middleware que crea un una officina.
 router.post(
     '/office/create',
@@ -39,14 +31,6 @@ router.post(
     authAdminController,
     createOfficeController,
 );
-// Middleware que retorna el listado de offices.
-router.get('/office/list', listOfficeController);
-
-// Middleware que retorna los equipamientos por keyword.
-router.get('/office/equipamiento', getEquipmentsController);
-
-// Middleware que retorna un office concreto por ID.
-router.get('/office/:idOffice', getOfficeByIdController);
 
 //Middleware para actualizar una oficina
 router.put(
@@ -56,10 +40,19 @@ router.put(
     updateOfficeController,
 );
 
+// Middleware que retorna el listado de offices.
+router.get('/office/list', listOfficeController);
+
+// Middleware que retorna los equipamientos por keyword.
+router.get('/office/equipments', getEquipmentsController);
+
+// Middleware que retorna un office concreto por ID.
+router.get('/office/:idOffice', getOfficeByIdController);
+
 // Middleware que retorna los equipamientos de una oficina.
 router.get('/office/:idOffice/equipments', getOfficeEquipmentController);
 
-// Middleware que permite reservar una officina por ID.
+// Middleware que permite reservar una oficina por ID.
 router.post(
     '/office/:idOffice/booking',
     authUserController,
@@ -74,7 +67,7 @@ router.put(
     adminBookingsController,
 );
 
-// Middleware que elimina una officina concreto por ID.
+// Middleware que elimina una oficina concreto por ID.
 router.delete(
     '/office/:idOffice',
     authUserController,
