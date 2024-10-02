@@ -8,6 +8,7 @@ import {
     getProfileUserController, //Alberto
     userAvatarController, //Joseba
     getUserBookingListController, //Joseba
+    editProfileUserController, //Alex
 } from '../controllers/users/index.js';
 
 // importamos las funciones controladoras intermedias
@@ -22,6 +23,14 @@ const router = express.Router();
 
 //Controlador que permite registrar un usuario.
 router.post('/users/register', newUserController);
+
+//Controlador que permite actualizar el perfil de un usuario
+router.post(
+    '/users/editProfile',
+    authUserController,
+    authAdminController,
+    editProfileUserController,
+);
 
 // Controlador que permite activar un usuario. Inicialmente un PUT, pero sugerido que se cambiara a PATCH
 router.patch('/users/activate/:registrationCode', activateUserController);

@@ -37,7 +37,7 @@ const [getEquipmentsController] = async (req, res, next) => {
                 equipments: [equipments],
             },
         });
-    } catch {
+    } catch (err) {
         next(err);
     }
 };
