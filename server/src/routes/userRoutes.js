@@ -37,7 +37,6 @@ router.get('/users/profile', authUserController, getProfileUserController);
 router.patch(
     '/users/editProfile',
     authUserController,
-    authAdminController,
     editProfileUserController,
 );
 
