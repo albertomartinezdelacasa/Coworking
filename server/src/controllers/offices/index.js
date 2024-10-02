@@ -6,6 +6,7 @@ import createOfficeController from './createOfficeController.js';
 import deleteOfficeController from './deleteOfficeController.js';
 import deleteBookingController from './deleteBookingController.js';
 import getEquipmentsController from './getEquipmentsController.js';
+import getOfficeEquipmentController from './getOfficeEquipmentController.js';
 import getOfficeByIdController from './getOfficeByIdController.js';
 import listOfficeController from './listOfficeController.js';
 import updateOfficeController from './updateOfficeController.js';
@@ -18,6 +19,7 @@ export {
     deleteBookingController,
     deleteOfficeController,
     getEquipmentsController,
+    getOfficeEquipmentController,
     getOfficeByIdController,
     listOfficeController,
     updateOfficeController,
