@@ -7,30 +7,23 @@ import generateErrorUtil from '../../utils/generateErrorUtil.js';
 // Función controladora que permite votar una oficina con un valor del 1 al 5, tras usarla.
 const voteOfficeAfterUseController = async (req, res, next) => {
     try {
-        // Obtenemos el ID de la reserva que queremos votar.
-        const { idBooking } = req.params;
+        // Obtenemos el ID de la reserva y el ID de la oficina que queremos votar.
+        const { idBooking, idOffice } = req.params;
 
         // Obtenemos los datos del body.
-        const { value } = req.body;
+        const { vote, comment } = req.body;
 
-        //ESTE CONSOLE LOG ES PARA COMPROBAR QUE VA BIEN MIENTRAS PROGRAMAMOS
-        //HABRÁ QUE QUITARLO
-        console.log(value);
+        // Convertimos en número el valor del voto
+        vote = parseInt(vote);
 
-        // Si faltan campos lanzamos un error.
-        if (!value) {
+        // Si voto no tiene valor lanzamos un error.
+        if (!vote) {
             generateErrorUtil('Faltan campos', 400);
         }
 
-        // Array de votos válidos.
-        const validVotes = [1, 2, 3, 4, 5];
-
-        // Si el valor del voto no es correcto lanzamos un error.
-        if (!validVotes.includes(value)) {
-            generateErrorUtil(
-                'Solo se admiten valores enteros comprendidos entre el 1 y el 5',
-                400,
-            );
+        // Nos aseguramos de que sea un valor correcto por si acaso
+        if (![1, 2, 3, 4, 5].includes(vote)) {
+            console.log('El voto no es válido');
         }
 
         // Obtenemos una conexión con la base de datos.
@@ -49,7 +42,7 @@ const voteOfficeAfterUseController = async (req, res, next) => {
 
         // Comprobamos si existen votos previos por esa reserva por parte del usuario.
         const [bookingVotes] = await pool.query(
-            `SELECT id FROM votes WHERE idUser = ? AND idBooking = ?`,
+            `SELECT vote FROM bookings WHERE idUser = ? AND idBooking = ?`,
             [req.user.id, idBooking],
         );
 
@@ -58,40 +51,32 @@ const voteOfficeAfterUseController = async (req, res, next) => {
             generateErrorUtil('Ya has votado esta reserva', 403);
         }
 
-        // Obtenemos el ID de la oficina que queremos votar.
-        const { idOffice } = await pool.query(
-            'SELECT idOffice FROM votes WHERE idBooking = ?',
-            [idBooking],
-        );
-
-        // Insertamos el voto.
+        // Insertamos el voto
         await pool.query(
-            `INSERT INTO votes(value, idUser, idUser) VALUES(?, ?, ?)`,
-            [value, idBooking, req.user.id],
+            `INSERT INTO booking(vote, comment) WHERE idBooking = ? VALUES(?, ?)`,
+            [idBooking, vote, comment],
         );
 
-        // Obtenemos la nueva media de votos de la entrada para poder actualizar el State
+        // Obtenemos la nueva media de votos de la oficina para poder actualizar el State
         // en el cliente.
-        const [votes] = await pool.query(
-            `SELECT AVG(value) AS avg FROM votes WHERE idBooking = ?`,
-            [idBooking],
+        const votesAvg = await pool.query(
+            `SELECT AVG(vote) AS avg FROM bookings WHERE idOffice = ?`,
+            [idOffice],
         );
 
         //Obtenemos la cantidad de votos de la oficina para poder actualizar el State
         // en el cliente
-        const [totalVotes] = await pool.query('SELECT Count(*) FROM votes');
-
-        //ESTOS CONSOLE LOG SON PARA COMPROBAR QUE VA BIEN MIENTRAS PROGRAMAMOS
-        //HABRÁ QUE QUITARLOS
-        console.log(votes);
-        console.log(totalVotes);
+        const [totalVotes] = await pool.query(
+            'SELECT Count(*) FROM bookings WHERE NOT vote = 0',
+        );
 
         // Enviamos una respuesta al cliente.
         res.status(201).send({
             status: 'ok',
             message: 'Voto agregado',
             data: {
-                votesAvg: Number(votes[0].avg),
+                votesAvg: votesAvg,
+                totalVotes: totalVotes,
             },
         });
     } catch (err) {
