@@ -11,10 +11,10 @@ const voteOfficeAfterUseController = async (req, res, next) => {
         const { idOffice, idBooking } = req.params;
 
         // Obtenemos los datos del body.
-        const { vote, comment } = req.body;
+        let { vote, comment } = req.body;
 
         // Convertimos en número el valor del voto
-        //vote = parseInt(vote);
+        vote = parseInt(vote);
 
         // Si voto no tiene valor lanzamos un error.
         if (!vote) {
@@ -47,14 +47,17 @@ const voteOfficeAfterUseController = async (req, res, next) => {
         );
 
         // Si ya existe un voto por parte del usuario lanzamos un error.
-        if (bookingVotes.length > 0) {
+        if (bookingVotes[0].length > 0) {
             generateErrorUtil('Ya has votado esta reserva', 403);
         }
 
         // Insertamos el voto
+        console.log(vote);
+        console.log(comment);
+        console.log(idBooking);
         await pool.query(
-            `INSERT INTO booking(vote, comment) WHERE id = ? VALUES(?, ?)`,
-            [idBooking, vote, comment],
+            `UPDATE bookings SET vote = ? , comment = ? WHERE id= ?`,
+            [vote, comment, idBooking],
         );
 
         // Obtenemos la nueva media de votos de la oficina para poder actualizar el State
@@ -75,8 +78,8 @@ const voteOfficeAfterUseController = async (req, res, next) => {
             status: 'ok',
             message: 'Voto agregado',
             data: {
-                votesAvg: votesAvg,
-                totalVotes: totalVotes,
+                votesAvg: Number(votesAvg[0]).avg,
+                totalVotes: Number(totalVotes[0]).avg,
             },
         });
     } catch (err) {

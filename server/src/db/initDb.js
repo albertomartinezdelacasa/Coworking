@@ -1,6 +1,8 @@
 // Añadimos al proceso actual la lista de variables de entorno que figuran en el fichero ".env".
 import 'dotenv/config';
 
+import bcrypt from 'bcrypt'; // Librería para encriptar contraseñas
+
 // Función que retorna una conexión con la base de datos.
 import getPool from './getPool.js';
 
@@ -103,7 +105,16 @@ const main = async () => {
 
         console.log('¡Tablas creadas!');
 
-        console.log('Insertamos equipamientos');
+        console.log('Creando Usuario administrador...');
+        const hashedAdminPass = await bcrypt.hash('admin', 10);
+        await pool.query(
+            `INSERT INTO users(email, username, password, name, lastname, role, active)
+            VALUES ("admin@coworking.com", "admin", ?, "administrador", "coworking", "ADMIN", TRUE)`,
+            [hashedAdminPass],
+        );
+        console.log('¡Administrador creado!');
+
+        console.log('Insertamos equipamientos...');
         await pool.query(`
             INSERT INTO equipments (name) VALUES
                 ("Pizarra"), ("Proyector"), ("Wi-fi")

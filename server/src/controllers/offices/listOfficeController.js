@@ -26,9 +26,9 @@ const listOfficeController = async (req, res, next) => {
             o.capacity,
             o.address,
             o.createdAt,
-            AVG(v.value) AS votesAvg
+            AVG(b.vote) AS votesAvg
         FROM offices o
-        LEFT JOIN votes v ON v.idOffice = o.id  
+        LEFT JOIN bookings b ON b.idOffice = o.id  
         WHERE o.name LIKE ?
         GROUP BY o.id
     `,
