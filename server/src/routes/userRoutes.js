@@ -24,27 +24,27 @@ const router = express.Router();
 //Controlador que permite registrar un usuario.
 router.post('/users/register', newUserController);
 
-//Controlador que permite actualizar el perfil de un usuario
-router.post(
-    '/users/editProfile',
-    authUserController,
-    authAdminController,
-    editProfileUserController,
-);
-
 // Controlador que permite activar un usuario. Inicialmente un PUT, pero sugerido que se cambiara a PATCH
 router.patch('/users/activate/:registrationCode', activateUserController);
 
 // Controlador que permite loguear un usuario.
 router.post('/users/login', loginUserController);
 
-// Controlador de gestión del perfil (edición de datos: email,username,name,last,namepassword,avatar)
+// Controlador que retorna el perfil de un usuario
 router.get('/users/profile', authUserController, getProfileUserController);
+
+//Controlador que permite actualizar el perfil de un usuario
+router.patch(
+    '/users/editProfile',
+    authUserController,
+    authAdminController,
+    editProfileUserController,
+);
 
 // Controlador que actualiza el avatar de un usuario. Inicialmente un put, pero sugerido que sea un PATCH
 router.patch('/users/avatar', authUserController, userAvatarController);
 
-// Controlador que retorna la lista de reservas
+// Controlador que retorna la lista de reservas del usuario
 router.get(
     '/users/bookingsList',
     authUserController,
