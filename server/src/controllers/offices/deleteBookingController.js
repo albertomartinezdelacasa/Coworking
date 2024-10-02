@@ -29,8 +29,8 @@ const deleteBookingController = async (req, res, next) => {
             status: 'ok',
             message: 'La reserva se ha eliminado correctamente',
         });
-    } catch (error) {
-        next(error);
+    } catch (err) {
+        next(err);
     }
 };
 

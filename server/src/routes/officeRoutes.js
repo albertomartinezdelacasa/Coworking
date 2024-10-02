@@ -9,7 +9,10 @@ import {
     getOfficeByIdController, //Claudio
     bookOfficeByIdController, //Claudio
     adminBookingsController, //Claudio
-    deleteOfficeController, //Mauro
+    deleteOfficeController,
+    deleteBookingController,
+    getEquipmentsController,
+    getOfficeEquipmentController,
 } from '../controllers/offices/index.js';
 
 import authUserController from '../middlewares/authUserController.js';
@@ -38,8 +41,22 @@ router.post(
 // Middleware que retorna el listado de offices.
 router.get('/office/list', listOfficeController);
 
+// Middleware que retorna los equipamientos por keyword.
+router.get('/office/equipamiento', getEquipmentsController);
+
 // Middleware que retorna un office concreto por ID.
 router.get('/office/:idOffice', getOfficeByIdController);
+
+//Middleware para actualizar una oficina
+router.put(
+    '/office/:idOffice',
+    authUserController,
+    authAdminController,
+    updateOfficeController,
+);
+
+// Middleware que retorna los equipamientos de una oficina.
+router.get('/office/:idOffice/equipments', getOfficeEquipmentController);
 
 // Middleware que permite reservar una officina por ID.
 router.post(
@@ -66,9 +83,9 @@ router.delete(
 
 //Middleware que elimina una reserva.
 router.delete(
-    '/office/:idOffice/booking',
+    '/office/:idBooking/booking',
     authUserController,
-    deleteOfficeController,
+    deleteBookingController,
 );
 
 export default router;

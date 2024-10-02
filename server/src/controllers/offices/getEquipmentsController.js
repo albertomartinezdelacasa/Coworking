@@ -7,8 +7,11 @@ import generateErrorUtil from '../../utils/generateErrorUtil.js';
 // Funcion controladora que retorna el listado de equipamientos de la oficina segun Id
 const getEquipmentsController = async (req, res, next) => {
     try {
-        // Obtenemos los Id del equipamiento que buscamos de los path params
-        let { idEquipment } = req.params;
+        // Obtenemos la palabra clave del equipamiento que buscamos
+        let { keyword } = req.query;
+
+        // Si "keyword" contiene un valor considerado falso por JS, asignamos un string vacío.
+        keyword = keyword || '';
 
         // Obtenemos la conexión con la base de datos
         const pool = await getPool();
@@ -19,10 +22,10 @@ const getEquipmentsController = async (req, res, next) => {
                 e.id,
                 e.name
             FROM equipments e
-            WHERE e.id = ?
+            WHERE e.name LIKE ?
             GROUP BY e.id
          `,
-            [idEquipment],
+            [`%${keyword}%`],
         );
 
         // Si no existe ningun equipamiento con ese ID, generamos un error.
