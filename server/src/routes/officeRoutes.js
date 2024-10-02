@@ -64,4 +64,11 @@ router.delete(
     deleteOfficeController,
 );
 
+//Middleware que elimina una reserva.
+router.delete(
+    '/office/:idOffice/booking',
+    authUserController,
+    deleteOfficeController,
+);
+
 export default router;

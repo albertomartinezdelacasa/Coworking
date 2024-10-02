@@ -1,10 +1,10 @@
-import generateError from '../../helpers/generateError.js';
 import getPool from '../../db/getPool.js';
+import generateErrorUtil from '../../utils/generateErrorUtil.js';
 
 const deleteBookingController = async (req, res, next) => {
     try {
         const { idBooking } = req.params;
-        const { idUser } = req.params;
+        const idUser = req.user.id;
 
         const pool = await getPool();
 
@@ -14,7 +14,7 @@ const deleteBookingController = async (req, res, next) => {
         );
 
         if (booking.length < 1) {
-            generateError(
+            throw generateErrorUtil(
                 'No se ha encontrado ninguna reserva con ese id y usuario',
                 404,
             );
@@ -35,4 +35,3 @@ const deleteBookingController = async (req, res, next) => {
 };
 
 export default deleteBookingController;
-
