@@ -93,6 +93,8 @@ const main = async () => {
 	            checkOut DATETIME NOT NULL,
               guests INT NOT NULL,
               status ENUM('PENDING', 'CONFIRMED', 'REJECTED', 'CANCELED') DEFAULT 'PENDING',
+              -- vote TINYINT UNSIGNED,
+              -- comment VARCHAR(255),
               createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
               FOREIGN KEY (idUser) REFERENCES users(id),
               FOREIGN KEY (idOffice) REFERENCES offices(id)
@@ -117,6 +119,15 @@ const main = async () => {
             `);
 
         console.log('¡Tablas creadas!');
+
+        console.log('Insert equipamientos');
+
+        /* await pool.query(`
+            INSERT INTO equipments (name) VALUES
+         ("A"), ("B"), ("C")
+            )
+            `);
+*/
 
         // Cerramos el proceso con código 0 indicando que todo ha ido bien.
         process.exit(0);
