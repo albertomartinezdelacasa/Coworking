@@ -75,13 +75,14 @@ router.delete(
     deleteOfficeController,
 );
 
-//Middleware que elimina una reserva.
+// Middleware que elimina una reserva.
 router.delete(
     '/office/:idBooking/booking',
     authUserController,
     deleteBookingController,
 );
 
+// Middleware que permite votar una oficina tras su uso
 router.put(
     '/office/:idOffice/:idBooking',
     authUserController,
