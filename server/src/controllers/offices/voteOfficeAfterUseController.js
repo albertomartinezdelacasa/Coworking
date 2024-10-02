@@ -8,13 +8,13 @@ import generateErrorUtil from '../../utils/generateErrorUtil.js';
 const voteOfficeAfterUseController = async (req, res, next) => {
     try {
         // Obtenemos el ID de la reserva y el ID de la oficina que queremos votar.
-        const { idBooking, idOffice } = req.params;
+        const { idOffice, idBooking } = req.params;
 
         // Obtenemos los datos del body.
         const { vote, comment } = req.body;
 
         // Convertimos en número el valor del voto
-        vote = parseInt(vote);
+        //vote = parseInt(vote);
 
         // Si voto no tiene valor lanzamos un error.
         if (!vote) {
@@ -31,7 +31,7 @@ const voteOfficeAfterUseController = async (req, res, next) => {
 
         // Obtenemos el checkout de la reserva.
         const { bookingCheckout } = await pool.query(
-            'SELECT checkOut FROM bookings WHERE idUser = ? AND idBooking = ?',
+            'SELECT checkOut FROM bookings WHERE idUser = ? AND id = ?',
             [req.user.id, idBooking],
         );
 
@@ -42,7 +42,7 @@ const voteOfficeAfterUseController = async (req, res, next) => {
 
         // Comprobamos si existen votos previos por esa reserva por parte del usuario.
         const [bookingVotes] = await pool.query(
-            `SELECT vote FROM bookings WHERE idUser = ? AND idBooking = ?`,
+            `SELECT vote FROM bookings WHERE idUser = ? AND id = ?`,
             [req.user.id, idBooking],
         );
 
@@ -53,7 +53,7 @@ const voteOfficeAfterUseController = async (req, res, next) => {
 
         // Insertamos el voto
         await pool.query(
-            `INSERT INTO booking(vote, comment) WHERE idBooking = ? VALUES(?, ?)`,
+            `INSERT INTO booking(vote, comment) WHERE id = ? VALUES(?, ?)`,
             [idBooking, vote, comment],
         );
 
