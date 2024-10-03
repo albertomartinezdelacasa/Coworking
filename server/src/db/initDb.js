@@ -97,7 +97,7 @@ const main = async () => {
                 checkOut DATETIME NOT NULL,
                 guests INT NOT NULL,
                 status ENUM('PENDING', 'CONFIRMED', 'REJECTED', 'CANCELED') DEFAULT 'PENDING',
-                vote TINYINT UNSIGNED,
+                vote TINYINT UNSIGNED DEFAULT 0,
                 comment VARCHAR(255),
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP                    
             )

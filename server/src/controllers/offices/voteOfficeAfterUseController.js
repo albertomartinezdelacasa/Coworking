@@ -13,13 +13,12 @@ const voteOfficeAfterUseController = async (req, res, next) => {
         // Obtenemos los datos del body.
         let { vote, comment } = req.body;
 
-        // Convertimos en número el valor del voto
-        vote = parseInt(vote);
-
         // Si voto no tiene valor lanzamos un error.
         if (!vote) {
             generateErrorUtil('Faltan campos', 400);
         }
+        // Convertimos en número el valor del voto
+        vote = parseInt(vote);
 
         // Nos aseguramos de que sea un valor correcto por si acaso
         if (![1, 2, 3, 4, 5].includes(vote)) {
@@ -52,9 +51,6 @@ const voteOfficeAfterUseController = async (req, res, next) => {
         }
 
         // Insertamos el voto
-        console.log(vote);
-        console.log(comment);
-        console.log(idBooking);
         await pool.query(
             `UPDATE bookings SET vote = ? , comment = ? WHERE id= ?`,
             [vote, comment, idBooking],
@@ -63,7 +59,7 @@ const voteOfficeAfterUseController = async (req, res, next) => {
         // Obtenemos la nueva media de votos de la oficina para poder actualizar el State
         // en el cliente.
         const votesAvg = await pool.query(
-            `SELECT AVG(vote) AS avg FROM bookings WHERE idOffice = ?`,
+            `SELECT AVG(vote) AS avg FROM bookings WHERE idOffice = ? AND NOT vote = 0`,
             [idOffice],
         );
 
