@@ -35,18 +35,13 @@ const updateOfficeController = async (req, res, next) => {
         // Tratamos de obtener la información del producto que queremos editar para ver
         // si somos los dueños.
         const [offices] = await pool.query(
-            `SELECT IdUser FROM offices WHERE id = ?`,
+            `SELECT * FROM offices WHERE id = ?`,
             [idOffice],
         );
 
         // Si la officina  no existe lanzamos un error.
         if (offices.length < 1) {
             generateErrorUtil('Coworking space not found', 404);
-        }
-
-        // Si no somos los propietarios lanzamos un error.
-        if (req.user.id !== offices[0].IdUser) {
-            generateErrorUtil('Only Admin can edit this space', 403);
         }
 
         // Si el Admin ha enviado un nombre lo actualizamos.
@@ -98,7 +93,7 @@ const updateOfficeController = async (req, res, next) => {
         // Enviamos una respuesta al cliente.
         res.send({
             status: 'ok',
-            message: 'Office updated',
+            message: 'Oficina actualizada',
             data: {
                 product: {
                     name,

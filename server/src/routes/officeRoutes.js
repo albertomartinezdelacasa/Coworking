@@ -9,7 +9,11 @@ import {
     getOfficeByIdController, //Claudio
     bookOfficeByIdController, //Claudio
     adminBookingsController, //Claudio
-    deleteOfficeController, //Mauro
+    deleteOfficeController,
+    deleteBookingController,
+    getEquipmentsController,
+    getOfficeEquipmentController,
+    voteOfficeAfterUseController,
 } from '../controllers/offices/index.js';
 
 import authUserController from '../middlewares/authUserController.js';
@@ -20,23 +24,35 @@ import authAdminController from '../middlewares/authAdminController.js';
 
 const router = express.Router();
 
-// Middleware que permite editar los detalles de un Office
+// Middleware que crea un una officina.
+router.post(
+    '/office/create',
+    authUserController,
+    authAdminController,
+    createOfficeController,
+);
+
+//Middleware para actualizar una oficina
 router.put(
-    '/office/edit/:idOffice',
+    '/office/:idOffice',
     authUserController,
     authAdminController,
     updateOfficeController,
 );
 
-// Middleware que crea un una officina.
-router.post('/office/create', authUserController, createOfficeController);
 // Middleware que retorna el listado de offices.
 router.get('/office/list', listOfficeController);
+
+// Middleware que retorna los equipamientos por keyword.
+router.get('/office/equipments', getEquipmentsController);
 
 // Middleware que retorna un office concreto por ID.
 router.get('/office/:idOffice', getOfficeByIdController);
 
-// Middleware que permite reservar una officina por ID.
+// Middleware que retorna los equipamientos de una oficina.
+router.get('/office/:idOffice/equipments', getOfficeEquipmentController);
+
+// Middleware que permite reservar una oficina por ID.
 router.post(
     '/office/:idOffice/booking',
     authUserController,
@@ -51,12 +67,26 @@ router.put(
     adminBookingsController,
 );
 
-// Middleware que elimina una officina concreto por ID.
+// Middleware que elimina una oficina concreto por ID.
 router.delete(
     '/office/:idOffice',
     authUserController,
     authAdminController,
     deleteOfficeController,
+);
+
+// Middleware que elimina una reserva.
+router.delete(
+    '/office/:idBooking/booking',
+    authUserController,
+    deleteBookingController,
+);
+
+// Middleware que permite votar una oficina tras su uso
+router.put(
+    '/office/:idOffice/:idBooking',
+    authUserController,
+    voteOfficeAfterUseController,
 );
 
 export default router;

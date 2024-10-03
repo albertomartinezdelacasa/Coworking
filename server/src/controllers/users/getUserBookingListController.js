@@ -22,13 +22,12 @@ const getUserBookingListController = async (req, res, next) => {
                 b.checkOut,
                 b.guests,
                 b.status,
-                b.createdAt,
-                u.username AS searchingUser
+                b.createdAt
 
             FROM bookings b
             INNER JOIN users u ON u.id = b.idUser
             INNER JOIN offices o ON o.id = b.idOffice
-            WHERE u.username LIKE ?
+            WHERE u.id LIKE ?
             GROUP BY b.id 
             `,
             /*
