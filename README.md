@@ -91,8 +91,8 @@ Portal donde publicar espacios de coworking, reservar y gestionar cada espacio.
 - **PATCH** - [`/users/editProfile`] - Permite actualizar el perfil del usuario. ✅
 - **PATCH** - [`/users/avatar`] - Permite actualizar el avatar del usuario. ✅
 - **GET** - [`/users/bookingsList`] - Retorna las reservas del usuario. ✅
-  <!-- - **PUT**   - [`/users/password/recover`] - Permite enviar un email de recuperación de contraseña.  -->
-  <!-- - **PUT**   - [`/users/password/reset/:recoverPassCode`] - Permite crear una nueva contraseña a partir de un código. -->
+- **PUT** - [`/users/password/recover`] - Permite enviar un email de recuperación de contraseña. ✅
+- **PUT** - [`/users/password/reset/:recoverPassCode`] - Permite crear una nueva contraseña a partir de un código. ✅
 
 ## Endpoints de las oficinas
 
@@ -103,7 +103,7 @@ Portal donde publicar espacios de coworking, reservar y gestionar cada espacio.
 - **GET** - [`/office/:idOffice`] - Retorna una oficina en concreto por ID. ✅
 - **GET** - [`/office/:idOffice/equipments`] - Retorna los equipamientos de una oficina. ✅
 - **POST** - [`/office/:idOffice/booking`] - Permite reservar una oficina por ID. ✅
-- **PUT** - [`/office/:idOffice/booking/:idBooking`] - Permite al admin administrar las reservas.
+- **PUT** - [`/office/:idOffice/booking/:idBooking`] - Permite al admin administrar las reservas.✅
 - **DELETE** - [`/office/:idOffice`] - Permite eliminar una oficina en concreto por ID. ✅
 - **DELETE** - [`/office/:idBooking/booking`] - Elimina una reserva. ✅
 - **PUT** - [`/office/:idOffice/:idBooking`] - Vota una oficina mediante una reserva (entre 1 y 5). ✅

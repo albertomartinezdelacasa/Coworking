@@ -7,6 +7,8 @@ import getUserBookingListController from './getUserBookingListController.js';
 import loginUserController from './loginUserController.js';
 import newUserController from './newUserController.js';
 import userAvatarController from './userAvatarController.js';
+import resetUserPassController from './resetUserPassController.js';
+import sendRecoverPassController from './sendRecoverPassController.js';
 
 // Aqui se exportan los controladores
 export {
@@ -18,4 +20,6 @@ export {
     getProfileUserController,
     getUserBookingListController,
     userAvatarController,
+    resetUserPassController,
+    sendRecoverPassController,
 };
