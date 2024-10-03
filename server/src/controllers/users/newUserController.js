@@ -55,7 +55,7 @@ const newUserController = async (req, res, next) => {
 
         Gracias por registrarte en THE COWORKING. Para activar tu cuenta, haz click en el siguiente enlace:
 
-        <a href="${process.env.CLIENT_URL}/users/validate/${registrationCode}">¡Activa tu usuario!</a>`;
+        <a href="${process.env.CLIENT_URL}/users/activate/${registrationCode}">¡Activa tu usuario!</a>`;
 
         // Enviamos el correo de activación
         await sendMailUtil(email, emailSubject, emailBody);

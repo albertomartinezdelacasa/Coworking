@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\":\"Pepe\",\n    \"email\":\"pepe@mail.com\",\n    \"password\":\"123456\",\n    \"name\":\"Pepe\",\n    \"lastname\":\"Argento\"\n}",
+							"raw": "{\n    \"username\":\"\",\n    \"email\":\"\",\n    \"password\":\"123456\",\n    \"name\":\"\",\n    \"lastname\":\"\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -286,12 +286,77 @@
 					"response": []
 				},
 				{
+					"name": "Send RecoverPassCode",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "olivermauro@outlook.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/users/password/recover",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users",
+								"password",
+								"recover"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "resetPassword",
 					"request": {
 						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "newPassword",
+									"value": "1234",
+									"type": "text"
+								},
+								{
+									"key": "repeatNewPassword",
+									"value": "1234",
+									"type": "text"
+								}
+							]
+						},
 						"url": {
-							"raw": ""
+							"raw": "http://localhost:8000/api/users/password/reset/:recoverPassCode",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users",
+								"password",
+								"reset",
+								":recoverPassCode"
+							],
+							"variable": [
+								{
+									"key": "recoverPassCode",
+									"value": "9640e35d4f18ca6a4c316de6873486"
+								}
+							]
 						}
 					},
 					"response": []
