@@ -93,7 +93,7 @@ const updateOfficeController = async (req, res, next) => {
         // Enviamos una respuesta al cliente.
         res.send({
             status: 'ok',
-            message: 'Office updated',
+            message: 'Oficina actualizada',
             data: {
                 product: {
                     name,
