@@ -18,13 +18,13 @@ const transport = nodemailer.createTransport({
 });
 
 // Función que envía un email.
-const sendMailUtil = async (receiverEmail, subject, body) => {
+const sendMailUtil = async (receiverEmail, subject, body, isHtml = false) => {
     try {
         await transport.sendMail({
             from: SMTP_USER,
             to: receiverEmail,
             subject,
-            text: body,
+            [isHtml ? 'html' : 'text']: body,
         });
     } catch (err) {
         console.error(err);
