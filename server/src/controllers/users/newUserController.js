@@ -38,6 +38,19 @@ const newUserController = async (req, res, next) => {
         // Encriptamos la contraseña
         const hashedPassword = await bcrypt.hash(password, 10);
 
+        // Preparamos el asunto del correo de activación
+        const emailSubject = 'Activación de cuenta';
+
+        // Preparamos el cuerpo del correo de activación
+        const emailBody = `
+        <p>¡Bienvenid@ ${name}!</p>
+        <p>Gracias por registrarte en THE COWORKING. Para activar tu cuenta, haz click en el siguiente enlace:</p>
+        <p><a href="${process.env.CLIENT_URL}/users/activate/${registrationCode}">¡Activa tu usuario!</a></p>
+        `;
+
+        // Enviamos el correo de activación
+        await sendMailUtil(email, emailSubject, emailBody, true);
+
         // Insertamos el nuevo usuario en la base de datos
         await pool.query(
             `
@@ -45,20 +58,6 @@ const newUserController = async (req, res, next) => {
             `,
             [username, email, name, lastname, hashedPassword, registrationCode],
         );
-
-        // Preparamos el asunto del correo de activación
-        const emailSubject = 'Activación de cuenta';
-
-        // Preparamos el cuerpo del correo de activación
-        const emailBody = `
-        ¡Bienvenid@ ${name}! 
-
-        Gracias por registrarte en THE COWORKING. Para activar tu cuenta, haz click en el siguiente enlace:
-
-        <a href="${process.env.CLIENT_URL}/users/activate/${registrationCode}">¡Activa tu usuario!</a>`;
-
-        // Enviamos el correo de activación
-        await sendMailUtil(email, emailSubject, emailBody);
 
         // Enviamos una respuesta exitosa
         res.status(201).send({
