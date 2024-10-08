@@ -9,6 +9,8 @@ import {
     userAvatarController, //Joseba
     getUserBookingListController, //Joseba
     editProfileUserController, //Alex
+    sendRecoverPassController,
+    resetUserPassController,
 } from '../controllers/users/index.js';
 
 // importamos las funciones controladoras intermedias
@@ -58,5 +60,11 @@ router.get(
     authAdminController,
     getUserBookingListController,
 );
+
+// Middleware que permite enviar un correo de recuperación de contraseña.
+router.put('/users/password/recover', sendRecoverPassController);
+
+// Middleware que permite resetear la contraseña con un código.
+router.put('/users/password/reset/:recoverPassCode', resetUserPassController);
 
 export default router;
