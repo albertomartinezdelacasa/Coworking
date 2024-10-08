@@ -46,7 +46,7 @@ router.patch(
 // Controlador que actualiza el avatar de un usuario. Inicialmente un put, pero sugerido que sea un PATCH
 router.patch('/users/avatar', authUserController, userAvatarController);
 
-// Controlador que retorna la lista de reservas del usuario
+// Controlador que retorna una reserva por ID
 router.get(
     '/users/bookings/:idBooking',
     authUserController,

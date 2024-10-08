@@ -14,7 +14,7 @@ const { VITE_API_URL } = import.meta.env;
 // Inicializamos el componente.
 const LoginPage = () => {
   // Importamos los datos del usuario y la función que almacena el token.
-  const { authUser, authLoginState } = useContext(AuthContext);
+  const { authUser, authLogin } = useContext(AuthContext);
 
   // Importamos la función navigate.
   const navigate = useNavigate();
@@ -56,7 +56,7 @@ const LoginPage = () => {
       }
 
       // Almacenamos el token en el State y en el localStorage.
-      authLoginState(body.data.token);
+      authLogin(body.data.token);
 
       // Redirigimos a la página principal.
       navigate('/');
