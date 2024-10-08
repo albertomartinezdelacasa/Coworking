@@ -1,8 +1,158 @@
+// register page by Alex
+
+// importamos los hooks .
+
+import { useContext, useState } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
+
+//importamos el contexto
+
+import { AuthContext } from '../contexts/AuthContext';
+
+// importamos la funcion toast ( la que deja bonito los errores en pantalla)
+
+import toast from 'react-hot-toast';
+
+// importamos la URL del servidor
+
+const { VITE_API_URL } = import.meta.env;
+
+// se inicia el componente
+
 const RegisterPage = () => {
+  // importamos datos del usuario
+  const { authUser } = useContext(AuthContext);
+
+  // importamos la funcion navigate.
+
+  const navigate = useNavigate();
+
+  // declaramos una variable en el State para definir el valor de cada input
+
+  //  username, name, lastname, email, password
+
+  const [username, setUsername] = useState('');
+  const [name, setName] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  // variable que indica cuando termina el fetch.
+  const [loading, setLoading] = useState(false);
+
+  // funcion que maneja el envio del form
+
+  const handleRegisterUser = async (e) => {
+    try {
+      // prevenimos el comportamiento por defecto del formulario
+      e.preventDefault();
+
+      // Indicamos que va dar comienzo el fetch.
+
+      setLoading(true);
+
+      // obtenemos una respuesta.
+
+      const res = await fetch(`${VITE_API_URL}/users/register`, {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+
+        body: JSON.stringify({
+          username,
+          name,
+          lastname,
+          email,
+          password,
+        }),
+      });
+      // obtenemos el body.
+      const body = await res.json();
+
+      // si hubo algun error lo lanzamos.
+
+      if (body.status === 'error') {
+        throw new Error(body.message);
+      }
+      // redirigimos a la pagina de login.
+      navigate('/login');
+
+      // si todo ha salido bien mostramos un mensaje
+      toast.succes(body.message, {
+        id: 'register',
+      });
+    } catch (err) {
+      toast.error(err.message, {
+        id: 'register',
+      });
+    } finally {
+      // indicamos que ha finalizado el fetch
+      setLoading(false);
+    }
+  };
+  // Si estamos logeados restringimos el acceso redirigiendo a la página principal.
+  // En este caso utilizaremos el componente Navigate (en lugar de la función).
+  if (authUser) {
+    return <Navigate to='/' />;
+  }
+
   return (
     <main>
-      <h1>A donde vas??</h1>
+      {/* meter aqui el logo de inovaspace */}
+      <h3> Registro </h3>
+
+      <form onSubmit={handleRegisterUser}>
+        <label htmlFor='username'>Usuario:</label>
+        <input
+          type='text'
+          id='username'
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
+
+        <label htmlFor='name'>Nombre:</label>
+        <input
+          type='text'
+          id='name'
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+
+        <label htmlFor='lastname'>Apellidos:</label>
+        <input
+          type='text'
+          id='lastname'
+          value={lastname}
+          onChange={(e) => setLastname(e.target.value)}
+          required
+        />
+
+        <label htmlFor='email'>Email:</label>
+        <input
+          type='email'
+          id='email'
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+
+        <label htmlFor='pass'>Contraseña:</label>
+        <input
+          type='password'
+          id='pass'
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+
+        {/* Habilitamos o deshabilitamos el botón en función de si estamos haciendo un fetch o no. */}
+        <button disabled={loading}>Registrarme</button>
+      </form>
     </main>
   );
 };
+
 export default RegisterPage;
