@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 // Importamos los componentes
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -11,6 +12,13 @@ const App = () => {
   return (
     <>
       <Header />
+      <Toaster
+        position='top-center'
+        toastOptions={{
+          duration: 5000,
+        }}
+      />
+
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/Register' element={<RegisterPage />} />
