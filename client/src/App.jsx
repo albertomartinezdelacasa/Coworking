@@ -7,12 +7,9 @@ import Home from './pages/Home';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
-import ActivateUserPage from './pages/ActivateuserPage';
-<<<<<<< HEAD
-=======
 import BookingDetailsPage from './pages/BookingDetailsPage';
 import UserProfilePage from './pages/UserProfilePage';
->>>>>>>  no te rompas ahora porfavor
+import ActivateUserPage from './pages/ActivateuserPage';
 
 const App = () => {
   return (
@@ -34,14 +31,8 @@ const App = () => {
           element={<BookingDetailsPage />}
         />
         <Route path='*' element={<NotFoundPage />} />
-<<<<<<< HEAD
-=======
         <Route path='/user-profile' element={<UserProfilePage />} />
->>>>>>>  no te rompas ahora porfavor
-        <Route
-          path='/users/activate/:registrationCode'
-          element={<ActivateUserPage />}
-        />
+        <Route path='/user-activate' element={<ActivateUserPage />} />
       </Routes>
       <Footer />
     </>
