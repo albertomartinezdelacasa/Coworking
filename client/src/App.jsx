@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
+import ActivateUserPage from './pages/ActivateuserPage';
 
 const App = () => {
   return (
@@ -24,6 +25,10 @@ const App = () => {
         <Route path='/Register' element={<RegisterPage />} />
         <Route path='/Login' element={<LoginPage />} />
         <Route path='*' element={<NotFoundPage />} />
+        <Route
+          path='/users/activate/:registrationCode'
+          element={<ActivateUserPage />}
+        />
       </Routes>
       <Footer />
     </>
