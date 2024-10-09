@@ -1,27 +1,37 @@
+// Importamos React y el hook useState para manejar el estado del componente
 import React, { useState } from 'react';
+// Importamos useParams para obtener parámetros de la URL
 import { useParams } from 'react-router-dom';
+// Importamos el hook personalizado useBookings para manejar las reservas
 import useBookings from '../hooks/UseBookings';
 
+// Definimos el componente funcional BookingOfficePage
 const BookingOfficePage = () => {
+    // Obtenemos el id de la oficina de los parámetros de la URL
     const { id } = useParams();
+    // Utilizamos el hook useBookings para obtener las funciones de reserva
     const { bookings, createBooking } = useBookings();
+    // Definimos el estado inicial para la nueva reserva
     const [newBooking, setNewBooking] = useState({
         officeId: id,
-        userId: '', // Asume que tienes el ID del usuario de alguna manera
+        userId: '', // ID del usuario (se asume que se obtiene de alguna manera)
         date: '', // Fecha de la reserva
-        // Otros campos necesarios para la reserva
+        // Aquí se pueden agregar más campos necesarios para la reserva
     });
 
+    // Función para manejar los cambios en los inputs del formulario
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setNewBooking({ ...newBooking, [name]: value });
     };
 
+    // Función para manejar el envío del formulario
     const handleSubmit = (e) => {
         e.preventDefault();
         createBooking(newBooking);
     };
 
+    // Renderizamos el componente
     return (
         <div>
             <h1>Reservar Oficina</h1>
@@ -39,12 +49,13 @@ const BookingOfficePage = () => {
                     value={newBooking.date}
                     onChange={handleInputChange}
                 />
-                {/* Agrega más campos según sea necesario */}
+                {/* Aquí se pueden agregar más campos según sea necesario */}
                 <button type="submit">Reservar</button>
             </form>
-            {/* Aquí podrías mostrar las reservas existentes si es necesario */}
+            {/* Aquí se podrían mostrar las reservas existentes si fuera necesario */}
         </div>
     );
 };
 
+// Exportamos el componente para su uso en otras partes de la aplicación
 export default BookingOfficePage;

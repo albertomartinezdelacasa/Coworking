@@ -1,14 +1,27 @@
+// Importación de los hooks useState y useContext de React
 import { useState, useContext } from "react";
-import { useNavigate, Navigate } from "react-router-dom"; // Añadí Navigate
+
+// Importación de los componentes useNavigate y Navigate de react-router-dom
+import { useNavigate, Navigate } from "react-router-dom";
+
+// Importación del contexto de autenticación
 import { AuthContext } from "../context/AuthContext";
+
+// Importación de la función toast para mostrar notificaciones
 import toast from "react-hot-toast";
 
+// Obtención de la URL de la API desde las variables de entorno
 const { VITE_API_URL } = import.meta.env;
 
+// Definición del componente funcional AddOfficeAdmin
 const AddOfficeAdmin = () => {
+    // Extracción de authToken y authUser del contexto de autenticación
     const { authToken, authUser } = useContext(AuthContext);
+    
+    // Hook para la navegación programática
     const navigate = useNavigate();
 
+    // Estados para los campos del formulario
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [address, setAddress] = useState("");
@@ -17,10 +30,12 @@ const AddOfficeAdmin = () => {
     const [price, setPrice] = useState("");
     const [photos, setPhotos] = useState([]);
 
+    // Redirección si el usuario no está autenticado o no es admin
     if (!authUser || authUser.role !== "admin") {
         return <Navigate to="/*" />;
     }
 
+    // Función para manejar la selección de archivos
     const handleFile = (e) => {
         // Mueve esta función fuera de handleAddSpace
         const file = Array.from(e.target.files);
@@ -32,9 +47,11 @@ const AddOfficeAdmin = () => {
         }
     };
 
+    // Función para manejar el envío del formulario
     const handleAddSpace = async (e) => {
         e.preventDefault();
         try {
+            // Creación del objeto FormData para enviar los datos
             const formData = new FormData();
             formData.append("name", name);
             formData.append("description", description);
@@ -43,10 +60,12 @@ const AddOfficeAdmin = () => {
             formData.append("capacity", capacity);
             formData.append("price", price);
 
+            // Agregar las fotos al FormData
             for (let i = 0; i < photos.length; i++) {
                 formData.append(`photo${i + 1}`, photos[i]);
             }
 
+            // Envío de la solicitud POST a la API
             const res = await fetch(`${VITE_API_URL}/api/offices`, {
                 method: "POST",
                 headers: {
@@ -55,14 +74,17 @@ const AddOfficeAdmin = () => {
                 body: formData,
             });
 
+            // Procesamiento de la respuesta
             const data = await res.json();
             if (data.status === "error") {
                 throw new Error(data.message);
             }
 
+            // Mostrar mensaje de éxito y navegar a la página principal
             toast.success(data.message, { id: "newOffice" });
             navigate("/");
         } catch (err) {
+            // Mostrar mensaje de error en caso de fallo
             toast.error(err.message, { id: "newOffice" });
         }
     };
@@ -140,4 +162,5 @@ const AddOfficeAdmin = () => {
     );
 };
 
+// Exportación del componente
 export default AddOfficeAdmin;
