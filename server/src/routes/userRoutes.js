@@ -2,15 +2,16 @@ import express from 'express';
 
 // Importamos las funciones controladores finales
 import {
-    newUserController, //Alberto
-    activateUserController, //Mauro
-    loginUserController, //Alberto
-    getProfileUserController, //Alberto
-    userAvatarController, //Joseba
-    getUserBookingListController, //Joseba
-    editProfileUserController, //Alex
+    newUserController,
+    activateUserController,
+    loginUserController,
+    getProfileUserController,
+    userAvatarController,
+    getUserBookingListController,
+    editProfileUserController,
     sendRecoverPassController,
     resetUserPassController,
+    getBookingByIdController,
 } from '../controllers/users/index.js';
 
 // importamos las funciones controladoras intermedias
@@ -44,6 +45,13 @@ router.patch(
 
 // Controlador que actualiza el avatar de un usuario. Inicialmente un put, pero sugerido que sea un PATCH
 router.patch('/users/avatar', authUserController, userAvatarController);
+
+// Controlador que retorna una reserva por ID
+router.get(
+    '/users/bookings/:idBooking',
+    authUserController,
+    getBookingByIdController,
+);
 
 // Controlador que retorna la lista de reservas del usuario
 router.get(

@@ -8,6 +8,11 @@ import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
 import ActivateUserPage from './pages/ActivateuserPage';
+<<<<<<< HEAD
+=======
+import BookingDetailsPage from './pages/BookingDetailsPage';
+import UserProfilePage from './pages/UserProfilePage';
+>>>>>>>  no te rompas ahora porfavor
 
 const App = () => {
   return (
@@ -24,7 +29,15 @@ const App = () => {
         <Route path='/' element={<Home />} />
         <Route path='/Register' element={<RegisterPage />} />
         <Route path='/Login' element={<LoginPage />} />
+        <Route
+          path='/users/bookings/:idBooking'
+          element={<BookingDetailsPage />}
+        />
         <Route path='*' element={<NotFoundPage />} />
+<<<<<<< HEAD
+=======
+        <Route path='/user-profile' element={<UserProfilePage />} />
+>>>>>>>  no te rompas ahora porfavor
         <Route
           path='/users/activate/:registrationCode'
           element={<ActivateUserPage />}

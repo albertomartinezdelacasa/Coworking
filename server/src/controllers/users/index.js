@@ -2,6 +2,7 @@
 import activateUserController from './activateUserController.js';
 import adminAllBookingsListController from './adminAllBookingsListController.js';
 import editProfileUserController from './editProfileUserController.js';
+import getBookingByIdController from './getBookingByIdController.js';
 import getProfileUserController from './getProfileUserController.js';
 import getUserBookingListController from './getUserBookingListController.js';
 import loginUserController from './loginUserController.js';
@@ -15,6 +16,7 @@ export {
     activateUserController,
     adminAllBookingsListController,
     editProfileUserController,
+    getBookingByIdController,
     newUserController,
     loginUserController,
     getProfileUserController,
