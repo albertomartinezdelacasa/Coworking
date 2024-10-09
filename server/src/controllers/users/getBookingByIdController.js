@@ -12,7 +12,8 @@ const getBookingByIdController = async (req, res, next) => {
     try {
         // Obtenemos id de la oficina que buscamos de los path params.
         let { idBooking } = req.params;
-
+        // Obtenemos el id del usuario.
+        let searchingUser = req.user.id;
         // Obtenemos la conexión con la base de datos
         const pool = await getPool();
 
@@ -33,7 +34,7 @@ const getBookingByIdController = async (req, res, next) => {
             FROM bookings b
             INNER JOIN users u ON u.id = b.idUser
             INNER JOIN offices o ON o.id = b.idOffice
-            WHERE b.id LIKE ?
+            WHERE b.id = ?
             GROUP BY b.id 
             `,
             /*
@@ -46,7 +47,7 @@ const getBookingByIdController = async (req, res, next) => {
 
         // Si no existe ninguna oficina con ese ID, generamos un error.
 
-        if (bookings.length < 1) {
+        if (bookings.length < 1 || searchingUser !== bookings[0].idUser) {
             generateErrorUtil('No existe esa reserva', 404);
         }
 
