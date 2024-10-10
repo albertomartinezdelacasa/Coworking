@@ -44,7 +44,12 @@ const loginUserController = async (req, res, next) => {
         // Preparamos la información para el token
         const tokenInfo = {
             id: user[0].id,
+            email: user[0].email,
+            userName: user[0].userName,
+            name: user[0].name,
+            lastName: user[0].lastName,
             role: user[0].role,
+            avatar: user[0].avatar,
         };
 
         // Generamos el token JWT
