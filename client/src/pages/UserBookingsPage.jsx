@@ -25,7 +25,7 @@ const UserBookingsPage = async () => {
     const { authToken, authUser } = useContext(AuthContext);
 
     // Obtenemos una respuesta del servidor.
-    const res = await fetch(`${VITE_API_URL}/users/bookingsList`, {
+    const res = await fetch(`${VITE_API_URL}/api/users/bookingsList`, {
       method: 'get',
       headers: {
         Authorization: authToken,

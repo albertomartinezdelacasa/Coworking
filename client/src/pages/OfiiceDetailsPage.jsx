@@ -61,7 +61,7 @@ const OfficeDetails = () => {
       setLoading(true);
 
       // Obtenemos una respuesta del servidor.
-      const res = await fetch(`${VITE_API_URL}/offices/${officeId}`, {
+      const res = await fetch(`${VITE_API_URL}/api/offices/${officeId}`, {
         method: 'put',
         headers: {
           Authorization: authToken,
