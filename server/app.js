@@ -9,6 +9,7 @@ import fileUpload from 'express-fileupload';
 // Importamos las rutas.
 import userRoutes from './src/routes/userRoutes.js';
 import officeRoutes from './src/routes/officeRoutes.js';
+import bookingRoutes from './src/routes/bookingRoutes.js';
 
 // Importamos las variables de entorno necesarias.
 const { PORT, UPLOADS_DIR } = process.env;
@@ -32,10 +33,10 @@ app.use(express.json());
 // Se instala fileupload para luego poder usarlo en el client.
 app.use(fileUpload());
 
-
 // Middleware que indica a Express dónde están las rutas.
 app.use('/api', userRoutes);
 app.use('/api', officeRoutes);
+app.use('/api', bookingRoutes);
 
 // Middleware de manejo de errores.
 // eslint-disable-next-line no-unused-vars
