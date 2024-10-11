@@ -29,7 +29,7 @@ const AuthProvider = ({ children }) => {
         const body = await res.json();
 
         // Si hay algún error lo lanzamos.
-        if (body.status === 'error') {
+        if (body.status === "error") {
           throw new Error(body.message);
         }
 
@@ -62,6 +62,14 @@ const AuthProvider = ({ children }) => {
     localStorage.removeItem(VITE_AUTH_TOKEN);
   };
 
+  // Función que actualiza el avatar del usuario.
+  const authUpdateAvatarState = (avatar) => {
+    setAuthUser({
+      ...authUser,
+      avatar,
+    });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -69,6 +77,7 @@ const AuthProvider = ({ children }) => {
         authLogin,
         authLogout,
         authUser,
+        authUpdateAvatarState,
       }}
     >
       {children}
