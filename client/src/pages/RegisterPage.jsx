@@ -79,7 +79,7 @@ const RegisterPage = () => {
       navigate('/login');
 
       // si todo ha salido bien mostramos un mensaje
-      toast.succes(body.message, {
+      toast.success(body.message, {
         id: 'register',
       });
     } catch (err) {
