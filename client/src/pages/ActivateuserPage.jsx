@@ -85,7 +85,7 @@ const ActivateUserPage = () => {
         tu paciencia.
       </p>
       <p> Si lo prefieres pulsa aqui </p>
-      <a href='./login'>Login</a>
+      <a href='/login'>Login</a>
     </main>
   );
 };
