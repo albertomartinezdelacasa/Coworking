@@ -1,33 +1,18 @@
-/* import { NavLink } from 'react-router-dom';
-
-const Header = () => {
-  return (
-    <header>
-      <NavLink to='/'>Home</NavLink>
-      {' | '}
-      <NavLink to='/Register'>Registrarse</NavLink>
-      {' | '}
-      <NavLink to='/Login'>Iniciar sesión</NavLink>
-    </header>
-  );
-};
-export default Header;
- */
-
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import { useContext } from 'react';
 import useUser from '../hooks/useUser';
 const { VITE_API_URL } = import.meta.env;
 
 const Header = () => {
-  const { authToken, authLogout } = useContext(AuthContext);
+  const { authUser, authLogout } = useContext(AuthContext);
   const { user, setUser } = useUser();
+  const navigate = useNavigate();
   return (
     <header>
       <NavLink to='/'>Home</NavLink>
       {' | '}
-      {!authToken ? (
+      {!authUser ? (
         <>
           <NavLink to='/Register'>Registrarse</NavLink>
           {' | '}
@@ -41,15 +26,15 @@ const Header = () => {
           {' | '}
           <NavLink to='/'>Acerca de nosotros</NavLink>
           <div>
-            {authToken.avatar ? (
+            {authUser.avatar ? (
               <img
-                src={`${VITE_API_URL}/${authToken.avatar}`}
-                alt={`profile picture ${authToken.username}`}
+                src={`${VITE_API_URL}/${authUser.avatar}`}
+                alt={`profile picture ${authUser.username}`}
               />
             ) : (
               <img
                 src='/default-avatar.png'
-                alt={`profile picture ${authToken.username}`}
+                alt={`profile picture ${authUser.username}`}
               />
             )}
           </div>
@@ -57,9 +42,10 @@ const Header = () => {
             onClick={() => {
               authLogout();
               setUser(null);
+              navigate('/');
             }}
           >
-            Logout
+            Cerrar Sesión
           </button>
         </>
       )}

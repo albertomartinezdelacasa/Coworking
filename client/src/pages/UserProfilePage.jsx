@@ -36,7 +36,7 @@ const UserProfilePage = () => {
       formData.append('avatar', avatar);
 
       // Obtenemos una respuesta del servidor.
-      const res = await fetch(`${VITE_API_URL}/users/avatar`, {
+      const res = await fetch(`${VITE_API_URL}/api/users/avatar`, {
         method: 'put',
         headers: {
           Authorization: authToken,
