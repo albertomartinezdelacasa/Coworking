@@ -53,7 +53,7 @@ const RegisterPage = () => {
 
       // obtenemos una respuesta.
 
-      const res = await fetch(`${VITE_API_URL}/users/register`, {
+      const res = await fetch(`${VITE_API_URL}/api/users/register`, {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',

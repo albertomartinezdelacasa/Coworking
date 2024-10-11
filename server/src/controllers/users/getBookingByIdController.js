@@ -25,6 +25,7 @@ const getBookingByIdController = async (req, res, next) => {
                 b.id,
                 b.idUser,
                 b.idOffice,
+                o.name AS officeName,
                 b.checkIn,
                 b.checkOut,
                 b.guests,

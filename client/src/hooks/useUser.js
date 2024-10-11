@@ -12,7 +12,7 @@ const useUser = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch(`${VITE_API_URL}/users`, {
+        const res = await fetch(`${VITE_API_URL}/api/users`, {
           headers: {
             Authorization: authToken,
           },

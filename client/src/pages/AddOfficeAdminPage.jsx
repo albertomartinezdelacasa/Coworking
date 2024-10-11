@@ -66,7 +66,7 @@ const AddOfficeAdmin = () => {
       }
 
       // Envío de la solicitud POST a la API
-      const res = await fetch(`${VITE_API_URL}/offices`, {
+      const res = await fetch(`${VITE_API_URL}/api/offices`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${authToken}`,

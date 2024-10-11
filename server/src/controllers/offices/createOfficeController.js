@@ -73,7 +73,7 @@ const createOfficeController = async (req, res, next) => {
 
         // Guardamos las fotos de la oficina.
         for (const photo of photosArr) {
-            const photoName = await savePhotoUtil(photo, 1000); // Guardar la foto en el servidor.
+            const photoName = await savePhotoUtil(photo, 500); // Guardar la foto en el servidor.
 
             // Insertamos la foto en la tabla `officePhotos`.
             await pool.query(

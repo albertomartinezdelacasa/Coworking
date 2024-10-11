@@ -26,7 +26,7 @@ const ActivateUserPage = () => {
       try {
         // Obtenemos una respuesta del servidor.
         const res = await fetch(
-          `${VITE_API_URL}/users/activate/${registrationCode}`,
+          `${VITE_API_URL}/api/users/activate/${registrationCode}`,
           {
             method: 'PATCH',
           }
