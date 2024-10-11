@@ -8,7 +8,7 @@ import generateErrorUtil from '../../utils/generateErrorUtil.js';
 const voteOfficeAfterUseController = async (req, res, next) => {
     try {
         // Obtenemos el ID de la reserva y el ID de la oficina que queremos votar.
-        const { idOffice, idBooking } = req.params;
+        const { idBooking } = req.params;
 
         // Obtenemos los datos del body.
         let { vote, comment } = req.body;
@@ -56,15 +56,13 @@ const voteOfficeAfterUseController = async (req, res, next) => {
             [vote, comment, idBooking],
         );
 
-        // Obtenemos la nueva media de votos de la oficina para poder actualizar el State
-        // en el cliente.
+        // Obtenemos la nueva media de votos de la oficina para poder actualizar el State en el cliente.
         const votesAvg = await pool.query(
             `SELECT AVG(vote) AS avg FROM bookings WHERE idOffice = ? AND NOT vote = 0`,
             [idOffice],
         );
 
-        //Obtenemos la cantidad de votos de la oficina para poder actualizar el State
-        // en el cliente
+        //Obtenemos la cantidad de votos de la oficina para poder actualizar el State en el cliente
         const [totalVotes] = await pool.query(
             'SELECT Count(*) FROM bookings WHERE NOT vote = 0',
         );

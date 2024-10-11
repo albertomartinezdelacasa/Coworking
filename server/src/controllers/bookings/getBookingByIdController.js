@@ -1,24 +1,19 @@
 // Importamos la funcion que retorna una conexion con la base de datos
-
 import getPool from '../../db/getPool.js';
 
 // Funcion que genera un error.
-
 import generateErrorUtil from '../../utils/generateErrorUtil.js';
 
 // Funcion controladora que retorna el listado de oficinas
-
 const getBookingByIdController = async (req, res, next) => {
     try {
-        // Obtenemos id de la oficina que buscamos de los path params.
+        // Obtenemos id de la reserva que buscamos de los path params.
         let { idBooking } = req.params;
-        // Obtenemos el id del usuario.
-        let searchingUser = req.user.id;
+
         // Obtenemos la conexión con la base de datos
         const pool = await getPool();
 
-        //Obtenemos las oficinas con el ID recibido
-
+        //Obtenemos las reservas con el ID recibido
         const [bookings] = await pool.query(
             `
             SELECT  
@@ -29,29 +24,30 @@ const getBookingByIdController = async (req, res, next) => {
                 b.checkOut,
                 b.guests,
                 b.status,
-                b.createdAt
+                b.createdAt,
+                u.id,
+                u.username,
+                -- u.email,
+                o.name,
+                o.workspace,
+                o.capacity,
+                o.price
 
             FROM bookings b
             INNER JOIN users u ON u.id = b.idUser
             INNER JOIN offices o ON o.id = b.idOffice
             WHERE b.id = ?
-            GROUP BY b.id 
             `,
-            /*
-                INNER JOIN officeEquipments oe ON oe.id = o.idOffice
-                    INNER JOIN equipments e ON e.id = oe.idEquipment
-                INNER JOIN officePhotos op ON op.id = o.idOffice
-                */
             [idBooking],
         );
 
-        // Si no existe ninguna oficina con ese ID, generamos un error.
-
-        if (bookings.length < 1 || searchingUser !== bookings[0].idUser) {
-            generateErrorUtil('No existe esa reserva', 404);
+        // Si no existe ninguna reserva con ese ID, y comprobando que eres el usuario que hizo esa reserva, generamos un error.
+        if (bookings.length < 1 || req.user.id !== bookings[0].idUser) {
+            generateErrorUtil('No existen reservas coincidentes', 404);
         }
 
-        // Buscamos la foto de la oficina   (crear tabla fotos)
+        /* 
+        // Buscamos la foto de la oficina (crear tabla fotos)
 
         const [photos] = await pool.query(
             `SELECT id, name FROM officePhotos WHERE idOffice = ?`,
@@ -60,7 +56,7 @@ const getBookingByIdController = async (req, res, next) => {
 
         // Agregamos el array de fotos a la officina
 
-        bookings[0].photos = photos;
+        bookings[0].photos = photos; */
 
         //Enviamos una respuesta al usuario
         res.send({

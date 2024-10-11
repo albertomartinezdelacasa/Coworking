@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "1bb6e81f-6569-48e3-b010-31878807c1fc",
+		"_postman_id": "4eebdb4c-7073-4c6d-be89-085ef6b38c27",
 		"name": "Coworking",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "37787457"
+		"_exporter_id": "38140514"
 	},
 	"item": [
 		{
@@ -82,6 +82,36 @@
 				},
 				{
 					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\n    \"email\":\"josebasaldana@gmail.com\",\n    \"password\":\"123456\"\n    \n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login User Admin",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -239,53 +269,6 @@
 					"response": []
 				},
 				{
-					"name": "User Booking's List",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6IkNMSUVOVCIsImlhdCI6MTcyNzkwNzg5NCwiZXhwIjoxNzI4NTEyNjk0fQ.BcAJk8SOawgKMEcD77HrULdUxXq1qZv7oCFDzMJmRGM",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "email",
-									"value": "pepe@mail.com",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "password",
-									"value": "123456",
-									"type": "text",
-									"disabled": true
-								}
-							]
-						},
-						"url": {
-							"raw": "http://localhost:8000/api/users/bookingsList",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"users",
-								"bookingsList"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Send RecoverPassCode",
 					"request": {
 						"method": "PUT",
@@ -356,33 +339,6 @@
 									"key": "recoverPassCode",
 									"value": "9640e35d4f18ca6a4c316de6873486"
 								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "All Bookings List ADMIN",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzI3ODg2Nzc0LCJleHAiOjE3Mjg0OTE1NzR9.AMdKCkVtNNUj3jLKilUd79yb1cyy0NeJ6Ufbnh3rHOI",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8000/api/users/bookingsList",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"users",
-								"bookingsList"
 							]
 						}
 					},
@@ -631,93 +587,6 @@
 					"response": []
 				},
 				{
-					"name": "Book an Office",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzI3OTA4NDQ2LCJleHAiOjE3Mjg1MTMyNDZ9.zVpSy9AVWtpO4EjfuAtOU5tC2dR84d9XPNMSYTKhp6k",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "checkIn",
-									"value": "2024-10-06 09:00:00",
-									"type": "text"
-								},
-								{
-									"key": "checkOut",
-									"value": "2024-10-06 14:00:00",
-									"type": "text"
-								},
-								{
-									"key": "guests",
-									"value": "4",
-									"type": "text"
-								}
-							]
-						},
-						"url": {
-							"raw": "http://localhost:8000/api/office/:idOffice/booking",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"office",
-								":idOffice",
-								"booking"
-							],
-							"variable": [
-								{
-									"key": "idOffice",
-									"value": "1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Admin Aproval",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8000/api/office/:idOffice/booking/:idBooking",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"office",
-								":idOffice",
-								"booking",
-								":idBooking"
-							],
-							"variable": [
-								{
-									"key": "idOffice",
-									"value": ""
-								},
-								{
-									"key": "idBooking",
-									"value": ""
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Delete Office ADMIN",
 					"request": {
 						"method": "DELETE",
@@ -743,40 +612,6 @@
 							"variable": [
 								{
 									"key": "idOffice",
-									"value": "3"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Booking ADMIN",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzI3OTA4NDQ2LCJleHAiOjE3Mjg1MTMyNDZ9.zVpSy9AVWtpO4EjfuAtOU5tC2dR84d9XPNMSYTKhp6k",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8000/api/office/:idBooking/booking",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"office",
-								":idBooking",
-								"booking"
-							],
-							"variable": [
-								{
-									"key": "idBooking",
 									"value": "3"
 								}
 							]
@@ -832,6 +667,305 @@
 									"key": "idBooking",
 									"value": "1"
 								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bookings",
+			"item": [
+				{
+					"name": "Book an Office",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzI3OTA4NDQ2LCJleHAiOjE3Mjg1MTMyNDZ9.zVpSy9AVWtpO4EjfuAtOU5tC2dR84d9XPNMSYTKhp6k",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "checkIn",
+									"value": "2024-10-06 09:00:00",
+									"type": "text"
+								},
+								{
+									"key": "checkOut",
+									"value": "2024-10-06 14:00:00",
+									"type": "text"
+								},
+								{
+									"key": "guests",
+									"value": "4",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api//booking/:idOffice",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"",
+								"booking",
+								":idOffice"
+							],
+							"variable": [
+								{
+									"key": "idOffice",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Booking by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/booking/:idBooking",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"booking",
+								":idBooking"
+							],
+							"variable": [
+								{
+									"key": "idBooking",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Booking",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6IkNMSUVOVCIsImlhdCI6MTcyODYzNTc1NywiZXhwIjoxNzI5MjQwNTU3fQ.mCFVd1qeimDV-Uxq5hKbnColymOwMy3kBOq394wOIEc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/bookings/:idBooking",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"bookings",
+								":idBooking"
+							],
+							"variable": [
+								{
+									"key": "idBooking",
+									"value": "8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Booking Admin",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6IkNMSUVOVCIsImlhdCI6MTcyODYzNTc1NywiZXhwIjoxNzI5MjQwNTU3fQ.mCFVd1qeimDV-Uxq5hKbnColymOwMy3kBOq394wOIEc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/bookings/:idBooking",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"bookings",
+								":idBooking"
+							],
+							"variable": [
+								{
+									"key": "idBooking",
+									"value": "8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Vote Booking arferuse",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/booking/:idBooking",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"booking",
+								":idBooking"
+							],
+							"variable": [
+								{
+									"key": "idBooking",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BookingList",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6IkNMSUVOVCIsImlhdCI6MTcyODU0Nzg3NCwiZXhwIjoxNzI5MTUyNjc0fQ.Jj8Lzu7cC2HczeN4_kHQh9vfXWAHgtFbCxAUWcEAFF0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "keyword",
+									"value": "oficina 01",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api//list/booking",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"",
+								"list",
+								"booking"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BookingList admin",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzI4NjM0NTYzLCJleHAiOjE3MjkyMzkzNjN9.HKUj7pFqd94-hUjO_GtWIPpclxrSK9_WG_AxBcvcBbk",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "keyword",
+									"value": "CONFIRMED",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api//list/booking",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"",
+								"list",
+								"booking"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Admin Booking Aproval",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6IkNMSUVOVCIsImlhdCI6MTcyODU0Nzg3NCwiZXhwIjoxNzI5MTUyNjc0fQ.Jj8Lzu7cC2HczeN4_kHQh9vfXWAHgtFbCxAUWcEAFF0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "keyword",
+									"value": "oficina 01",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api//list/booking",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"",
+								"list",
+								"booking"
 							]
 						}
 					},
