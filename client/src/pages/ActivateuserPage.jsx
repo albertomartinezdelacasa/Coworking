@@ -1,9 +1,12 @@
 // Importamos los hooks.
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 // Importamos la función toast.
 import toast from 'react-hot-toast';
+
+// Importamos el contexto de autenticación (descomentar si lo necesitas).
+// import { AuthContext } from '../contexts/AuthContext';
 
 // Importamos la URL del servidor.
 const { VITE_API_URL } = import.meta.env;
@@ -16,11 +19,20 @@ const ActivateUserPage = () => {
   // Obtenemos el código de registro de los path params.
   const { registrationCode } = useParams();
 
-  // Estado para controlar si hay un error.
+  // Estado para controlar si hay un error o si se está cargando.
   const [hasError, setHasError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Validamos al usuario cuando se monta el componente.
+  // Obtenemos el estado de autenticación desde el contexto (descomentar si lo necesitas).
+  // const { authUser } = useContext(AuthContext);
+
   useEffect(() => {
+    // Si el usuario ya está autenticado, redirigimos a la página principal (descomentar si lo necesitas).
+    // if (authUser) {
+    //   navigate('/');
+    //   return;
+    // }
+
     // Función que valida a un usuario en la base de datos.
     const fetchValidateUser = async () => {
       try {
@@ -35,30 +47,33 @@ const ActivateUserPage = () => {
         // Traducimos el body.
         const body = await res.json();
 
-        // Si hay algún error lo lanzamos.
-        if (body.status === 'error') {
-          throw new Error(body.message);
+        // Si la respuesta no es exitosa, lanzamos un error.
+        if (!res.ok) {
+          throw new Error(body.message || 'Error al activar la cuenta.');
         }
 
         // Mostramos un mensaje satisfactorio al usuario.
-        toast.success(body.message, {
+        toast.success(body.message || 'Cuenta activada con éxito', {
           id: 'validate',
         });
 
-        // Redirigimos a login después de 10 segundos.
+        // Redirigimos a login después de 5 segundos.
         setTimeout(() => {
           navigate('/login');
-        }, 10000);
+        }, 5000);
       } catch (err) {
         // En caso de error, mostramos el mensaje de error y actualizamos el estado.
         setHasError(true);
         toast.error(err.message, {
           id: 'validate',
         });
+      } finally {
+        // Indicamos que ha finalizado el proceso.
+        setIsLoading(false);
       }
     };
 
-    // Llamamos a la función anterior.
+    // Llamamos a la función de validación de usuario.
     fetchValidateUser();
   }, [registrationCode, navigate]);
 
@@ -68,24 +83,38 @@ const ActivateUserPage = () => {
       <main>
         <h1>No ha sido posible activar tu cuenta</h1>
         <p>
-          Seguramente esta cuenta ya esta activada. Por favor, si continua el
-          problema intenta nuevamente más tarde o contacta con soporte.
+          Seguramente esta cuenta ya está activada o el enlace ha expirado. Por
+          favor, si el problema persiste intenta nuevamente más tarde o contacta
+          con soporte.
         </p>
-        <a href='https://chatgpt.com/'>Servicio Tecnico InovaSpace Coworking</a>
+        <a href='https://inovaspace.com/soporte'>
+          Servicio Técnico InovaSpace Coworking
+        </a>
       </main>
     );
   }
 
+  // Mientras se está cargando, mostramos un mensaje de carga.
+  if (isLoading) {
+    return (
+      <main>
+        <h1>Activando tu nuevo perfil...</h1>
+        <p>Por favor, espera un momento mientras procesamos tu solicitud.</p>
+      </main>
+    );
+  }
+
+  // Contenido mostrado cuando la activación es exitosa.
   return (
     <main>
-      <img src='' alt='logo de InovaSace' />
-      <h1>Activando tu nuevo perfil</h1>
+      <img src='/path/to/logo.png' alt='Logo de InovaSpace' />
+      <h1>Perfil activado con éxito</h1>
       <p>
-        Enseguida serás redirigido a la página de inicio de sesión. Gracias por
-        tu paciencia.
+        Serás redirigido a la página de inicio de sesión en unos segundos.
+        Gracias por tu paciencia.
       </p>
-      <p> Si lo prefieres pulsa aqui </p>
-      <a href='./login'>Login</a>
+      <p>Si lo prefieres, haz clic aquí:</p>
+      <a href='/login'>Login</a>
     </main>
   );
 };

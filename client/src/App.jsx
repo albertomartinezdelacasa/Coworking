@@ -13,31 +13,31 @@ import BookingDetailsPage from './pages/BookingDetailsPage';
 import UserProfilePage from './pages/UserProfilePage';
 import ActivateUserPage from './pages/ActivateuserPage';
 
-
 const App = () => {
   return (
     <>
       <Header />
       <Toaster
-        position="top-center"
+        position='top-center'
         toastOptions={{
           duration: 5000,
         }}
       />
 
       <Routes>
-        
         <Route path='/' element={<Home />} />
-        <Route path='/Register' element={<RegisterPage />} />
-        <Route path='/Login' element={<LoginPage />} />
+        <Route path='/register' element={<RegisterPage />} />
+        <Route path='/login' element={<LoginPage />} />
         <Route
           path='/users/bookings/:idBooking'
           element={<BookingDetailsPage />}
         />
-        <Route path='*' element={<NotFoundPage />} />
         <Route path='/user-profile' element={<UserProfilePage />} />
-        <Route path='/user-activate' element={<ActivateUserPage />} />
-
+        <Route
+          path='/users/activate/:registrationCode'
+          element={<ActivateUserPage />}
+        />
+        <Route path='*' element={<NotFoundPage />} />
       </Routes>
       <Footer />
     </>

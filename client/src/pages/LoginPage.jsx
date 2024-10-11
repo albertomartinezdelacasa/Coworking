@@ -1,4 +1,7 @@
+// Nota de Alex : una vez te logeas salta un error de toast diciendo que ruta no encontrada ???
+
 // Importamos los hooks.
+
 import { useContext, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 
@@ -73,6 +76,7 @@ const LoginPage = () => {
   // Si estamos logeados restringimos el acceso redirigiendo a la página principal.
   // En este caso utilizaremos el componente Navigate (en lugar de la función).
   if (authUser) {
+    console.log('Login exitoso, redirigiendo a la página principal');
     return <Navigate to='/' />;
   }
 
