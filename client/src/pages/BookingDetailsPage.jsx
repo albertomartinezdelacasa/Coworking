@@ -45,15 +45,12 @@ const BookingDetailsPage = () => {
       }
 
       // Obtenemos la respuesta del servidor.
-      const res = await fetch(
-        `${VITE_API_URL}/api/office/${idBooking}/booking`,
-        {
-          method: 'delete',
-          headers: {
-            Authorization: authToken,
-          },
-        }
-      );
+      const res = await fetch(`${VITE_API_URL}/api/bookings/${idBooking}`, {
+        method: 'PATCH',
+        headers: {
+          Authorization: authToken,
+        },
+      });
 
       // Obtenemos el body.
       const body = await res.json();
@@ -112,7 +109,11 @@ const BookingDetailsPage = () => {
             {moment(booking.createdAt).format('DD/MM/YYYY [a las] HH:mm')}
           </li>
         </ul>
-        <button onClick={() => handleDeleteBooking()}>Cancelar reserva</button>
+        {booking.status !== 'CANCELED' && (
+          <button onClick={() => handleDeleteBooking()}>
+            Cancelar reserva
+          </button>
+        )}
 
         {/* Formulario de votar. */}
         {/* <AddVoteForm
