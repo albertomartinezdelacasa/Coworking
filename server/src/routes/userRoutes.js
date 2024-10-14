@@ -10,6 +10,7 @@ import {
     editProfileUserController,
     sendRecoverPassController,
     resetUserPassController,
+    changeUserPasswordController,
 } from '../controllers/users/index.js';
 
 // importamos las funciones controladoras intermedias
@@ -39,6 +40,12 @@ router.patch(
     '/users/editProfile',
     authUserController,
     editProfileUserController,
+);
+//Controlador que permite actualizar el password
+router.patch(
+    '/users/password',
+    authUserController,
+    changeUserPasswordController,
 );
 
 // Controlador que actualiza el avatar de un usuario. Inicialmente un put, pero sugerido que sea un PATCH
