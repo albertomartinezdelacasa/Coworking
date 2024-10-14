@@ -60,9 +60,6 @@ const LoginPage = () => {
 
       // Almacenamos el token en el State y en el localStorage.
       authLogin(body.data.token);
-
-      // Redirigimos a la página principal.
-      navigate('/');
     } catch (err) {
       toast.error(err.message, {
         id: 'login',
@@ -77,7 +74,7 @@ const LoginPage = () => {
   // En este caso utilizaremos el componente Navigate (en lugar de la función).
   if (authUser) {
     console.log('Login exitoso, redirigiendo a la página principal');
-    return <Navigate to='/' />;
+    return <Navigate to='/users/profile' />;
   }
 
   return (

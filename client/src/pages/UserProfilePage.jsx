@@ -1,12 +1,12 @@
 // Importamos los hooks.
-import { useContext, useState } from "react";
+import { useContext, useState } from 'react';
 
 // Importamos el contexto.
-import { AuthContext } from "../contexts/AuthContext";
+import { AuthContext } from '../contexts/AuthContext';
 
 // Importamos la función toast.
-import toast from "react-hot-toast";
-import { Navigate, Link } from "react-router-dom";
+import toast from 'react-hot-toast';
+import { Navigate, Link } from 'react-router-dom';
 
 // Importamos la URL del servidor.
 const { VITE_API_URL } = import.meta.env;
@@ -14,14 +14,14 @@ const { VITE_API_URL } = import.meta.env;
 // Inicializamos el componente.
 const UserProfilePage = () => {
   // Importamos el token.
-  const { authToken, authUser, authUpdateAvatarState} =
+  const { authToken, authUser, authUpdateAvatarState } =
     useContext(AuthContext);
 
   // Creamos una variable en el State por cada input.
-  const [avatar, setAvatar] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [repeatNewPassword, setRepeatNewPassword] = useState("");
+  const [avatar, setAvatar] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [repeatNewPassword, setRepeatNewPassword] = useState('');
 
   // Función que maneja el envío del formulario.
   const handleUpdateAvatar = async (e) => {
@@ -33,11 +33,11 @@ const UserProfilePage = () => {
       const formData = new FormData();
 
       // Agregamos los valores y propiedades.
-      formData.append("avatar", avatar);
+      formData.append('avatar', avatar);
 
       // Obtenemos una respuesta del servidor.
       const res = await fetch(`${VITE_API_URL}/api/users/avatar`, {
-        method: "PUT",
+        method: 'PATCH',
         headers: {
           Authorization: authToken,
         },
@@ -48,7 +48,7 @@ const UserProfilePage = () => {
       const body = await res.json();
 
       // Si hay algún error lo lanzamos.
-      if (body.status === "error") {
+      if (body.status === 'error') {
         throw new Error(body.message);
       }
 
@@ -57,11 +57,11 @@ const UserProfilePage = () => {
 
       // Mostramos un mensaje satisfactorio al usuario.
       toast.success(body.message, {
-        id: "userProfile",
+        id: 'userProfile',
       });
     } catch (err) {
       toast.error(err.message, {
-        id: "userProfile",
+        id: 'userProfile',
       });
     }
   };
@@ -72,13 +72,13 @@ const UserProfilePage = () => {
       e.preventDefault();
 
       if (newPassword !== repeatNewPassword) {
-        throw new Error("Las nuevas contraseñas no coinciden");
+        throw new Error('Las nuevas contraseñas no coinciden');
       }
 
       const res = await fetch(`${VITE_API_URL}/api/users/password`, {
-        method: "PUT",
+        method: 'PATCH',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: authToken,
         },
         body: JSON.stringify({
@@ -89,35 +89,35 @@ const UserProfilePage = () => {
 
       const body = await res.json();
 
-      if (body.status === "error") {
+      if (body.status === 'error') {
         throw new Error(body.message);
       }
 
       toast.success(body.message, {
-        id: "passwordChange",
+        id: 'passwordChange',
       });
 
-      setCurrentPassword("");
-      setNewPassword("");
-      setRepeatNewPassword("");
+      setCurrentPassword('');
+      setNewPassword('');
+      setRepeatNewPassword('');
     } catch (err) {
       toast.error(err.message, {
-        id: "passwordChange",
+        id: 'passwordChange',
       });
     }
   };
 
-   //Si no estamos logueados redirigimos a la página de login.
+  //Si no estamos logueados redirigimos a la página de login.
   if (!authUser) {
-    return <Navigate to="/login" />;
+    return <Navigate to='/login' />;
   }
 
   return (
     <main>
-      <nav className="horizontal-user-nav">
-        <Link to="/mi-perfil">Mi Perfil</Link>
-        <Link to="/reservar">Reservar un espacio</Link>
-        <Link to="/mis-reservas">Mis reservas</Link>
+      <nav className='horizontal-user-nav'>
+        <Link to='/mi-perfil'>Mi Perfil</Link>
+        <Link to='/reservar'>Reservar un espacio</Link>
+        <Link to='/mis-reservas'>Mis reservas</Link>
       </nav>
 
       <h2>Mi Perfil</h2>
@@ -125,21 +125,23 @@ const UserProfilePage = () => {
       <div>
         <img
           src={
-            authUser.avatar
-              ? `${VITE_API_URL}/${authUser.avatar}`
-              : "/ruta/a/imagen/por/defecto.png"
+            authUser.avatar ? (
+              `${VITE_API_URL}/${authUser.avatar}`
+            ) : (
+              <img src='/default-avatar.png' alt='mr blooby picture' />
+            )
           } //  Cambiar por la ruta de la imagen por defecto
           alt={`Foto de perfil de ${authUser.email}`}
         />
       </div>
 
       <form onSubmit={handleUpdateAvatar}>
-        <label htmlFor="avatar">Actualizar avatar:</label>
+        <label htmlFor='avatar'>Actualizar avatar:</label>
         <input
-          type="file"
-          id="avatar"
+          type='file'
+          id='avatar'
           onChange={(e) => setAvatar(e.target.files[0])}
-          accept="image/jpeg, image/png"
+          accept='image/jpeg, image/png'
           required
         />
 
@@ -148,34 +150,34 @@ const UserProfilePage = () => {
 
       <form onSubmit={handleChangePassword}>
         <h3>Cambiar contraseña</h3>
-        <label htmlFor="currentPassword">Contraseña actual:</label>
+        <label htmlFor='currentPassword'>Contraseña actual:</label>
         <input
-          type="password"
-          id="currentPassword"
+          type='password'
+          id='currentPassword'
           value={currentPassword}
           onChange={(e) => setCurrentPassword(e.target.value)}
           required
-          placeholder="Ingrese su contraseña actual"
+          placeholder='Ingrese su contraseña actual'
         />
 
-        <label htmlFor="newPassword">Nueva contraseña:</label>
+        <label htmlFor='newPassword'>Nueva contraseña:</label>
         <input
-          type="password"
-          id="newPassword"
+          type='password'
+          id='newPassword'
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
           required
-          placeholder="Ingrese su nueva contraseña"
+          placeholder='Ingrese su nueva contraseña'
         />
 
-        <label htmlFor="repeatNewPassword">Repetir nueva contraseña:</label>
+        <label htmlFor='repeatNewPassword'>Repetir nueva contraseña:</label>
         <input
-          type="password"
-          id="repeatNewPassword"
+          type='password'
+          id='repeatNewPassword'
           value={repeatNewPassword}
           onChange={(e) => setRepeatNewPassword(e.target.value)}
           required
-          placeholder="Repita su nueva contraseña"
+          placeholder='Repita su nueva contraseña'
         />
 
         <button>Cambiar contraseña</button>

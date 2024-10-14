@@ -21,6 +21,7 @@ const useSingleOffice = (idOffice) => {
     const fetchOffice = async () => {
       try {
         // Obtenmemos una respuesta del servidor.
+
         const res = await fetch(
           `${VITE_API_URL}/api/offices/${idOffice}`,
           {
@@ -29,6 +30,7 @@ const useSingleOffice = (idOffice) => {
             },
           }
         );
+
 
         // Obtenemos el body.
         const body = await res.json();
