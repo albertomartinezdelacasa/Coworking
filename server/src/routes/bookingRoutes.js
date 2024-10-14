@@ -32,7 +32,7 @@ router.patch(
     authUserController,
     cancelBookingController,
 );
-//Endpoint que edita el valor de la columna votes de la tabla Bookings
+// Endpoint que edita el valor de la columna votes de la tabla Bookings
 router.patch(
     '/bookings/:idBooking',
     authUserController,
