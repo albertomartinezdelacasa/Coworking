@@ -38,19 +38,6 @@ const newUserController = async (req, res, next) => {
         // Encriptamos la contraseña
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Preparamos el asunto del correo de activación
-        const emailSubject = 'Activación de cuenta';
-
-        // Preparamos el cuerpo del correo de activación
-        const emailBody = `
-        <p>¡Bienvenid@ ${name}!</p>
-        <p>Gracias por registrarte en THE COWORKING. Para activar tu cuenta, haz click en el siguiente enlace:</p>
-        <p><a href="${process.env.CLIENT_URL}/users/activate/${registrationCode}">¡Activa tu usuario!</a></p>
-        `;
-
-        // Enviamos el correo de activación
-        await sendMailUtil(email, emailSubject, emailBody, true);
-
         // Insertamos el nuevo usuario en la base de datos
         await pool.query(
             `
@@ -58,7 +45,28 @@ const newUserController = async (req, res, next) => {
             `,
             [username, email, name, lastname, hashedPassword, registrationCode],
         );
+        try {
+            // Preparamos el asunto del correo de activación
+            const emailSubject = 'Activación de cuenta';
 
+            // Preparamos el cuerpo del correo de activación
+            const emailBody = `
+        <p>¡Bienvenid@ ${name}!</p>
+        <p>Gracias por registrarte en THE COWORKING. Para activar tu cuenta, haz click en el siguiente enlace:</p>
+        <p><a href="${process.env.CLIENT_URL}/users/activate/${registrationCode}">¡Activa tu usuario!</a></p>
+        `;
+
+            // Enviamos el correo de activación
+            await sendMailUtil(email, emailSubject, emailBody, true);
+        } catch {
+            console.log(err);
+
+            // Eliminamos el usuario que acabamos de insertar, el cual dió un error al enviar el mail de validación
+            await pool.query(`DELETE FROM users WHERE email = ?`, [email]);
+
+            // Si ocurre algún error, lo pasamos al siguiente middleware
+            next(err);
+        }
         // Enviamos una respuesta exitosa
         res.status(201).send({
             status: 'ok',
