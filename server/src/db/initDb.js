@@ -6,6 +6,17 @@ import bcrypt from 'bcrypt'; // Librería para encriptar contraseñas
 // Función que retorna una conexión con la base de datos.
 import getPool from './getPool.js';
 
+// Importamos las variables de entorno que necesitamos para crear el admin
+const {
+    ADMIN_USER_USERNAME,
+    ADMIN_USER_EMAIL,
+    ADMIN_USER_PASSWORD,
+    ADMIN_USER_NAME,
+    ADMIN_USER_LASTNAME,
+    ADMIN_USER_ROLE,
+    ADMIN_USER_ACTIVE,
+} = process.env;
+
 // Función que genera las tablas.
 const main = async () => {
     try {
@@ -106,10 +117,10 @@ const main = async () => {
         console.log('¡Tablas creadas!');
 
         console.log('Creando Usuario administrador...');
-        const hashedAdminPass = await bcrypt.hash('admin', 10);
+        const hashedAdminPass = await bcrypt.hash(ADMIN_USER_PASSWORD, 10);
         await pool.query(
             `INSERT INTO users(email, username, password, name, lastname, role, active)
-            VALUES ("admin@coworking.com", "admin", ?, "administrador", "coworking", "ADMIN", TRUE)`,
+            VALUES ("${ADMIN_USER_EMAIL}", "${ADMIN_USER_USERNAME}", ?, "${ADMIN_USER_NAME}", "${ADMIN_USER_LASTNAME}", "ADMIN", TRUE)`,
             [hashedAdminPass],
         );
         console.log('¡Administrador creado!');

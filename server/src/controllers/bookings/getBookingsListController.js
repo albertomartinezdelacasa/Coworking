@@ -1,8 +1,6 @@
 // Importamos la función que retorna una conexión con la base de datos.
 import getPool from '../../db/getPool.js';
 
-import generateErrorUtil from '../../utils/generateErrorUtil.js';
-import adminBookingsController from './adminBookingsController.js';
 // Función controladora que retorna el listado de reservas.
 const getBookingsListController = async (req, res, next) => {
     try {
@@ -42,7 +40,7 @@ const getBookingsListController = async (req, res, next) => {
             strQuery = strQuery + 'WHERE u.id = ?';
             arrayQuery.push(req.user.id);
         } else {
-            strQuery = strQuery + 'WHERE b.status = ?';
+            strQuery = strQuery + 'WHERE b.status = ? ORDER BY b.checkIn';
             arrayQuery.push(keyword);
         }
 
