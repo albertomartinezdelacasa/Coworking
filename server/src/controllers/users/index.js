@@ -7,7 +7,7 @@ import newUserController from './newUserController.js';
 import userAvatarController from './userAvatarController.js';
 import resetUserPassController from './resetUserPassController.js';
 import sendRecoverPassController from './sendRecoverPassController.js';
-
+import changeUserPasswordController from './changeUserPasswordController.js';
 // Aqui se exportan los controladores
 export {
     activateUserController,
@@ -18,4 +18,5 @@ export {
     userAvatarController,
     resetUserPassController,
     sendRecoverPassController,
+    changeUserPasswordController,
 };
