@@ -1,13 +1,10 @@
 // Importamos la funcion que retorna una conexion a la base de datos
-
 import getPool from '../../db/getPool.js';
 
 // Importamos la función que genera un error
-
 import generateErrorUtil from '../../utils/generateErrorUtil.js';
 
 // Importamos la función para enviar correos
-
 import sendMailUtil from '../../utils/sendMailUtil.js';
 
 //Función Controladora que crea una reserva de una oficina por su id y usuario
@@ -46,7 +43,6 @@ const bookOfficeByIdController = async (req, res, next) => {
 
         // Comprobamos si ya hay una reserva pendiente o confirmada sobre esta oficina
         // Verificamos si la oficina está disponible en las fechas seleccionadas
-
         const [existingBookings] = await pool.query(
             `SELECT id FROM bookings 
                             WHERE idOffice = ? 
@@ -68,13 +64,6 @@ const bookOfficeByIdController = async (req, res, next) => {
             throw generateErrorUtil('Capacidad menor', 400);
         }
 
-        // Creamos la reserva con estado 'PENDING'
-        await pool.query(
-            `INSERT INTO bookings (idUser, idOffice, checkIn, checkOut ,guests, status,createdAt) 
-             VALUES (?, ?, ? , ?, ?,'PENDING',NOW()) `,
-            [idUser, idOffice, checkIn, checkOut, guests],
-        );
-
         // Obtenemos los datos del usuario para enviar el correo
         const [userData] = await pool.query(
             'SELECT email, name FROM users WHERE id = ?',
@@ -92,7 +81,6 @@ const bookOfficeByIdController = async (req, res, next) => {
 
         Gracias por usar nuestro servicio.
         `;
-
         await sendMailUtil(userData[0].email, emailSubject, emailBody);
 
         // Obtenemos el correo del administrador
@@ -120,6 +108,12 @@ const bookOfficeByIdController = async (req, res, next) => {
                 adminData[0].email,
                 adminEmailSubject,
                 adminEmailBody,
+            );
+            // Creamos la reserva con estado 'PENDING'
+            await pool.query(
+                `INSERT INTO bookings (idUser, idOffice, checkIn, checkOut ,guests, status,createdAt) 
+             VALUES (?, ?, ? , ?, ?,'PENDING',NOW()) `,
+                [idUser, idOffice, checkIn, checkOut, guests],
             );
         }
 
