@@ -23,11 +23,10 @@ import moment from 'moment';
 // Inicializamos el componente.
 const BookingDetailsPage = () => {
   // Obtenemos los datos del usuario.
-  const { authToken } = useContext(AuthContext);
+  const { authToken, authUser } = useContext(AuthContext);
 
   // Obtenemos el ID de la entrada.
   const { idBooking } = useParams();
-  console.log(idBooking);
 
   // Importamos los datos de la entrada.
   const { booking } = useSingleBooking(idBooking);
@@ -46,9 +45,9 @@ const BookingDetailsPage = () => {
 
       // Obtenemos la respuesta del servidor.
       const res = await fetch(
-        `${VITE_API_URL}/api/office/${idBooking}/booking`,
+        `${VITE_API_URL}/api/bookings/${idBooking}/cancel`,
         {
-          method: 'delete',
+          method: 'PATCH',
           headers: {
             Authorization: authToken,
           },
@@ -68,11 +67,55 @@ const BookingDetailsPage = () => {
 
       // Mostramos un mensaje satisfactorio al usuario.
       toast.success(body.message, {
-        id: 'productDetails',
+        id: 'bookingDetails',
       });
     } catch (err) {
       toast.error(err.message, {
-        id: 'productDetails',
+        id: 'bookingDetails',
+      });
+    }
+  };
+
+  const handleConfirmBooking = async () => {
+    try {
+      // Si el usuario NO confirma que desea eliminar finalizamos la función.
+      if (!confirm('¿Confirmar reserva?')) {
+        return;
+      }
+
+      // Obtenemos la respuesta del servidor.
+      const res = await fetch(
+        `${VITE_API_URL}/api/bookings/${idBooking}/admin`,
+        {
+          method: 'PATCH',
+          headers: {
+            Authorization: authToken,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            action: 'aprobada',
+          }),
+        }
+      );
+
+      // Obtenemos el body.
+      const body = await res.json();
+
+      // Si hay algún error lo lanzamos.
+      if (body.status === 'error') {
+        throw new Error(body.message);
+      }
+
+      // Redirigimos a la página pricipal.
+      navigate('/');
+
+      // Mostramos un mensaje satisfactorio al usuario.
+      toast.success(body.message, {
+        id: 'bookingDetails',
+      });
+    } catch (err) {
+      toast.error(err.message, {
+        id: 'bookingDetails',
       });
     }
   };
@@ -112,7 +155,18 @@ const BookingDetailsPage = () => {
             {moment(booking.createdAt).format('DD/MM/YYYY [a las] HH:mm')}
           </li>
         </ul>
-        <button onClick={() => handleDeleteBooking()}>Cancelar reserva</button>
+        {booking.status !== 'CANCELED' && (
+          <>
+            {authUser.role === 'ADMIN' && booking.status !== 'CONFIRMED' && (
+              <button onClick={() => handleConfirmBooking()}>
+                Confirmar reserva
+              </button>
+            )}
+            <button onClick={() => handleDeleteBooking()}>
+              Cancelar reserva
+            </button>
+          </>
+        )}
 
         {/* Formulario de votar. */}
         {/* <AddVoteForm

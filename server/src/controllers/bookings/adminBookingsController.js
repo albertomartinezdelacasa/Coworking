@@ -11,7 +11,8 @@ import sendMailUtil from '../../utils/sendMailUtil.js';
 const adminBookingsController = async (req, res, next) => {
     try {
         // Obtenemos el id de la reserva y la acción (aprobar o rechazar) de los parámetros de la solicitud
-        const { idBooking, action } = req.body;
+        const { action } = req.body;
+        const { idBooking } = req.params;
 
         // Verificamos que se haya proporcionado una acción válida
         if (action !== 'aprobada' && action !== 'rechazada') {

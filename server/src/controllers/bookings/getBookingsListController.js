@@ -8,7 +8,7 @@ const getBookingsListController = async (req, res, next) => {
         let { keyword } = req.query;
 
         // Si "keyword" contiene un valor considerado falso por JS, asignamos un string vacío.
-        keyword = keyword || 'PENDING';
+        keyword = keyword || '';
 
         // Obtenemos una conexión con la base de datos.
         const pool = await getPool();
@@ -16,7 +16,7 @@ const getBookingsListController = async (req, res, next) => {
         let arrayQuery = [];
         let strQuery = `
             SELECT  
-                b.id,
+                b.id AS idBooking,
                 b.idUser,
                 b.idOffice,
                 b.checkIn,
@@ -24,9 +24,8 @@ const getBookingsListController = async (req, res, next) => {
                 b.guests,
                 b.status,
                 b.createdAt,
-                u.name,
-                u.lastname,
-                o.name,
+                u.username,
+                o.name AS nameOffice,
                 o.workspace,
                 o.capacity,
                 o.price
@@ -40,7 +39,7 @@ const getBookingsListController = async (req, res, next) => {
             strQuery = strQuery + 'WHERE u.id = ?';
             arrayQuery.push(req.user.id);
         } else {
-            strQuery = strQuery + 'WHERE b.status = ? ORDER BY b.checkIn';
+            strQuery = strQuery + 'WHERE b.status = ? ORDER BY b.status';
             arrayQuery.push(keyword);
         }
 
