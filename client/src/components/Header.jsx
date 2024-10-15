@@ -20,23 +20,27 @@ const Header = () => {
         </>
       ) : (
         <>
+          <NavLink to='/'>Mis reservas</NavLink>
+          {' | '}
           <NavLink to='/'>Reserva tu espacio</NavLink>
           {' | '}
           <NavLink to='/'>Publica tu oficina</NavLink>
           {' | '}
           <NavLink to='/'>Acerca de nosotros</NavLink>
           <div>
-            {authUser.avatar ? (
-              <img
-                src={`${VITE_API_URL}/${authUser.avatar}`}
-                alt={`profile picture ${authUser.username}`}
-              />
-            ) : (
-              <img
-                src='/default-avatar.png'
-                alt={`profile picture ${authUser.username}`}
-              />
-            )}
+            <NavLink to='/users/profile'>
+              {authUser.avatar ? (
+                <img
+                  src={`${VITE_API_URL}/${authUser.avatar}`}
+                  alt={`profile picture ${authUser.username}`}
+                />
+              ) : (
+                <img
+                  src='/default-avatar.png'
+                  alt={`profile picture ${authUser.username}`}
+                />
+              )}
+            </NavLink>
           </div>
           <button
             onClick={() => {
