@@ -44,12 +44,16 @@ const sendRecoverPassController = async (req, res, next) => {
             // Asunto del email de verificación.
             const emailSubject = 'Recuperación de contraseña - Coworking';
 
-            // Cuerpo del email de verificación.
+           // Modificamos el cuerpo del email de verificación.
             const emailBody = `
-                Hemos recibido una solicitud para recuperar contraseña en tu cuenta de Coworking. Si no has sido tú ignora este email.
+Hemos recibido una solicitud para recuperar contraseña en tu cuenta de Coworking. Si no has sido tú, ignora este email.
 
-                <a href="${process.env.CLIENT_URL}/users/password/reset/${recoverPassCode}">¡Cambiar contraseña!</a>
-            `;
+Para cambiar tu contraseña, haz clic en el siguiente enlace:
+
+${process.env.CLIENT_URL}/users/password/reset/${recoverPassCode}
+
+Si no puedes hacer clic en el enlace, cópialo y pégalo en la barra de direcciones de tu navegador.
+`;
 
             // Enviamos el email.
             await sendMailUtil(email, emailSubject, emailBody);
