@@ -21,14 +21,11 @@ const useSingleBooking = (idBooking) => {
     const fetchBooking = async () => {
       try {
         // Obtenmemos una respuesta del servidor.
-        const res = await fetch(
-          `${VITE_API_URL}/api/users/bookings/${idBooking}`,
-          {
-            headers: {
-              Authorization: authToken,
-            },
-          }
-        );
+        const res = await fetch(`${VITE_API_URL}/api/bookings/${idBooking}`, {
+          headers: {
+            Authorization: authToken,
+          },
+        });
 
         // Obtenemos el body.
         const body = await res.json();

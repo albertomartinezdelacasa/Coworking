@@ -87,3 +87,4 @@ const BookingOfficePage = () => {
 
 // Exportamos el componente para su uso en otras partes de la aplicación
 export default BookingOfficePage;
+

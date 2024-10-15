@@ -116,8 +116,11 @@ const UserProfilePage = () => {
     <main>
       <nav className='horizontal-user-nav'>
         <Link to='/mi-perfil'>Mi Perfil</Link>
+        {' | '}
         <Link to='/reservar'>Reservar un espacio</Link>
+        {' | '}
         <Link to='/mis-reservas'>Mis reservas</Link>
+        {' | '}
       </nav>
 
       <h2>Mi Perfil</h2>
