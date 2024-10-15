@@ -89,7 +89,7 @@ const cancelBookingController = async (req, res, next) => {
         // Enviamos un mensaje de OK al usuario.
         res.send({
             status: 'ok',
-            message: 'La reserva se ha eliminado correctamente',
+            message: 'La reserva se ha cancelado con exito',
         });
     } catch (err) {
         next(err);

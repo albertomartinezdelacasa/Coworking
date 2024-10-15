@@ -43,7 +43,10 @@ const getBookingByIdController = async (req, res, next) => {
         );
 
         // Si no existe ninguna reserva con ese ID, y comprobando que eres el usuario que hizo esa reserva, generamos un error.
-        if (bookings.length < 1 || req.user.id !== bookings[0].idUser) {
+        if (
+            bookings.length < 1 ||
+            (req.user.role !== 'ADMIN' && req.user.id !== bookings[0].idUser)
+        ) {
             generateErrorUtil('No existen reservas coincidentes', 404);
         }
 
