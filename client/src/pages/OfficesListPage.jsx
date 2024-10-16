@@ -1,18 +1,18 @@
 // Importamos los hooks.
-import useOffice from "../hooks/UseBookings";
-import { useContext, useState, useEffect } from "react";
+import useOffice from '../hooks/UseBookings';
+import { useContext, useState, useEffect } from 'react';
 
 // Importamos los componentes.
-import { NavLink, Navigate } from "react-router-dom";
+import { NavLink, Navigate } from 'react-router-dom';
 
 // Importamos el contexto.
-import { AuthContext } from "../contexts/AuthContext";
+import { AuthContext } from '../contexts/AuthContext';
 
 // Importamos la función toast.
-import toast from "react-hot-toast";
+import toast from 'react-hot-toast';
 
 // Importamos la librería moment
-import moment from "moment";
+import moment from 'moment';
 
 // Importamos la URL del servidor.
 const { VITE_API_URL } = import.meta.env;
@@ -33,14 +33,14 @@ const OfficesListPage = () => {
       try {
         // Obtenemos la respuesta del servidor.
         const res = await fetch(`${VITE_API_URL}/api/office/list`, {
-          method: "GET",
+          method: 'GET',
         });
 
         // Procesamos la respuesta
         const body = await res.json();
 
         // Si hay algún error lo lanzamos.
-        if (body.status === "error") {
+        if (body.status === 'error') {
           throw new Error(body.message);
         }
 
@@ -50,13 +50,13 @@ const OfficesListPage = () => {
         ///////////////////////////////////////////////////////////////////////////
 
         // Mostramos un mensaje satisfactorio al usuario.
-        toast.success("Oficinas obtenidas con éxito", {
-          id: "get-bookings",
+        toast.success('Oficinas obtenidas con éxito', {
+          id: 'g',
         });
       } catch (err) {
         setHasError(true); // Establecemos el estado de error
         toast.error(err.message, {
-          id: "get-bookings",
+          id: 'get-bookings',
         });
       } finally {
         // Indicamos que ha finalizado el proceso de carga.
@@ -92,17 +92,17 @@ const OfficesListPage = () => {
       <h2>Listado de reservas</h2>
 
       {/* Desplegable para filtrar por estado */}
-      <label htmlFor="statusFilter">Filtrar por estado:</label>
+      <label htmlFor='statusFilter'>Filtrar por estado:</label>
       <select
-        id="statusFilter"
+        id='statusFilter'
         value={statusFilter}
         onChange={(e) => setStatusFilter(e.target.value)}
       >
-        <option value="">Todos</option>
-        <option value="CONFIRMED">Confirmado</option>
-        <option value="PENDING">Pendiente</option>
-        <option value="CANCELED">Cancelado</option>
-        <option value="REJECTED">Rechazado</option>
+        <option value=''>Todos</option>
+        <option value='CONFIRMED'>Confirmado</option>
+        <option value='PENDING'>Pendiente</option>
+        <option value='CANCELED'>Cancelado</option>
+        <option value='REJECTED'>Rechazado</option>
       </select>
 
       {/* Si no hay reservas, muestra un mensaje */}
@@ -112,7 +112,7 @@ const OfficesListPage = () => {
             No hay reservas disponibles. Haz click en el siguiente enlace para
             hacer una reserva:
           </p>
-          <NavLink to="/office/list">
+          <NavLink to='/office/list'>
             Ver listado de oficinas disponibles
           </NavLink>
         </>
@@ -126,7 +126,7 @@ const OfficesListPage = () => {
                 <img
                   src={`${VITE_API_URL}/${photo.name}`}
                   key={photo.id}
-                  alt="Foto de la oficina"
+                  alt='Foto de la oficina'
                 />
               ))}
               <ul>
@@ -135,18 +135,18 @@ const OfficesListPage = () => {
                   <h2>{booking.nameOffice}</h2>
                 </li>
                 <li>
-                  Check In:{" "}
-                  {moment(booking.checkIn).format("DD/MM/YYYY [a las] HH:mm")}
+                  Check In:{' '}
+                  {moment(booking.checkIn).format('DD/MM/YYYY [a las] HH:mm')}
                 </li>
                 <li>
-                  Check Out:{" "}
-                  {moment(booking.checkOut).format("DD/MM/YYYY [a las] HH:mm")}
+                  Check Out:{' '}
+                  {moment(booking.checkOut).format('DD/MM/YYYY [a las] HH:mm')}
                 </li>
                 <li>Estado de reserva: {booking.status}</li>
                 <li>Precio: {booking.price} €</li>
               </ul>
               {/* Si es admin, añade esta información */}
-              {authUser.role === "ADMIN" && (
+              {authUser.role === 'ADMIN' && (
                 <ul>
                   <li>Usuario: {booking.username}</li>
                   <li>
