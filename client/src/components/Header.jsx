@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import { useContext } from 'react';
-import useUser from '../hooks/useUser';
+//import useUser from '../hooks/useUser';
 const { VITE_API_URL } = import.meta.env;
 
 const Header = () => {
