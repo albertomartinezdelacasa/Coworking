@@ -11,7 +11,9 @@ const AuthProvider = ({ children }) => {
     localStorage.getItem(VITE_AUTH_TOKEN) || null
   );
 
-  const [authUser, setAuthUser] = useState(null);
+  const [authUser, setAuthUser] = useState(
+    localStorage.getItem('AuthUser') || null
+  );
 
   // Declaramos una variable que indica que el fetch a los datos
   // del usuario no ha terminado. Util para activacion de usuario por ejemplo.
@@ -39,6 +41,7 @@ const AuthProvider = ({ children }) => {
 
         // Actualizamos los datos del usuario en el State.
         setAuthUser(body.data.user);
+        localStorage.setItem('AuthUser', body.data.user);
       } catch (err) {
         // Si surge cualquier error eliminamos el token del State y del localStorage.
         authLogout();
