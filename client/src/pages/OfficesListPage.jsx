@@ -1,165 +1,93 @@
-// Importamos los hooks.
-import useOffice from '../hooks/UseBookings';
-import { useContext, useState, useEffect } from 'react';
-
-// Importamos los componentes.
-import { NavLink, Navigate } from 'react-router-dom';
-
-// Importamos el contexto.
-import { AuthContext } from '../contexts/AuthContext';
-
-// Importamos la función toast.
-import toast from 'react-hot-toast';
-
-// Importamos la librería moment
-import moment from 'moment';
+import { useEffect, useState } from 'react';
 
 // Importamos la URL del servidor.
 const { VITE_API_URL } = import.meta.env;
 
-const OfficesListPage = () => {
-  // Estado para controlar si se está cargando y si hay error.
-  const [isLoading, setIsLoading] = useState(true);
-  // Estado para manejar errores
-  const [hasError, setHasError] = useState(false);
-  // Obtenemos los bookings del hook
-  const { offices, fetchOffices } = useOffice();
-  // Obtenemos el token y usuario autenticado
-  const { authToken, authUser } = useContext(AuthContext);
+const OfficeListPage = () => {
+  const [offices, setOffices] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // useEffect para cargar las oficinas
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchOffices = async () => {
       try {
-        // Obtenemos la respuesta del servidor.
-        const res = await fetch(`${VITE_API_URL}/api/office/list`, {
-          method: 'GET',
-        });
-
-        // Procesamos la respuesta
+        const res = await fetch(`${VITE_API_URL}/api/office/list`);
         const body = await res.json();
 
-        // Si hay algún error lo lanzamos.
         if (body.status === 'error') {
           throw new Error(body.message);
         }
 
-        // Actualizamos el estado de las oficinas usando el hook
-        fetchOffices(body.offices);
-
-        ///////////////////////////////////////////////////////////////////////////
-
-        // Mostramos un mensaje satisfactorio al usuario.
-        toast.success('Oficinas obtenidas con éxito', {
-          id: 'g',
-        });
+        setOffices(body.data.offices); // Asumiendo que tu respuesta incluye esta estructura
       } catch (err) {
-        setHasError(true); // Establecemos el estado de error
-        toast.error(err.message, {
-          id: 'get-bookings',
-        });
+        setError('Error al cargar las oficinas');
       } finally {
-        // Indicamos que ha finalizado el proceso de carga.
-        setIsLoading(false);
+        setLoading(false); // Asegúrate de establecer loading en false al final
       }
     };
 
-    fetchData();
-  }, [authToken, fetchOffices]); // Dependencias del efecto
+    fetchOffices();
+  }, []); // El array vacío hace que esto se ejecute solo una vez al montar el componente
 
-  // Mientras se está cargando, mostramos un mensaje de carga.
-  if (isLoading) {
-    return (
-      <main>
-        <h1>Obteniendo reservas...</h1>
-        <p>Por favor, espera un momento mientras procesamos tu solicitud.</p>
-      </main>
-    );
-  }
-
-  // Si hay un error, mostramos un mensaje de error.
-  if (hasError) {
-    return (
-      <main>
-        <h1>Error al obtener las reservas</h1>
-        <p>Intenta recargar la página o intenta de nuevo más tarde.</p>
-      </main>
-    );
-  }
+  if (loading) return <p>Cargando...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
-    <main>
-      <h2>Listado de reservas</h2>
+    <div>
+      <h1>Lista de Oficinas</h1>
+      <div>
+        {offices.map((office) => (
+          <div
+            key={office.id}
+            style={{
+              border: '1px solid black',
+              padding: '10px',
+              margin: '10px 0',
+            }}
+          >
+            <h2>{office.name}</h2>
+            <p>
+              <strong>Dirección:</strong> {office.address}
+            </p>
+            <p>
+              <strong>Descripción:</strong> {office.description}
+            </p>
+            <p>
+              <strong>Capacidad:</strong> {office.capacity}
+            </p>
+            <p>
+              <strong>Precio:</strong> ${office.price}
+            </p>
+            <p>
+              <strong>Tipo de Espacio:</strong> {office.workspace}
+            </p>
+            <div>
+              <strong>Fotos:</strong>
 
-      {/* Desplegable para filtrar por estado */}
-      <label htmlFor='statusFilter'>Filtrar por estado:</label>
-      <select
-        id='statusFilter'
-        value={statusFilter}
-        onChange={(e) => setStatusFilter(e.target.value)}
-      >
-        <option value=''>Todos</option>
-        <option value='CONFIRMED'>Confirmado</option>
-        <option value='PENDING'>Pendiente</option>
-        <option value='CANCELED'>Cancelado</option>
-        <option value='REJECTED'>Rechazado</option>
-      </select>
-
-      {/* Si no hay reservas, muestra un mensaje */}
-      {filteredBookings.length === 0 ? (
-        <>
-          <p>
-            No hay reservas disponibles. Haz click en el siguiente enlace para
-            hacer una reserva:
-          </p>
-          <NavLink to='/office/list'>
-            Ver listado de oficinas disponibles
-          </NavLink>
-        </>
-      ) : (
-        <ul>
-          {filteredBookings.map((booking) => (
-            <li key={booking.id}>
-              <NavLink to={`/bookings/${booking.id}`}>Ver detalles</NavLink>
-              {/* Fotos de la oficina */}
-              {booking.photos.map((photo) => (
-                <img
-                  src={`${VITE_API_URL}/${photo.name}`}
-                  key={photo.id}
-                  alt='Foto de la oficina'
-                />
-              ))}
-              <ul>
-                {/* Información de la reserva */}
-                <li>
-                  <h2>{booking.nameOffice}</h2>
-                </li>
-                <li>
-                  Check In:{' '}
-                  {moment(booking.checkIn).format('DD/MM/YYYY [a las] HH:mm')}
-                </li>
-                <li>
-                  Check Out:{' '}
-                  {moment(booking.checkOut).format('DD/MM/YYYY [a las] HH:mm')}
-                </li>
-                <li>Estado de reserva: {booking.status}</li>
-                <li>Precio: {booking.price} €</li>
-              </ul>
-              {/* Si es admin, añade esta información */}
-              {authUser.role === 'ADMIN' && (
-                <ul>
-                  <li>Usuario: {booking.username}</li>
-                  <li>
-                    {booking.guests} Invitados / {booking.capacity} Capacidad
-                  </li>
-                </ul>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
-    </main>
+              <div>
+                {office.photos && office.photos.length > 0 ? (
+                  office.photos.map((photo) => (
+                    <img
+                      key={photo.id}
+                      src={`${VITE_API_URL}/uploads/${photo.name}`} // Nota Alex :no estoy seguro que hay que hace aqui
+                      alt={`Foto ${photo.name}`}
+                      style={{
+                        width: '100px',
+                        height: '100px',
+                        objectFit: 'cover',
+                      }}
+                    />
+                  ))
+                ) : (
+                  <p>No hay fotos disponibles.</p>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
 
-export default OfficesListPage;
+export default OfficeListPage;
