@@ -16,50 +16,59 @@ import ActivateUserPage from "./pages/ActivateuserPage";
 import BookingsListPage from "./pages/BookingsListPage";
 
 import AddOfficeAdminPage from "./pages/AddOfficeAdminPage";
-import OfficeDetails from "./pages/OfiiceDetailsPage";
+import OfficeDetailsPage from "./pages/OfficeDetailsPage";
 import BookAnOfficePage from "./pages/BookAnOfficePage";
 import RecoverPassPage from "./pages/RecoverPassPage";
 import ResetPassPage from "./pages/ResetPassPage";
 
 const App = () => {
-  return (
-    <>
-      <Header />
-      <Toaster
-        position="top-center"
-        toastOptions={{
-          duration: 5000,
-        }}
-      />
+    return (
+        <>
+            <Header />
+            <Toaster
+                position="top-center"
+                toastOptions={{
+                    duration: 5000,
+                }}
+            />
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route
-          path="/users/bookings/:idBooking"
-          element={<BookingDetailsPage />}
-        />
-        <Route path="/booking/list" element={<BookingsListPage />} />
-        <Route path="/office/create" element={<AddOfficeAdminPage />} />
-        <Route path="/users/profile" element={<UserProfilePage />} />
-        <Route
-          path="/users/activate/:registrationCode"
-          element={<ActivateUserPage />}
-        />
-        <Route path="/booking/:idOffice" element={<BookAnOfficePage />} />
-        <Route path="/office/details/:idOffice" element={<OfficeDetails />} />
-        <Route path="/users/password/recover" element={<RecoverPassPage />} />
-        <Route
-          path="/users/password/reset/:recoverPassCode"
-          element={<ResetPassPage />}
-        />
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route
+                    path="/users/bookings/:idBooking"
+                    element={<BookingDetailsPage />}
+                />
+                <Route path="/booking/list" element={<BookingsListPage />} />
+                <Route path="/office/create" element={<AddOfficeAdminPage />} />
+                <Route path="/users/profile" element={<UserProfilePage />} />
+                <Route
+                    path="/users/activate/:registrationCode"
+                    element={<ActivateUserPage />}
+                />
+                <Route
+                    path="/booking/:idOffice"
+                    element={<BookAnOfficePage />}
+                />
+                <Route
+                    path="/office/details/:idOffice"
+                    element={<OfficeDetailsPage />}
+                />
+                <Route
+                    path="/users/password/recover"
+                    element={<RecoverPassPage />}
+                />
+                <Route
+                    path="/users/password/reset/:recoverPassCode"
+                    element={<ResetPassPage />}
+                />
 
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-      <Footer />
-    </>
-  );
+                <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+            <Footer />
+        </>
+    );
 };
 
 export default App;
