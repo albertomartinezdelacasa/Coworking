@@ -5,8 +5,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 // Importamos la función toast.
 import toast from 'react-hot-toast';
 
+// nota de Alex 15/10/24 creo que no hace falta, aun asi cuando se descomenta no funciona
 // Importamos el contexto de autenticación (descomentar si lo necesitas).
-// import { AuthContext } from '../contexts/AuthContext';
+// import { AuthContext } from '../contexts/AuthContext'
 
 // Importamos la URL del servidor.
 const { VITE_API_URL } = import.meta.env;
@@ -27,6 +28,7 @@ const ActivateUserPage = () => {
   // const { authUser } = useContext(AuthContext);
 
   useEffect(() => {
+    // Nota de Alex 15/10 esto sirve de algo ? lo he comentado por que no creo que sirva
     // Si el usuario ya está autenticado, redirigimos a la página principal (descomentar si lo necesitas).
     // if (authUser) {
     //   navigate('/');
