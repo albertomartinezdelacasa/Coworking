@@ -41,7 +41,7 @@ const AuthProvider = ({ children }) => {
 
         // Actualizamos los datos del usuario en el State.
         setAuthUser(body.data.user);
-        localStorage.setItem('AuthUser', body.data.user);
+        localStorage.setItem('AuthUser', JSON.stringify(body.data.user));
       } catch (err) {
         // Si surge cualquier error eliminamos el token del State y del localStorage.
         authLogout();
