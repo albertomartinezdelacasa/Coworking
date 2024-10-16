@@ -26,22 +26,26 @@ router.get(
     authUserController,
     getBookingByIdController,
 );
-// Endpoint que cancela una reserva por ID
-router.patch(
-    '/bookings/:idBooking',
-    authUserController,
-    cancelBookingController,
-);
 // Endpoint que edita el valor de la columna votes de la tabla Bookings
 router.patch(
-    '/bookings/:idBooking',
+    '/bookings/:idBooking/vote',
     authUserController,
     voteOfficeAfterUseController,
 );
 
+// Endpoint que permite al admin editar el valor del estado de la reserva
+router.patch(
+    '/bookings/:idBooking/admin',
+    authUserController,
+    adminBookingsController,
+);
+// Endpoint que cancela una reserva por ID
+router.patch(
+    '/bookings/:idBooking/cancel',
+    authUserController,
+    cancelBookingController,
+);
 // Endpoint que lista todas sus reservas para CLIENT y todas las reservas pendientes para ADMIN
 router.get('/list/booking', authUserController, getBookingsListController);
-// Endpoint que permite al admin editar el valor del estado de la reserva
-router.patch('/list/booking', authUserController, adminBookingsController);
 
 export default router;

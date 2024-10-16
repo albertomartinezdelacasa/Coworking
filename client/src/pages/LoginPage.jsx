@@ -1,5 +1,3 @@
-// Nota de Alex : una vez te logeas salta un error de toast diciendo que ruta no encontrada ???
-
 // Importamos los hooks.
 
 import { useContext, useState } from "react";
@@ -76,35 +74,44 @@ const LoginPage = () => {
         console.log("Login exitoso, redirigiendo a la página principal");
         return <Navigate to="/users/profile" />;
     }
+  };
 
-    return (
-        <main>
-            <h2>Página de login</h2>
 
-            <form onSubmit={handleLoginUser}>
-                <label htmlFor="email">Email:</label>
-                <input
-                    type="email"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
 
-                <label htmlFor="pass">Contraseña:</label>
-                <input
-                    type="password"
-                    id="pass"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
+  return (
+    <main>
+      <h2>Página de login</h2>
 
-                {/* Habilitamos o deshabilitamos el botón en función de si estamos haciendo un fetch o no. */}
-                <button disabled={loading}>Loguearme</button>
-            </form>
-        </main>
-    );
+      <form onSubmit={handleLoginUser}>
+        <label htmlFor="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+
+        <label htmlFor="pass">Contraseña:</label>
+        <input
+          type="password"
+          id="pass"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+
+        {/* Habilitamos o deshabilitamos el botón en función de si estamos haciendo un fetch o no. */}
+        <button disabled={loading}>Loguearme</button>
+      </form>
+
+      <p>
+        <a href="/users/password/recover">¿Has olvidado tu contraseña?</a>
+      </p>
+      
+    </main>
+  );
+
 };
 
 export default LoginPage;

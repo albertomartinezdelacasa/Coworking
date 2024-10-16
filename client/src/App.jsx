@@ -12,9 +12,12 @@ import NotFoundPage from "./pages/NotFoundPage";
 import BookingDetailsPage from "./pages/BookingDetailsPage";
 import UserProfilePage from "./pages/UserProfilePage";
 import ActivateUserPage from "./pages/ActivateuserPage";
+
 import AddOfficeAdminPage from "./pages/AddOfficeAdminPage";
 import OfficeDetails from "./pages/OfiiceDetailsPage";
 import BookAnOfficePage from "./pages/BookAnOfficePage";
+import RecoverPassPage from "./pages/RecoverPassPage";
+import ResetPassPage from "./pages/ResetPassPage";
 
 const App = () => {
     return (
@@ -49,12 +52,15 @@ const App = () => {
                     path="/office/details/:idOffice"
                     element={<OfficeDetails />}
                 />
+               <Route path="/users/password/recover" element={<RecoverPassPage />} />
+                <Route path="/users/password/reset/:recoverPassCode" element={<ResetPassPage />} />
 
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
             <Footer />
         </>
     );
+
 };
 
 export default App;
