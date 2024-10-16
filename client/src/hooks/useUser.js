@@ -12,7 +12,7 @@ const useUser = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch(`${VITE_API_URL}/api/users`, {
+        const res = await fetch(`${VITE_API_URL}/api/users/profile`, {
           headers: {
             Authorization: authToken,
           },
@@ -25,8 +25,6 @@ const useUser = () => {
         }
 
         setUser(body.data.user);
-        console.log(user);
-        console.log(body.data.user);
       } catch (err) {
         toast.error(err.message);
       }
