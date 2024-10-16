@@ -114,28 +114,29 @@ const UserProfilePage = () => {
 
   return (
     <main>
-      <nav className='horizontal-user-nav'>
+      {/* <nav className='horizontal-user-nav'>
         <Link to='/mi-perfil'>Mi Perfil</Link>
         {' | '}
         <Link to='/reservar'>Reservar un espacio</Link>
         {' | '}
         <Link to='/mis-reservas'>Mis reservas</Link>
         {' | '}
-      </nav>
+      </nav> */}
 
-      <h2>Mi Perfil</h2>
+      <h2>Hola, {authUser.username}</h2>
 
       <div>
-        <img
-          src={
-            authUser.avatar ? (
-              `${VITE_API_URL}/${authUser.avatar}`
-            ) : (
-              <img src='/default-avatar.png' alt='mr blooby picture' />
-            )
-          } //  Cambiar por la ruta de la imagen por defecto
-          alt={`Foto de perfil de ${authUser.email}`}
-        />
+        {authUser.avatar ? (
+          <img
+            src={`${VITE_API_URL}/${authUser.avatar}`}
+            alt={`profile picture ${authUser.username}`}
+          />
+        ) : (
+          <img
+            src='/default-avatar.png'
+            alt={`profile picture ${authUser.username}`}
+          />
+        )}
       </div>
 
       <form onSubmit={handleUpdateAvatar}>
