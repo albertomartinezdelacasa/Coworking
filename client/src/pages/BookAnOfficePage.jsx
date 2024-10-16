@@ -4,7 +4,7 @@ import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 // Importamos los hooks personalizados
 import useBookings from "../hooks/UseBookings";
-import useSingleOffice from "../hooks/UseOffice";
+import useOffice from "../hooks/UseOffice";
 // Importamos el contexto de autenticación
 import { AuthContext } from "../contexts/AuthContext";
 // Importamos toast para mostrar notificaciones
@@ -17,7 +17,7 @@ const BookAnOfficePage = () => {
     const navigate = useNavigate();
 
     // Utilizamos el hook useOffice para obtener la información de la oficina
-    const { office, loading } = useSingleOffice(idOffice);
+    const { office, loading } = useOffice(idOffice);
     // Utilizamos el hook useBookings para obtener las funciones de reserva
     const { createBooking } = useBookings();
 
