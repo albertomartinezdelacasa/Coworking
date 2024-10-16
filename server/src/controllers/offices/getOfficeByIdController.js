@@ -25,6 +25,7 @@ const getOfficeByIdController = async (req, res, next) => {
               o.name,
               o.description,
               o.address,
+              o.workspace,
               o.capacity,
               o.price,
               o.createdAt,

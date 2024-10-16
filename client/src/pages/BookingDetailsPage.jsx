@@ -170,9 +170,11 @@ const BookingDetailsPage = () => {
                 Confirmar reserva
               </button>
             )}
-            <button onClick={() => handleDeleteBooking()}>
-              Cancelar reserva
-            </button>
+            {booking.checkOut < new Date() && (
+              <button onClick={() => handleDeleteBooking()}>
+                Cancelar reserva
+              </button>
+            )}
           </>
         )}
 

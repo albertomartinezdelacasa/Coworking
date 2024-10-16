@@ -1,6 +1,6 @@
 // Importamos los hooks y el componente Navigate.
 import { useContext, useEffect, useState } from 'react';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useSingleOffice from '../hooks/useSingleOffice';
 import BookAnOfficePage from './BookAnOfficePage';
 // Importamos el contexto.
@@ -22,31 +22,16 @@ const OfficeDetailsPage = () => {
   // Obtenemos la oficina.
   const { office, updateOfficeState } = useSingleOffice(idOffice);
 
-  /* const handleBookOffice = async () => {
+  const navigate = useNavigate();
+
+  const sendToBooking = async (e) => {
     try {
-      const res = await fetch(`${VITE_API_URL}/api/booking/${idOffice}`, {
-        method: 'POST',
-        headers: {
-          Authorization: authToken,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          checkIn,
-          checkOut,
-          guests,
-        }),
-      });
-
-      // Obtenemos el body.
-      const body = await res.json();
-
-      // Si hay algún error lo lanzamos.
-      if (body.status === 'error') {
-        throw new Error(body.message);
-      }
-    } catch (err) {}
-  }; */
-
+      e.preventDefault();
+      navigate(`/booking/${idOffice}`);
+    } catch (err) {
+      toast(err.message);
+    }
+  };
   return (
     office && (
       <main>
@@ -70,8 +55,10 @@ const OfficeDetailsPage = () => {
           <li>Tipo: {office.workspace}</li>
           <li>Capacidad: {office.capacity}</li>
           <li>Precio: {office.price}</li>
+          <li>Valoracion: {parseFloat(office.votesAvg).toFixed(2)}⭐</li>
+          <li>De {office.totalVotes} votos</li>
         </ul>
-        <button onClick={() => BookAnOfficePage()}>Reservar oficina</button>
+        <button onClick={sendToBooking}>Reservar oficina</button>
       </main>
     )
   );
