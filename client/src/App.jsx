@@ -13,10 +13,17 @@ import NotFoundPage from './pages/NotFoundPage';
 import BookingDetailsPage from './pages/BookingDetailsPage';
 import UserProfilePage from './pages/UserProfilePage';
 import ActivateUserPage from './pages/ActivateuserPage';
+<<<<<<< Updated upstream
 import BookingsListPage from './pages/BookingsListPage';
 
 import AddOfficeAdminPage from './pages/AddOfficeAdminPage';
 import OfficeDetailsPage from './pages/OfficeDetailsPage';
+=======
+
+import AddOfficeAdminPage from './pages/AddOfficeAdminPage';
+import OfficesListPage from './pages/OfficesListPage';
+import OfficeDetails from './pages/OfiiceDetailsPage';
+>>>>>>> Stashed changes
 import BookAnOfficePage from './pages/BookAnOfficePage';
 import RecoverPassPage from './pages/RecoverPassPage';
 import ResetPassPage from './pages/ResetPassPage';
@@ -40,7 +47,6 @@ const App = () => {
           path='/users/bookings/:idBooking'
           element={<BookingDetailsPage />}
         />
-        <Route path='/booking/list' element={<BookingsListPage />} />
         <Route path='/office/create' element={<AddOfficeAdminPage />} />
         <Route path='/users/profile' element={<UserProfilePage />} />
         <Route
@@ -48,10 +54,8 @@ const App = () => {
           element={<ActivateUserPage />}
         />
         <Route path='/booking/:idOffice' element={<BookAnOfficePage />} />
-        <Route
-          path='/office/details/:idOffice'
-          element={<OfficeDetailsPage />}
-        />
+        <Route path='/office/list' element={<OfficesListPage />} />
+        <Route path='/office/details/:idOffice' element={<OfficeDetails />} />
         <Route path='/users/password/recover' element={<RecoverPassPage />} />
         <Route
           path='/users/password/reset/:recoverPassCode'

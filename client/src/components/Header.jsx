@@ -14,12 +14,16 @@ const Header = () => {
       {' | '}
       {!authUser ? (
         <>
+          <NavLink to='/office/list'>Coworking Spaces</NavLink>
+          {' | '}
           <NavLink to='/Register'>Registrarse</NavLink>
           {' | '}
           <NavLink to='/Login'>Iniciar sesión</NavLink>
         </>
       ) : (
         <>
+          <NavLink to='/office/list'>Coworking Spaces</NavLink>
+          {' | '}
           <NavLink to='/'>Mis reservas</NavLink>
           {' | '}
           <NavLink to='/'>Reserva tu espacio</NavLink>
