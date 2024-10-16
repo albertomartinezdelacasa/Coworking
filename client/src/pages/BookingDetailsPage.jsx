@@ -1,5 +1,5 @@
 // Importamos los hooks.
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import useSingleBooking from '../hooks/useSingleBooking';
 import toast from 'react-hot-toast';
@@ -12,13 +12,7 @@ import { AuthContext } from '../contexts/AuthContext';
 // Importamos moment para manipular fechar.
 import moment from 'moment';
 
-// Importamos los componentes.
-//import EntryPhotos from '../components/EntryPhotos';
-//import DeleteEntryButton from '../components/DeleteEntryButton';
-
-// Importamos los formularios.
-//import AddPhotoForm from '../forms/AddPhotoForm';
-//import AddVoteForm from '../forms/AddVoteForm';
+import AddVoteForm from '../Forms/AddVoteForm';
 
 // Inicializamos el componente.
 const BookingDetailsPage = () => {
@@ -35,6 +29,20 @@ const BookingDetailsPage = () => {
   // Declaramos una variable para indicar cuando estamos haciendo fetch al servidor y poder
   // deshabilitar así los botones durante ese proceso.
   const [loading, setLoading] = useState(false);
+
+  const [canVote, setCanVote] = useState(false);
+
+  useEffect(() => {
+    if (booking) {
+      const checkoutDate = moment(booking.checkOut);
+      const now = moment();
+      setCanVote(
+        now.isAfter(checkoutDate) &&
+          !booking.vote &&
+          booking.status !== 'CANCELED'
+      );
+    }
+  }, [booking]);
 
   const handleDeleteBooking = async () => {
     try {
@@ -168,6 +176,16 @@ const BookingDetailsPage = () => {
           </>
         )}
 
+        {/* Comprobamos si se puede votar. */}
+        {canVote && (
+          <AddVoteForm
+            idBooking={idBooking}
+            onVoteSubmit={() => {
+              setCanVote(false);
+            }}
+          />
+        )}
+
         {/* Formulario de votar. */}
         {/* <AddVoteForm
             entryId={bookingId}
@@ -175,17 +193,6 @@ const BookingDetailsPage = () => {
             loading={loading}
             setLoading={setLoading}
             /> */}
-
-        {
-          // Si estamos logueados y somos los dueños podemos borrar la entrada.
-          /* authUser && authUser.id === entry.userId && (
-                <DeleteEntryButton
-                entryId={bookingId}
-                loading={loading}
-                setLoading={setLoading}
-                />
-            ) */
-        }
       </main>
     )
   );
