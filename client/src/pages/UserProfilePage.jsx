@@ -8,6 +8,7 @@ import { AuthContext } from '../contexts/AuthContext';
 import toast from 'react-hot-toast';
 import { Navigate, Link } from 'react-router-dom';
 
+
 // Importamos la URL del servidor.
 const { VITE_API_URL } = import.meta.env;
 
