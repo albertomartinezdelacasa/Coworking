@@ -1,7 +1,9 @@
-import { Routes, Route } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
+import { Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+import '/App.css';
 
 // Importamos los componentes
+
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";

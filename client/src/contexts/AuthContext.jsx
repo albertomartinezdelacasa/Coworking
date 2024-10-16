@@ -13,6 +13,10 @@ const AuthProvider = ({ children }) => {
 
   const [authUser, setAuthUser] = useState(null);
 
+  // Declaramos una variable que indica que el fetch a los datos
+  // del usuario no ha terminado. Util para activacion de usuario por ejemplo.
+  const [authUserLoading, setAuthUserLoading] = useState(true);
+
   // Obtenemos los datos del usuario si existe un token.
   useEffect(() => {
     // Función que solicita los datos del usuario.
@@ -29,7 +33,7 @@ const AuthProvider = ({ children }) => {
         const body = await res.json();
 
         // Si hay algún error lo lanzamos.
-        if (body.status === "error") {
+        if (body.status === 'error') {
           throw new Error(body.message);
         }
 
@@ -38,8 +42,10 @@ const AuthProvider = ({ children }) => {
       } catch (err) {
         // Si surge cualquier error eliminamos el token del State y del localStorage.
         authLogout();
-
         toast.error(err.message);
+      } finally {
+        // Indicamos que el fetch a los datos del usuario ha terminado.
+        setAuthUserLoading(false);
       }
     };
 
@@ -48,17 +54,18 @@ const AuthProvider = ({ children }) => {
       fetchUser();
     } else {
       setAuthUser(null);
+      setAuthUserLoading(false); // Indicamos que ya no está cargando
     }
   }, [authToken]);
 
   const authLogin = (token) => {
     setAuthToken(token);
-
     localStorage.setItem(VITE_AUTH_TOKEN, token);
   };
 
   const authLogout = () => {
     setAuthToken(null);
+    setAuthUser(null);
     localStorage.removeItem(VITE_AUTH_TOKEN);
   };
 
@@ -78,6 +85,7 @@ const AuthProvider = ({ children }) => {
         authLogout,
         authUser,
         authUpdateAvatarState,
+        authUserLoading,
       }}
     >
       {children}
