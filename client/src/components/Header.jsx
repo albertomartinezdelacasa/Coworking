@@ -6,7 +6,7 @@ const { VITE_API_URL } = import.meta.env;
 
 const Header = () => {
   const { authUser, authLogout } = useContext(AuthContext);
-  const { user, setUser } = useUser();
+  //const { user, setUser } = useUser();
   const navigate = useNavigate();
   return (
     <header>
