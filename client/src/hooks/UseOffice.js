@@ -21,7 +21,7 @@ const useOffice = (officeId) => {
             try {
                 // Realizamos la petición GET a la API
                 const response = await fetch(
-                    `${VITE_API_URL}/api/offices/${officeId}`
+                    `${VITE_API_URL}/api/office/${officeId}`
                 );
                 // Convertimos la respuesta a JSON
                 const data = await response.json();

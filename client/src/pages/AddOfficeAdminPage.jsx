@@ -25,15 +25,10 @@ const AddOfficeAdminPage = () => {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [address, setAddress] = useState("");
-    const [workspace, setWorkspace] = useState("");
+    const [workspace, setWorkspace] = useState("OFFICE");
     const [capacity, setCapacity] = useState("");
     const [price, setPrice] = useState("");
     const [photos, setPhotos] = useState([]);
-
-    // Redirección si el usuario no está autenticado o no es admin
-    if (!authUser || authUser.role !== "admin") {
-        return <Navigate to="/*" />;
-    }
 
     // Función para manejar la selección de archivos
     const handleFile = (e) => {
@@ -49,8 +44,8 @@ const AddOfficeAdminPage = () => {
 
     // Función para manejar el envío del formulario
     const handleAddSpace = async (e) => {
-        e.preventDefault();
         try {
+            e.preventDefault();
             // Creación del objeto FormData para enviar los datos
             const formData = new FormData();
             formData.append("name", name);
@@ -59,6 +54,7 @@ const AddOfficeAdminPage = () => {
             formData.append("workspace", workspace);
             formData.append("capacity", capacity);
             formData.append("price", price);
+            formData.append("equipments", JSON.stringify([1]));
 
             // Agregar las fotos al FormData
             for (let i = 0; i < photos.length; i++) {
@@ -66,22 +62,26 @@ const AddOfficeAdminPage = () => {
             }
 
             // Envío de la solicitud POST a la API
-            const res = await fetch(`${VITE_API_URL}/api/offices`, {
+            const res = await fetch(`${VITE_API_URL}/api/office/create`, {
                 method: "POST",
                 headers: {
-                    Authorization: `Bearer ${authToken}`,
+                    /*  "Content-Type": "application/json", */
+                    Authorization: authToken,
                 },
                 body: formData,
             });
 
             // Procesamiento de la respuesta
-            const data = await res.json();
-            if (data.status === "error") {
-                throw new Error(data.message);
+            const body = await res.json();
+            console.log(body);
+
+            if (body.status === "error") {
+                throw new Error(body.message);
             }
 
             // Mostrar mensaje de éxito y navegar a la página principal
-            toast.success(data.message, { id: "newOffice" });
+            toast.success(body.message, { id: "newOffice" });
+
             navigate("/");
         } catch (err) {
             // Mostrar mensaje de error en caso de fallo
@@ -89,12 +89,14 @@ const AddOfficeAdminPage = () => {
         }
     };
 
+    /*     // Redirección si el usuario no está autenticado o no es admin
+    if (!authUser||authUser.role !== "ADMIN") {
+        <Navigate to="/" />;
+    } hace falta meter el suthuserloading */
+
     return (
         <main>
-            <h2>
-                Página de creación de oficinas. SOLO ADMINISTRADOR. SI ERES
-                CLIENTE, DISIMULA Y EMPIEZA A ADMINISTRAR
-            </h2>
+            <h2>Página de creación de oficinas.</h2>
             <form onSubmit={handleAddSpace}>
                 <label htmlFor="name">NOMBRE: </label>
                 <input
@@ -128,10 +130,7 @@ const AddOfficeAdminPage = () => {
                     onChange={(e) => setCapacity(e.target.value)}
                     required
                 />
-                <label htmlFor="workspace">
-                    ¿Tiene workspace QUE ES
-                    WORKSPACEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE?:{" "}
-                </label>
+                <label htmlFor="workspace">WORKSPACE: </label>
                 <select
                     id="workspace"
                     value={workspace}

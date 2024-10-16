@@ -4,12 +4,6 @@ import getPool from '../../db/getPool.js';
 // Función controladora que retorna el listado de reservas.
 const getBookingsListController = async (req, res, next) => {
     try {
-        // Obtenemos la palabra clave del equipamiento que buscamos
-        let { keyword } = req.query;
-
-        // Si "keyword" contiene un valor considerado falso por JS, asignamos un string vacío.
-        keyword = keyword || '';
-
         // Obtenemos una conexión con la base de datos.
         const pool = await getPool();
 
@@ -39,8 +33,7 @@ const getBookingsListController = async (req, res, next) => {
             strQuery = strQuery + 'WHERE u.id = ?';
             arrayQuery.push(req.user.id);
         } else {
-            strQuery = strQuery + 'WHERE b.status = ? ORDER BY b.status';
-            arrayQuery.push(keyword);
+            strQuery = strQuery + 'ORDER BY b.status';
         }
 
         // Obtenemos el listado de reservas.

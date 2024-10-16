@@ -1,5 +1,4 @@
 import { Link, useNavigate } from 'react-router-dom';
-import BecomeAdminForm from '../Forms/BecomeAdminForm';
 
 // importamos la URL del servidor.
 const { VITE_API_URL } = import.meta.env;
@@ -12,40 +11,48 @@ const Home = () => {
 
   return (
     <main>
-      <>
-        <h1>Bienvenidos a Innovaspace</h1>
-        <p> Te acompañamos en todas tus maneras de trabajar. </p>
-        <img src='' alt='foto de spacio de officinas' />
-      </>
+      <div className='portada'>
+        <div>
+          <h1>Bienvenidos a Innovaspace</h1>
+          <p> Te acompañamos en todas tus maneras de trabajar. </p>
+        </div>
+      </div>
 
-      <>
-        <h2>Explora todas nuestras opciones</h2>
-        <a href='/allofficesanddesks'>Ver todas las opciones</a>
-      </>
+      {/* -------------------------------------------------------------------- */}
 
-      <Link to='/listoffice'>
-        <>
-          <img src='' alt='' />
-          <h3>Oficinas Privadas</h3>
-          <p>
-            Instálate en una oficina totalmente amueblada con acceso a servicios
-            profesionales y salas de reuniones, además de complementos
-            opcionales.
-          </p>
-        </>
-      </Link>
+      <div className='mega'>
+        <div className='texts'>
+          <h2>Explora todas nuestras opciones</h2>
+          <a href='/ ruta a todas las officinas '>Ver todas las opciones</a>
+        </div>
 
-      <Link to='/listoffice/desk'>
-        <>
-          <img src='' alt='' />
-          <h3>Escritorio Personal</h3>
-          <p>
-            Instálate en una oficina totalmente amueblada con acceso a servicios
-            profesionales y salas de reuniones, además de complementos
-            opcionales.
-          </p>
-        </>
-      </Link>
+        {/* <Link to='/listoffice'> */}
+        <div className='container'>
+          <div className='art'>
+            <img src='./fondo.jpg' alt='' />
+            <h3>Oficinas Privadas</h3>
+            <p>
+              Instálate en una oficina totalmente amueblada con acceso a
+              servicios profesionales y salas de reuniones, además de
+              complementos opcionales.
+            </p>
+          </div>
+
+          {/* </Link> */}
+
+          {/* <Link to='/listoffice/desk'> */}
+          <div className='art'>
+            <img src='./fondo.jpg' alt='' />
+            <h3>Escritorio Personal</h3>
+            <p>
+              Instálate en una oficina totalmente amueblada con acceso a
+              servicios profesionales y salas de reuniones, además de
+              complementos opcionales.
+            </p>
+          </div>
+          {/* </Link> */}
+        </div>
+      </div>
 
       <>
         <img src='' alt=' foto de gente chocando las manos' />
@@ -111,13 +118,8 @@ const Home = () => {
 
       <>
         <h1>Quieres Publicar una Oficina?</h1>
-        <p>
-          Completa el formulario y nuestro equipo se pondrá en contacto para
-          obtener más información sobre tu oficina.
-        </p>
-
-        {/* Aquí se incluye el formulario */}
-        <BecomeAdminForm />
+        <p>Contactanos para poder publicar tu espacio coworking</p>
+        <a href='mailto:example@example.com'>example@example.com</a>
       </>
     </main>
   );

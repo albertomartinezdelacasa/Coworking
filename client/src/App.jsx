@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
+import "/App.css";
 
 // Importamos los componentes
 
@@ -12,6 +13,13 @@ import NotFoundPage from "./pages/NotFoundPage";
 import BookingDetailsPage from "./pages/BookingDetailsPage";
 import UserProfilePage from "./pages/UserProfilePage";
 import ActivateUserPage from "./pages/ActivateuserPage";
+import BookingsListPage from "./pages/BookingsListPage";
+
+import AddOfficeAdminPage from "./pages/AddOfficeAdminPage";
+import OfficeDetails from "./pages/OfiiceDetailsPage";
+import BookAnOfficePage from "./pages/BookAnOfficePage";
+import RecoverPassPage from "./pages/RecoverPassPage";
+import ResetPassPage from "./pages/ResetPassPage";
 
 const App = () => {
   return (
@@ -32,11 +40,21 @@ const App = () => {
           path="/users/bookings/:idBooking"
           element={<BookingDetailsPage />}
         />
+        <Route path="/booking/list" element={<BookingsListPage />} />
+        <Route path="/office/create" element={<AddOfficeAdminPage />} />
         <Route path="/users/profile" element={<UserProfilePage />} />
         <Route
           path="/users/activate/:registrationCode"
           element={<ActivateUserPage />}
         />
+        <Route path="/booking/:idOffice" element={<BookAnOfficePage />} />
+        <Route path="/office/details/:idOffice" element={<OfficeDetails />} />
+        <Route path="/users/password/recover" element={<RecoverPassPage />} />
+        <Route
+          path="/users/password/reset/:recoverPassCode"
+          element={<ResetPassPage />}
+        />
+
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Footer />
