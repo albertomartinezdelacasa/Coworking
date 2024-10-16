@@ -29,13 +29,12 @@ const voteOfficeAfterUseController = async (req, res, next) => {
         const pool = await getPool();
 
         // Obtenemos el checkout de la reserva.
-        const { bookingData } = await pool.query(
-            'SELECT checkOut FROM bookings WHERE idUser = ? AND id = ?',
+        const [bookingData] = await pool.query(
+            'SELECT checkOut, idOffice FROM bookings WHERE idUser = ? AND id = ?',
             [req.user.id, idBooking],
         );
-
-        const bookingCheckout = bookingData[0].checkOut; 
-
+        console.log(bookingData);
+        const bookingCheckout = bookingData[0].checkOut;
 
         //Comprobamos que la fecha del checkout sea anterior a la actual y lanzamos un error.
         if (new Date(bookingCheckout) > new Date()) {
@@ -63,7 +62,7 @@ const voteOfficeAfterUseController = async (req, res, next) => {
         const votesAvg = await pool.query(
             `SELECT AVG(vote) AS avg FROM bookings WHERE idOffice = ? AND NOT vote = 0`,
             // eslint-disable-next-line no-undef
-            [idOffice],
+            [bookingData.idOffice],
         );
 
         //Obtenemos la cantidad de votos de la oficina para poder actualizar el State en el cliente
