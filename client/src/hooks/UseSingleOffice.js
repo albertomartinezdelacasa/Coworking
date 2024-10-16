@@ -43,18 +43,26 @@ const useSingleOffice = (idOffice) => {
         fetchOffice();
     }, [idOffice]);
 
-    const updateOfficeState = (name, price, description, address, workspace, capacity, photos) => {
-            setOffice({
-                ...office,
-                name: name || office.name,
-                price: price || office.price,
-                description: description || office.description,
-                address: address || office.address,
-                workspace: workspace || office.workspace,
-                capacity: capacity || office.capacity,
-                photos: photos || office.photos,
-            })
-        }
+    const updateOfficeState = (
+        name,
+        price,
+        description,
+        address,
+        workspace,
+        capacity,
+        photos
+    ) => {
+        setOffice({
+            ...office,
+            name: name || office.name,
+            price: price || office.price,
+            description: description || office.description,
+            address: address || office.address,
+            workspace: workspace || office.workspace,
+            capacity: capacity || office.capacity,
+            photos: photos || office.photos,
+        });
+    };
 
     // Actualizamos la media de votos de la entrada en el State.
     /*   const updateEntryVotes = (votesAvg) => {
