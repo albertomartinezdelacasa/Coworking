@@ -12,14 +12,17 @@ const useSingleOffice = (idOffice) => {
     // Declaramos una variable en el State que permita almacenar la info de la oficina.
     const [office, setOffice] = useState(null);
 
+    console.log("IDOFFICE", idOffice);
+
     // Obtenemos la oficina cuando se monta el componente.
     useEffect(() => {
         // Solicitamos la oficina al servidor.
         const fetchOffice = async () => {
             try {
+
                 // Obtenemos una respuesta del servidor.
                 const res = await fetch(
-                    `${VITE_API_URL}/api/offices/${idOffice}`
+                    `${VITE_API_URL}/api/office/${idOffice}`
                 );
 
                 // Obtenemos el body.
@@ -31,7 +34,7 @@ const useSingleOffice = (idOffice) => {
                 }
 
                 // Almacenamos la oficina.
-                setOffice(body.data.office);
+                setOffice(body.data.offices);
             } catch (err) {
                 toast.error(err.message, {
                     id: "OfficeDetails",
@@ -43,7 +46,7 @@ const useSingleOffice = (idOffice) => {
         fetchOffice();
     }, [idOffice]);
 
-    const updateOfficeState = (
+    /* const updateOfficeState = (
         name,
         price,
         description,
@@ -62,7 +65,7 @@ const useSingleOffice = (idOffice) => {
             capacity: capacity || office.capacity,
             photos: photos || office.photos,
         });
-    };
+    }; */
 
     // Actualizamos la media de votos de la entrada en el State.
     /*   const updateEntryVotes = (votesAvg) => {
@@ -76,7 +79,6 @@ const useSingleOffice = (idOffice) => {
     // Retornamos las variables y funciones necesarias.
     return {
         office,
-        updateOfficeState,
     };
 };
 

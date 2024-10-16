@@ -13,18 +13,24 @@ import toast from "react-hot-toast";
 const { VITE_API_URL } = import.meta.env;
 
 // Inicializamos el componente.
-const OfficeDetails = () => {
+const OfficeDetailsPage = () => {
+    // Obtenemos los path params necesarios.
+    const { idOffice } = useParams();
+
+    // Obtenemos la oficina.
+    const { office, updateOfficeState } = useSingleOffice(idOffice);
+
+    return <section>{office && <p>{office.name}</p>}</section>;
+};
+
+/*
+const OfficeDetailsOLD = () => {
     // Importamos el token.
     const { authToken, authUser} = useContext(AuthContext);
 
     // Importamos la función navigate.
     const navigate = useNavigate();
 
-    // Obtenemos los path params necesarios.
-    const { idOffice } = useParams();
-
-    // Obtenemos la oficina.
-    const { office, updateOfficeState } = useSingleOffice(idOffice);
 
     // Declaramos variables en el State para almacenar el valor de cada input.
     const [officeName, setOfficeName] = useState("");
@@ -165,9 +171,9 @@ const OfficeDetails = () => {
     };
 
     // Si aún no se han cargado los datos del usuario no retornamos nada.
-/*     if (authUserLoading) {
+ if (authUserLoading) {
         return <></>;
-    } */
+    } 
 
     // Ahora que el fetch de usuarios ya ha terminado, si NO estamos logueados
     // redirigimos a la página de login.
@@ -262,13 +268,13 @@ const OfficeDetails = () => {
                         required
                     />
 
-                    {/* Si estamos haciendo un fetch o NO estamos editando deshabilitamos el botón. */}
+                    {/Si estamos haciendo un fetch o NO estamos editando deshabilitamos el botón. }
                     <button disabled={loading || !isEditing}>
                         Actualizar oficina
                     </button>
                 </form>
 
-                {/* Botón para habilitar o deshabilitar el modo edición. */}
+                {Botón para habilitar o deshabilitar el modo edición. }
                 <button onClick={() => setIsEditing(!isEditing)}>
                     {isEditing ? "Cancelar edición" : "Editar oficina"}
                 </button>
@@ -285,5 +291,6 @@ const OfficeDetails = () => {
         )
     );
 };
+*/
 
-export default OfficeDetails;
+export default OfficeDetailsPage;
