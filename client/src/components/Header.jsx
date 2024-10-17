@@ -1,6 +1,6 @@
-import { NavLink, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../contexts/AuthContext';
-import { useContext } from 'react';
+import { NavLink, useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext";
+import { useContext } from "react";
 const { VITE_API_URL } = import.meta.env;
 
 const Header = () => {
@@ -9,48 +9,48 @@ const Header = () => {
 
   // Verifica si el usuario está logueado y su rol
   const isLoggedIn = !!authUser;
-  const isAdmin = isLoggedIn && authUser.role === 'ADMIN';
+  const isAdmin = isLoggedIn && authUser.role === "ADMIN";
 
   return (
     <header>
-      <div className='header-top'>
+      <div className="header-top">
         {/* Logo de la empresa */}
-        <NavLink to='/'>
-          <img src='/Logo.png' alt='Logo de la empresa' className='logo' />
+        <NavLink to="/">
+          <img src="/Logo.png" alt="Logo de la empresa" className="logo" />
         </NavLink>
 
         {/* Botones de autenticación */}
-        <div className='auth-buttons'>
+        <div className="auth-buttons">
           {!isLoggedIn ? (
             <>
-              <NavLink to='/Register'>Registrarse</NavLink>
-              {' | '}
-              <NavLink to='/Login'>Log In</NavLink>
+              <NavLink to="/Register">Registrarse</NavLink>
+              {" | "}
+              <NavLink to="/Login">Log In</NavLink>
             </>
           ) : (
             <>
               {/* Enlace al perfil del usuario */}
-              <NavLink to='/users/profile'>
+              <NavLink to="/users/profile">
                 {authUser.avatar ? (
                   <img
                     src={`${VITE_API_URL}/${authUser.avatar}`}
                     alt={`profile picture ${authUser.username}`}
-                    className='profile-picture'
+                    className="profile-picture"
                   />
                 ) : (
                   <img
-                    src='/default-avatar.png'
+                    src="/default-avatar.png"
                     alt={`profile picture ${authUser.username}`}
-                    className='profile-picture'
+                    className="profile-picture"
                   />
                 )}
               </NavLink>
-              {' | '}
+              {" | "}
               {/* Botón de cerrar sesión */}
               <button
                 onClick={() => {
                   authLogout();
-                  navigate('/');
+                  navigate("/");
                 }}
               >
                 Cerrar Sesión
@@ -62,31 +62,30 @@ const Header = () => {
 
       {/* Barra de navegación solo si está logueado */}
       {isLoggedIn && (
-        <nav className='nav-bar'>
+        <nav className="nav-bar">
           <ul>
             <li>
-              <NavLink to='/users/profile'>Mi Perfil</NavLink>
+              <NavLink to="/users/profile">Mi Perfil</NavLink>
             </li>
             {isAdmin ? (
               <>
                 <li>
-                  <NavLink to='/admin/manage-reservations'>
-                    Gestionar Reservas
-                  </NavLink>
+                  <NavLink to="/booking/list">Gestionar Reservas</NavLink>
                 </li>
                 <li>
-                  <NavLink to='/admin/manage-spaces'>
-                    Gestionar Espacios
-                  </NavLink>
+                  <NavLink to="/office/create">Añadir Espacio</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/office/list">Lista de espacios</NavLink>
                 </li>
               </>
             ) : (
               <>
                 <li>
-                  <NavLink to='/user/my-reservations'>Mis Reservas</NavLink>
+                  <NavLink to="/booking/list">Mis Reservas</NavLink>
                 </li>
                 <li>
-                  <NavLink to='/user/make-reservation'>Reservar</NavLink>
+                  <NavLink to="office/list">Reservar</NavLink>
                 </li>
               </>
             )}
