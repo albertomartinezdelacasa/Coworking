@@ -1,77 +1,65 @@
 // Importamos los hooks.
-import useBookings from '../hooks/UseBookings';
-import { useContext, useState, useEffect } from 'react';
+import useBookings from "../hooks/UseBookings";
+import { useContext, useState, useEffect } from "react";
 
 // Importamos los componentes.
-import { NavLink, Navigate } from 'react-router-dom';
+import { NavLink, Navigate } from "react-router-dom";
 
 // Importamos el contexto.
-import { AuthContext } from '../contexts/AuthContext';
+import { AuthContext } from "../contexts/AuthContext";
 
 // Importamos la función toast.
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 
 // Importamos la librería moment
-import moment from 'moment';
+import moment from "moment";
 
 // Importamos la URL del servidor.
 const { VITE_API_URL } = import.meta.env;
 
 const BookingsListPage = () => {
   // Estado para controlar si se está cargando y si hay error.
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setLoading] = useState(true);
   // Estado para manejar errores
-  const [hasError, setHasError] = useState(false);
+  const [error, setError] = useState(false);
   // Obtenemos los bookings del hook
-  const { bookings, fetchBookings } = useBookings();
+  const { bookings, setBookings } = useBookings();
   // Obtenemos el token y usuario autenticado
   const { authToken, authUser } = useContext(AuthContext);
 
   // Redirigimos al login si no hay sesion iniciada
-  /* if (!authUser) {
+  if (!authToken) {
     return <Navigate to="/login" />;
-  } */
+  }
 
   // useEffect para cargar las reservas
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchBookings = async () => {
       try {
-        // Obtenemos la respuesta del servidor.
+        // Obtenmemos una respuesta del servidor.
         const res = await fetch(`${VITE_API_URL}/api/list/booking`, {
-          method: 'GET',
           headers: {
             Authorization: authToken,
           },
         });
 
-        // Procesamos la respuesta
+        // Obtenemos el body de la respuesta
         const body = await res.json();
 
-        // Si hay algún error lo lanzamos.
-        if (body.status === 'error') {
+        if (body.status === "error") {
           throw new Error(body.message);
         }
 
-        // Actualizamos el estado de las reservas usando el hook
-        fetchBookings(body.bookings);
-
-        // Mostramos un mensaje satisfactorio al usuario.
-        toast.success('Reservas obtenidas con éxito', {
-          id: 'get-bookings',
-        });
+        setBookings(body.data.bookings); // Asumiendo que tu respuesta incluye esta estructura
       } catch (err) {
-        setHasError(true); // Establecemos el estado de error
-        toast.error(err.message, {
-          id: 'get-bookings',
-        });
+        setError("Error al cargar las revesvas");
       } finally {
-        // Indicamos que ha finalizado el proceso de carga.
-        setIsLoading(false);
+        setLoading(false); // Asegúrate de establecer loading en false al final
       }
     };
 
-    fetchData();
-  }, [authToken, fetchBookings]); // Dependencias del efecto
+    fetchBookings();
+  }, []); // El array vacío hace que esto se ejecute solo una vez al montar el componente
 
   // Mientras se está cargando, mostramos un mensaje de carga.
   if (isLoading) {
@@ -84,75 +72,50 @@ const BookingsListPage = () => {
   }
 
   // Si hay un error, mostramos un mensaje de error.
-  if (hasError) {
-    return (
-      <main>
-        <h1>Error al obtener las reservas</h1>
-        <p>Intenta recargar la página o intenta de nuevo más tarde.</p>
-      </main>
-    );
+  if (error) {
+    <main>
+      <h1>Error al obtener las reservas</h1>
+      <p>Intenta recargar la página o intenta de nuevo más tarde.</p>
+      <p>ERROR: {error}</p>
+    </main>;
   }
-
   return (
     <main>
       <h2>Listado de reservas</h2>
 
-      {/* Desplegable para filtrar por estado */}
-      <label htmlFor='statusFilter'>Filtrar por estado:</label>
-      <select
-        id='statusFilter'
-        value={statusFilter}
-        onChange={(e) => setStatusFilter(e.target.value)}
-      >
-        <option value=''>Todos</option>
-        <option value='CONFIRMED'>Confirmado</option>
-        <option value='PENDING'>Pendiente</option>
-        <option value='CANCELED'>Cancelado</option>
-        <option value='REJECTED'>Rechazado</option>
-      </select>
-
       {/* Si no hay reservas, muestra un mensaje */}
-      {filteredBookings.length === 0 ? (
+      {bookings.length === 0 ? (
         <>
           <p>
             No hay reservas disponibles. Haz click en el siguiente enlace para
             hacer una reserva:
           </p>
-          <NavLink to='/office/list'>
+          <NavLink to="/office/list">
             Ver listado de oficinas disponibles
           </NavLink>
         </>
       ) : (
         <ul>
-          {filteredBookings.map((booking) => (
-            <li key={booking.id}>
-              <NavLink to={`/bookings/${booking.id}`}>Ver detalles</NavLink>
-              {/* Fotos de la oficina */}
-              {booking.photos.map((photo) => (
-                <img
-                  src={`${VITE_API_URL}/${photo.name}`}
-                  key={photo.id}
-                  alt='Foto de la oficina'
-                />
-              ))}
+          {bookings.map((booking) => (
+            <li key={booking.idBooking}>
               <ul>
                 {/* Información de la reserva */}
                 <li>
                   <h2>{booking.nameOffice}</h2>
                 </li>
                 <li>
-                  Check In:{' '}
-                  {moment(booking.checkIn).format('DD/MM/YYYY [a las] HH:mm')}
+                  Check In:{" "}
+                  {moment(booking.checkIn).format("DD/MM/YYYY [a las] HH:mm")}
                 </li>
                 <li>
-                  Check Out:{' '}
-                  {moment(booking.checkOut).format('DD/MM/YYYY [a las] HH:mm')}
+                  Check Out:{" "}
+                  {moment(booking.checkOut).format("DD/MM/YYYY [a las] HH:mm")}
                 </li>
                 <li>Estado de reserva: {booking.status}</li>
                 <li>Precio: {booking.price} €</li>
               </ul>
               {/* Si es admin, añade esta información */}
-              {authUser.role === 'ADMIN' && (
+              {authUser.role === "ADMIN" && (
                 <ul>
                   <li>Usuario: {booking.username}</li>
                   <li>
@@ -160,6 +123,9 @@ const BookingsListPage = () => {
                   </li>
                 </ul>
               )}
+              <NavLink to={`/users/bookings/${booking.idBooking}`}>
+                Ver detalles
+              </NavLink>
             </li>
           ))}
         </ul>
