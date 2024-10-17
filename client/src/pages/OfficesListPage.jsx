@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 
 // Importamos la URL del servidor.
 const { VITE_API_URL } = import.meta.env;
@@ -14,13 +15,13 @@ const OfficeListPage = () => {
         const res = await fetch(`${VITE_API_URL}/api/office/list`);
         const body = await res.json();
 
-        if (body.status === 'error') {
+        if (body.status === "error") {
           throw new Error(body.message);
         }
 
         setOffices(body.data.offices); // Asumiendo que tu respuesta incluye esta estructura
       } catch (err) {
-        setError('Error al cargar las oficinas');
+        setError("Error al cargar las oficinas");
       } finally {
         setLoading(false); // Asegúrate de establecer loading en false al final
       }
@@ -35,7 +36,7 @@ const OfficeListPage = () => {
   return (
     <div
       style={{
-        margin: '30px',
+        margin: "30px",
       }}
     >
       <h1>Lista de Oficinas</h1>
@@ -44,14 +45,14 @@ const OfficeListPage = () => {
           <div
             key={office.id}
             style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              boxShadow: '11px 10px 5px -8px rgba(0,0,0,0.11)',
-              padding: '10px',
-              margin: '10px 30px',
-              width: '400px',
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              boxShadow: "11px 10px 5px -8px rgba(0,0,0,0.11)",
+              padding: "10px",
+              margin: "10px 30px",
+              width: "400px",
             }}
           >
             <div>
@@ -62,11 +63,11 @@ const OfficeListPage = () => {
                     src={`${VITE_API_URL}/${office.photos[0].name}`} // Nota Alex :no estoy seguro que hay que hace aqui
                     alt={`Foto ${photo.name}`}
                     style={{
-                      width: '200px',
-                      height: '200px',
-                      objectFit: 'cover',
-                      boxShadow: '11px 10px 5px -8px rgba(0,0,0,0.11)',
-                      borderRadius: '10px',
+                      width: "200px",
+                      height: "200px",
+                      objectFit: "cover",
+                      boxShadow: "11px 10px 5px -8px rgba(0,0,0,0.11)",
+                      borderRadius: "10px",
                     }}
                   />
                 ))
@@ -77,9 +78,9 @@ const OfficeListPage = () => {
             <div>
               <ul
                 style={{
-                  listStyleType: 'none',
-                  padding: '0',
-                  margin: '0',
+                  listStyleType: "none",
+                  padding: "0",
+                  margin: "0",
                 }}
               >
                 <li>
@@ -90,6 +91,9 @@ const OfficeListPage = () => {
                 <li>Capacidad: {office.capacity}</li>
                 <li>£{office.price}</li>
                 <li>{office.workspace}</li>
+                <li>
+                  <NavLink to={`/booking/${office.id}`}>Reservar</NavLink>
+                </li>
               </ul>
             </div>
           </div>
