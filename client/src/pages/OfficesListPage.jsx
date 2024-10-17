@@ -33,55 +33,64 @@ const OfficeListPage = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div>
+    <div
+      style={{
+        margin: '30px',
+      }}
+    >
       <h1>Lista de Oficinas</h1>
       <div>
         {offices.map((office) => (
           <div
             key={office.id}
             style={{
-              border: '1px solid black',
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              boxShadow: '11px 10px 5px -8px rgba(0,0,0,0.11)',
               padding: '10px',
-              margin: '10px 0',
+              margin: '10px 30px',
+              width: '400px',
             }}
           >
-            <h2>{office.name}</h2>
-            <p>
-              <strong>Dirección:</strong> {office.address}
-            </p>
-            <p>
-              <strong>Descripción:</strong> {office.description}
-            </p>
-            <p>
-              <strong>Capacidad:</strong> {office.capacity}
-            </p>
-            <p>
-              <strong>Precio:</strong> ${office.price}
-            </p>
-            <p>
-              <strong>Tipo de Espacio:</strong> {office.workspace}
-            </p>
             <div>
-              <strong>Fotos:</strong>
-
-              <div>
-                {office.photos && office.photos.length > 0 ? (
-                  office.photos.map((photo) => (
-                    <img
-                      key={photo.id}
-                      src={`${VITE_API_URL}/uploads/${photo.name}`} // Nota Alex :no estoy seguro que hay que hace aqui
-                      alt={`Foto ${photo.name}`}
-                      style={{
-                        width: '100px',
-                        height: '100px',
-                        objectFit: 'cover',
-                      }}
-                    />
-                  ))
-                ) : (
-                  <p>No hay fotos disponibles.</p>
-                )}
-              </div>
+              {office.photos && office.photos.length > 0 ? (
+                office.photos.map((photo) => (
+                  <img
+                    key={photo.id}
+                    src={`${VITE_API_URL}/${office.photos[0].name}`} // Nota Alex :no estoy seguro que hay que hace aqui
+                    alt={`Foto ${photo.name}`}
+                    style={{
+                      width: '200px',
+                      height: '200px',
+                      objectFit: 'cover',
+                      boxShadow: '11px 10px 5px -8px rgba(0,0,0,0.11)',
+                      borderRadius: '10px',
+                    }}
+                  />
+                ))
+              ) : (
+                <p>No hay fotos disponibles.</p>
+              )}
+            </div>
+            <div>
+              <ul
+                style={{
+                  listStyleType: 'none',
+                  padding: '0',
+                  margin: '0',
+                }}
+              >
+                <li>
+                  <strong>{office.name}</strong>
+                </li>
+                <li>{office.address}</li>
+                <li>{office.description}</li>
+                <li>Capacidad: {office.capacity}</li>
+                <li>£{office.price}</li>
+                <li>{office.workspace}</li>
+              </ul>
             </div>
           </div>
         ))}
