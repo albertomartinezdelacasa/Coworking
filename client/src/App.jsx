@@ -20,6 +20,7 @@ import OfficeDetailsPage from './pages/OfficeDetailsPage';
 import BookAnOfficePage from './pages/BookAnOfficePage';
 import RecoverPassPage from './pages/RecoverPassPage';
 import ResetPassPage from './pages/ResetPassPage';
+import OfficeListPage from './pages/OfficesListPage';
 
 const App = () => {
   return (
@@ -43,6 +44,7 @@ const App = () => {
         <Route path='/booking/list' element={<BookingsListPage />} />
         <Route path='/office/create' element={<AddOfficeAdminPage />} />
         <Route path='/users/profile' element={<UserProfilePage />} />
+        <Route path='/office/list' element={<OfficeListPage />} />
         <Route
           path='/users/activate/:registrationCode'
           element={<ActivateUserPage />}
