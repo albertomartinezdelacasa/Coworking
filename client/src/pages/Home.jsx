@@ -22,7 +22,8 @@ const Home = () => {
       <div className='mega'>
         <div className='texts'>
           <h2>Explora todas nuestras opciones</h2>
-          <NavLink to='/office/list'>Ver todas las opciones</NavLink>s{' '}
+          <NavLink to='/office/list'>Ver todas las opciones</NavLink>
+          {''}
         </div>
 
         <div className='container'>
