@@ -22,6 +22,8 @@ const BookingsListPage = () => {
   const [isLoading, setLoading] = useState(true);
   // Estado para manejar errores
   const [error, setError] = useState(false);
+  // Estado para gestionar el filtro de estado
+  const [filterStatus, setFilterStatus] = useState("");
   // Obtenemos los bookings del hook
   const { bookings, setBookings } = useBookings();
   // Obtenemos el token y usuario autenticado
@@ -79,12 +81,35 @@ const BookingsListPage = () => {
       <p>ERROR: {error}</p>
     </main>;
   }
+
+  // Función para gestionar el cambio de selección en el menú
+  const handleStatusChange = (event) => {
+    setFilterStatus(event.target.value);
+  };
+  // Filtrar las reservas según el estado seleccionado
+  const filteredBookings = filterStatus
+    ? bookings.filter((booking) => booking.status === filterStatus)
+    : bookings;
+
   return (
     <main>
+      {/* Menú desplegable para filtrar por estado */}
+      <label htmlFor="statusFilter">Filtrar por estado:</label>
+      <select
+        id="statusFilter"
+        value={filterStatus}
+        onChange={handleStatusChange}
+      >
+        <option value="">Todas</option>
+        <option value="CONFIRMED">Confirmadas</option>
+        <option value="CANCELLED">Canceladas</option>
+        <option value="PENDING">Pendientes</option>
+        <option value="REJECTED">Rechazada</option>
+      </select>
       <h2>Listado de reservas</h2>
 
       {/* Si no hay reservas, muestra un mensaje */}
-      {bookings.length === 0 ? (
+      {filteredBookings.length === 0 ? (
         <>
           <p>
             No hay reservas disponibles. Haz click en el siguiente enlace para
@@ -96,37 +121,61 @@ const BookingsListPage = () => {
         </>
       ) : (
         <ul>
-          {bookings.map((booking) => (
-            <li key={booking.idBooking}>
-              <ul>
-                {/* Información de la reserva */}
-                <li>
-                  <h2>{booking.nameOffice}</h2>
-                </li>
-                <li>
-                  Check In:{" "}
-                  {moment(booking.checkIn).format("DD/MM/YYYY [a las] HH:mm")}
-                </li>
-                <li>
-                  Check Out:{" "}
-                  {moment(booking.checkOut).format("DD/MM/YYYY [a las] HH:mm")}
-                </li>
-                <li>Estado de reserva: {booking.status}</li>
-                <li>Precio: {booking.price} €</li>
-              </ul>
-              {/* Si es admin, añade esta información */}
-              {authUser.role === "ADMIN" && (
+          {filteredBookings.map((booking) => (
+            <>
+              <div>
+                {booking.photos && booking.photos.length > 0 ? (
+                  booking.photos.map((photo) => (
+                    <img
+                      key={photo.id}
+                      src={`${VITE_API_URL}/${booking.photos[0].name}`} // Nota Alex :no estoy seguro que hay que hace aqui
+                      alt={`Foto ${photo.name}`}
+                      style={{
+                        width: "200px",
+                        height: "200px",
+                        objectFit: "cover",
+                        boxShadow: "11px 10px 5px -8px rgba(0,0,0,0.11)",
+                        borderRadius: "10px",
+                      }}
+                    />
+                  ))
+                ) : (
+                  <p>No hay fotos disponibles.</p>
+                )}
+              </div>
+              <li key={booking.idBooking}>
                 <ul>
-                  <li>Usuario: {booking.username}</li>
+                  {/* Información de la reserva */}
                   <li>
-                    {booking.guests} Invitados / {booking.capacity} Capacidad
+                    <h2>{booking.nameOffice}</h2>
                   </li>
+                  <li>
+                    Check In:{" "}
+                    {moment(booking.checkIn).format("DD/MM/YYYY [a las] HH:mm")}
+                  </li>
+                  <li>
+                    Check Out:{" "}
+                    {moment(booking.checkOut).format(
+                      "DD/MM/YYYY [a las] HH:mm"
+                    )}
+                  </li>
+                  <li>Estado de reserva: {booking.status}</li>
+                  <li>Precio: {booking.price} €</li>
                 </ul>
-              )}
-              <NavLink to={`/users/bookings/${booking.idBooking}`}>
-                Ver detalles
-              </NavLink>
-            </li>
+                {/* Si es admin, añade esta información */}
+                {authUser.role === "ADMIN" && (
+                  <ul>
+                    <li>Usuario: {booking.username}</li>
+                    <li>
+                      {booking.guests} Invitados / {booking.capacity} Capacidad
+                    </li>
+                  </ul>
+                )}
+                <NavLink to={`/users/bookings/${booking.idBooking}`}>
+                  Ver detalles
+                </NavLink>
+              </li>
+            </>
           ))}
         </ul>
       )}
