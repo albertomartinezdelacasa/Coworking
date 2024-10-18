@@ -39,6 +39,17 @@ const getBookingsListController = async (req, res, next) => {
         // Obtenemos el listado de reservas.
         const [bookings] = await pool.query(strQuery, arrayQuery);
 
+        // Recorremos las reservas en busca de las fotos.
+        for (const booking of bookings) {
+            // Buscamos las fotos de la oficina.
+            const [photos] = await pool.query(
+                `SELECT id, name FROM officePhotos WHERE IdOffice = ?`,
+                [booking.idOffice],
+            );
+
+            // Agregamos el array de fotos a la reserva.
+            booking.photos = photos;
+        }
         // Si no hay ninguna reserva , devuelve un array vacio que en el Front usaremos
         res.send({
             status: 'ok',

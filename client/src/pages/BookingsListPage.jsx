@@ -122,36 +122,60 @@ const BookingsListPage = () => {
       ) : (
         <ul>
           {filteredBookings.map((booking) => (
-            <li key={booking.idBooking}>
-              <ul>
-                {/* Información de la reserva */}
-                <li>
-                  <h2>{booking.nameOffice}</h2>
-                </li>
-                <li>
-                  Check In:{" "}
-                  {moment(booking.checkIn).format("DD/MM/YYYY [a las] HH:mm")}
-                </li>
-                <li>
-                  Check Out:{" "}
-                  {moment(booking.checkOut).format("DD/MM/YYYY [a las] HH:mm")}
-                </li>
-                <li>Estado de reserva: {booking.status}</li>
-                <li>Precio: {booking.price} €</li>
-              </ul>
-              {/* Si es admin, añade esta información */}
-              {authUser.role === "ADMIN" && (
+            <>
+              <div>
+                {booking.photos && booking.photos.length > 0 ? (
+                  booking.photos.map((photo) => (
+                    <img
+                      key={photo.id}
+                      src={`${VITE_API_URL}/${booking.photos[0].name}`} // Nota Alex :no estoy seguro que hay que hace aqui
+                      alt={`Foto ${photo.name}`}
+                      style={{
+                        width: "200px",
+                        height: "200px",
+                        objectFit: "cover",
+                        boxShadow: "11px 10px 5px -8px rgba(0,0,0,0.11)",
+                        borderRadius: "10px",
+                      }}
+                    />
+                  ))
+                ) : (
+                  <p>No hay fotos disponibles.</p>
+                )}
+              </div>
+              <li key={booking.idBooking}>
                 <ul>
-                  <li>Usuario: {booking.username}</li>
+                  {/* Información de la reserva */}
                   <li>
-                    {booking.guests} Invitados / {booking.capacity} Capacidad
+                    <h2>{booking.nameOffice}</h2>
                   </li>
+                  <li>
+                    Check In:{" "}
+                    {moment(booking.checkIn).format("DD/MM/YYYY [a las] HH:mm")}
+                  </li>
+                  <li>
+                    Check Out:{" "}
+                    {moment(booking.checkOut).format(
+                      "DD/MM/YYYY [a las] HH:mm"
+                    )}
+                  </li>
+                  <li>Estado de reserva: {booking.status}</li>
+                  <li>Precio: {booking.price} €</li>
                 </ul>
-              )}
-              <NavLink to={`/users/bookings/${booking.idBooking}`}>
-                Ver detalles
-              </NavLink>
-            </li>
+                {/* Si es admin, añade esta información */}
+                {authUser.role === "ADMIN" && (
+                  <ul>
+                    <li>Usuario: {booking.username}</li>
+                    <li>
+                      {booking.guests} Invitados / {booking.capacity} Capacidad
+                    </li>
+                  </ul>
+                )}
+                <NavLink to={`/users/bookings/${booking.idBooking}`}>
+                  Ver detalles
+                </NavLink>
+              </li>
+            </>
           ))}
         </ul>
       )}
