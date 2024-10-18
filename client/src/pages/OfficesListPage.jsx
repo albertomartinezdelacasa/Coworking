@@ -6,8 +6,16 @@ const { VITE_API_URL } = import.meta.env;
 
 const OfficeListPage = () => {
   const [offices, setOffices] = useState([]);
+  const [filteredOffices, setFilteredOffices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // Estado para los filtros
+  const [filters, setFilters] = useState({
+    capacity: '',
+    price: '',
+    workspace: '',
+  });
 
   useEffect(() => {
     const fetchOffices = async () => {
@@ -19,29 +27,99 @@ const OfficeListPage = () => {
           throw new Error(body.message);
         }
 
-        setOffices(body.data.offices); // Asumiendo que tu respuesta incluye esta estructura
+        setOffices(body.data.offices);
+        setFilteredOffices(body.data.offices); // Inicializamos las oficinas filtradas con todas las oficinas
       } catch (err) {
         setError('Error al cargar las oficinas');
       } finally {
-        setLoading(false); // Asegúrate de establecer loading en false al final
+        setLoading(false);
       }
     };
 
     fetchOffices();
-  }, []); // El array vacío hace que esto se ejecute solo una vez al montar el componente
+  }, []);
+
+  // Función para aplicar los filtros
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [name]: value,
+    }));
+  };
+
+  useEffect(() => {
+    const filterOffices = () => {
+      const filtered = offices.filter((office) => {
+        // Filtro por capacidad
+        if (
+          filters.capacity &&
+          office.capacity < parseInt(filters.capacity, 10)
+        ) {
+          return false;
+        }
+
+        // Filtro por precio
+        if (
+          filters.price &&
+          parseFloat(office.price) > parseFloat(filters.price)
+        ) {
+          return false;
+        }
+
+        // Filtro por tipo de espacio (workspace)
+        if (filters.workspace && office.workspace !== filters.workspace) {
+          return false;
+        }
+
+        return true;
+      });
+
+      setFilteredOffices(filtered);
+    };
+
+    filterOffices();
+  }, [filters, offices]);
 
   if (loading) return <p>Cargando...</p>;
   if (error) return <p>{error}</p>;
 
   return (
-    <div
-      style={{
-        margin: '30px',
-      }}
-    >
+    <div style={{ margin: '30px' }}>
       <h1>Lista de Oficinas</h1>
+
+      {/* Formulario para filtros */}
+      <div style={{ marginBottom: '20px' }}>
+        <input
+          type='number'
+          name='capacity'
+          placeholder='Capacidad mínima'
+          value={filters.capacity}
+          onChange={handleFilterChange}
+          style={{ marginRight: '10px' }}
+        />
+        <input
+          type='number'
+          name='price'
+          placeholder='Precio máximo'
+          value={filters.price}
+          onChange={handleFilterChange}
+          style={{ marginRight: '10px' }}
+        />
+        <select
+          name='workspace'
+          value={filters.workspace}
+          onChange={handleFilterChange}
+          style={{ marginRight: '10px' }}
+        >
+          <option value=''>Tipo de Espacio</option>
+          <option value='OFFICE'>Office</option>
+          <option value='DESK'>Desk</option>
+        </select>
+      </div>
+
       <div>
-        {offices.map((office) => (
+        {filteredOffices.map((office) => (
           <div
             key={office.id}
             style={{
@@ -60,7 +138,7 @@ const OfficeListPage = () => {
                 office.photos.map((photo) => (
                   <img
                     key={photo.id}
-                    src={`${VITE_API_URL}/${office.photos[0].name}`} // Nota Alex :no estoy seguro que hay que hace aqui
+                    src={`${VITE_API_URL}/${photo.name}`}
                     alt={`Foto ${photo.name}`}
                     style={{
                       width: '200px',
@@ -76,20 +154,14 @@ const OfficeListPage = () => {
               )}
             </div>
             <div>
-              <ul
-                style={{
-                  listStyleType: 'none',
-                  padding: '0',
-                  margin: '0',
-                }}
-              >
+              <ul style={{ listStyleType: 'none', padding: '0', margin: '0' }}>
                 <li>
                   <strong>{office.name}</strong>
                 </li>
                 <li>{office.address}</li>
                 <li>{office.description}</li>
                 <li>Capacidad: {office.capacity}</li>
-                <li>£{office.price}</li>
+                <li>€{office.price}</li>
                 <li>{office.workspace}</li>
                 <li>
                   <NavLink to={`/office/details/${office.id}`}>

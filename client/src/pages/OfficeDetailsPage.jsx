@@ -55,6 +55,7 @@ const OfficeDetailsPage = () => {
           <li>Tipo: {office.workspace}</li>
           <li>Capacidad: {office.capacity}</li>
           <li>Precio: {office.price}</li>
+          <li>{office.description}</li>
           <li>Valoracion: {parseFloat(office.votesAvg).toFixed(2)}⭐</li>
           <li>De {office.totalVotes} votos</li>
         </ul>
