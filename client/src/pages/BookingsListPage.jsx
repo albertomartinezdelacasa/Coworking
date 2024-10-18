@@ -22,6 +22,8 @@ const BookingsListPage = () => {
   const [isLoading, setLoading] = useState(true);
   // Estado para manejar errores
   const [error, setError] = useState(false);
+  // Estado para gestionar el filtro de estado
+  const [filterStatus, setFilterStatus] = useState("");
   // Obtenemos los bookings del hook
   const { bookings, setBookings } = useBookings();
   // Obtenemos el token y usuario autenticado
@@ -79,12 +81,35 @@ const BookingsListPage = () => {
       <p>ERROR: {error}</p>
     </main>;
   }
+
+  // Función para gestionar el cambio de selección en el menú
+  const handleStatusChange = (event) => {
+    setFilterStatus(event.target.value);
+  };
+  // Filtrar las reservas según el estado seleccionado
+  const filteredBookings = filterStatus
+    ? bookings.filter((booking) => booking.status === filterStatus)
+    : bookings;
+
   return (
     <main>
+      {/* Menú desplegable para filtrar por estado */}
+      <label htmlFor="statusFilter">Filtrar por estado:</label>
+      <select
+        id="statusFilter"
+        value={filterStatus}
+        onChange={handleStatusChange}
+      >
+        <option value="">Todas</option>
+        <option value="CONFIRMED">Confirmadas</option>
+        <option value="CANCELLED">Canceladas</option>
+        <option value="PENDING">Pendientes</option>
+        <option value="REJECTED">Rechazada</option>
+      </select>
       <h2>Listado de reservas</h2>
 
       {/* Si no hay reservas, muestra un mensaje */}
-      {bookings.length === 0 ? (
+      {filteredBookings.length === 0 ? (
         <>
           <p>
             No hay reservas disponibles. Haz click en el siguiente enlace para
@@ -96,7 +121,7 @@ const BookingsListPage = () => {
         </>
       ) : (
         <ul>
-          {bookings.map((booking) => (
+          {filteredBookings.map((booking) => (
             <li key={booking.idBooking}>
               <ul>
                 {/* Información de la reserva */}
