@@ -30,13 +30,27 @@ const bookOfficeByIdController = async (req, res, next) => {
         }
 
         // Verificamos que las fechas son válidas
-
         if (
-            new Date(checkIn) > new Date(checkOut) ||
+            new Date(checkIn) >= new Date(checkOut) ||
             new Date(checkIn) < new Date()
         ) {
             throw generateErrorUtil(
-                ' No intentes a cambiar el espacio tiempo, tus fechas no son validas en este universo.',
+                'El check-in tiene que ser antes que el check-out',
+                400,
+            );
+        }
+
+        // Función para validar si una fecha/hora tiene minutos diferentes a '00'
+        const isHourFull = (dateString) => {
+            const date = new Date(dateString);
+            const minutes = date.getMinutes();
+            return minutes === 0;
+        };
+
+        // Verificamos checkIn y checkOut
+        if (!isHourFull(checkIn) || !isHourFull(checkOut)) {
+            throw generateErrorUtil(
+                ' La hora seleccionada debe ser en horas completas (por ejemplo, 10:00)',
                 400,
             );
         }
@@ -130,8 +144,8 @@ const bookOfficeByIdController = async (req, res, next) => {
                 status: 'PENDING',
             },
         });
-    } catch (error) {
-        next(error);
+    } catch (err) {
+        next(err);
     }
 };
 
