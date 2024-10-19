@@ -80,7 +80,7 @@ const LoginPage = () => {
         <img src="/Logo-limpio.png" alt="Logo" className="login-logo" />
         <h2>Inicio de Sesión</h2>
 
-        <form onSubmit={handleLoginUser}>
+        <form className="login-form" onSubmit={handleLoginUser}>
           <label htmlFor="email">Email:</label>
           <input
             type="email"
@@ -105,7 +105,9 @@ const LoginPage = () => {
             <a href="/users/password/recover">¿Has olvidado tu contraseña?</a>
           </p>
 
-          <button disabled={loading}>Log In</button>
+          <button className="login-button" disabled={loading}>
+            Log In
+          </button>
         </form>
       </div>
     </main>

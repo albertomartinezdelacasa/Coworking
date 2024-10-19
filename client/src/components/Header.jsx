@@ -24,7 +24,6 @@ const Header = () => {
           {!isLoggedIn ? (
             <>
               <NavLink to="/Register">Registrarse</NavLink>
-              {" | "}
               <NavLink to="/Login">Log In</NavLink>
             </>
           ) : (
