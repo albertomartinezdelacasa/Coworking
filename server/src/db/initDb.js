@@ -59,6 +59,8 @@ const main = async () => {
                 address VARCHAR(255) NOT NULL,
                 workspace ENUM ("OFFICE", "DESK"),
                 capacity INT UNSIGNED NOT NULL,
+                opening TIME NOT NULL DEFAULT '08:00',
+                closing TIME NOT NULL DEFAULT '21:00',
                 price DECIMAL(10, 2) NOT NULL,
                 createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
         )

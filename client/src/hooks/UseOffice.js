@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 const { VITE_API_URL } = import.meta.env;
 
 // Definimos el hook personalizado useOffice que toma un officeId como parámetro
-const useOffice = (officeId) => {
+const useOffice = (idOffice) => {
   // Declaramos un estado para almacenar la información de la oficina
   const [office, setOffice] = useState(null);
   // Declaramos un estado para controlar si la carga está en progreso
@@ -20,11 +20,11 @@ const useOffice = (officeId) => {
     const fetchOffice = async () => {
       try {
         // Realizamos la petición GET a la API
-        const response = await fetch(`${VITE_API_URL}/api/office/${officeId}`);
+        const res = await fetch(`${VITE_API_URL}/api/office/${idOffice}`);
         // Convertimos la respuesta a JSON
-        const data = await response.json();
+        const data = await res.json();
         // Actualizamos el estado con la información de la oficina
-        setOffice(data.office);
+        setOffice(data.offices);
       } catch (error) {
         // Si hay un error, lo mostramos en la consola
         console.error('Error fetching office:', error);
@@ -36,7 +36,7 @@ const useOffice = (officeId) => {
 
     // Llamamos a la función para obtener los datos
     fetchOffice();
-  }, [officeId]); // Este efecto se ejecutará cada vez que cambie el officeId
+  }, [idOffice]); // Este efecto se ejecutará cada vez que cambie el officeId
 
   // Retornamos un objeto con la información de la oficina y el estado de carga
   return { office, loading };
