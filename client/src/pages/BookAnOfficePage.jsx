@@ -2,19 +2,43 @@ import { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import toast from 'react-hot-toast';
-
+import useAnOffice from '../hooks/useAnOffice';
 const { VITE_API_URL } = import.meta.env;
 
 const BookAnOfficePage = () => {
   const { authUser, authToken } = useContext(AuthContext);
   const { idOffice } = useParams();
+
+  /* const officeData = async ()=>{
+    const { office } = await useSingleOffice(idOffice);
+    return office;
+  }
+  officeData(office); */
+  // Obtenemos la oficina.
+  const { oficina, loading } = useAnOffice(idOffice);
+
   const navigate = useNavigate();
 
   const [checkInDate, setCheckInDate] = useState('');
   const [checkInTime, setCheckInTime] = useState('8');
   const [checkOutDate, setCheckOutDate] = useState('');
-  const [checkOutTime, setCheckOutTime] = useState('8');
+  const [checkOutTime, setCheckOutTime] = useState('9');
   const [guests, setGuests] = useState(1);
+
+  // Si está cargando, mostramos un mensaje de carga
+  if (loading) {
+    return <div>Cargando oficina...</div>;
+  }
+
+  // Verificar si oficina tiene datos antes de continuar con la lógica
+  // Esto es porque a veces tarda el fetch y oficina termina siendo Null.
+  if (!oficina || !oficina.closing || !oficina.opening) {
+    return <div>No se encontraron los datos de la oficina.</div>;
+  }
+  // Verificamos cuantas horas esta abierto.
+  const open = parseInt(oficina.opening);
+  const close = parseInt(oficina.closing);
+  const horasAbierto = close - open + 1;
 
   const handleSubmit = async (e) => {
     try {
@@ -81,16 +105,15 @@ const BookAnOfficePage = () => {
               onChange={(e) => setCheckInTime(e.target.value)}
               required
             >
-              {Array.from({ length: 14 }, (_, i) => i + 8).map((hour) => (
-                <>
-                  <option key={hour} value={hour}>
-                    {`${hour}:00`}
-                  </option>
-                  <option key={hour} value={hour}>
-                    {`${hour}:30`}
-                  </option>
-                </>
-              ))}
+              {Array.from({ length: horasAbierto }, (_, i) => i + open).map(
+                (hour) => (
+                  <>
+                    <option key={hour} value={hour}>
+                      {`${hour}:00`}
+                    </option>
+                  </>
+                )
+              )}
             </select>
           </li>
           <li>
@@ -111,11 +134,13 @@ const BookAnOfficePage = () => {
               onChange={(e) => setCheckOutTime(e.target.value)}
               required
             >
-              {Array.from({ length: 14 }, (_, i) => i + 8).map((hour) => (
-                <option key={hour} value={hour}>
-                  {`${hour}:00`}
-                </option>
-              ))}
+              {Array.from({ length: horasAbierto }, (_, i) => i + open).map(
+                (hour) => (
+                  <option key={hour} value={hour}>
+                    {`${hour}:00`}
+                  </option>
+                )
+              )}
             </select>
           </li>
           <li>
