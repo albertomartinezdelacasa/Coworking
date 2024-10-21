@@ -12,6 +12,10 @@ import { AuthContext } from "../contexts/AuthContext";
 // Importamos moment para manipular fechar.
 import moment from "moment";
 
+// Importamos el carrusel de fotos
+import Carrusel from "../components/CarruselFotosOfi";
+
+// Importamos el formulario de votaciones
 import AddVoteForm from "../Forms/AddVoteForm";
 
 // Inicializamos el componente.
