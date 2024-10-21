@@ -142,7 +142,7 @@ const BookAnOfficePage = () => {
               onChange={(e) => setCheckOutTime(e.target.value)}
               required
             >
-              {Array.from({ length: horasAbierto }, (_, i) => i + open).map(
+              {Array.from({ length: horasAbierto + 1 }, (_, i) => i + open).map(
                 (hour) => (
                   <option key={hour} value={hour}>
                     {`${hour}:00`}
