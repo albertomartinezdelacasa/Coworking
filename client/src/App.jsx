@@ -8,6 +8,7 @@ import "/styles/Footer.css";
 import "/styles/RegisterPage.css";
 import "/styles/Main.css";
 import "/styles/UserProfilePage.css";
+import "/styles/RecoverPass.css";
 
 // Importamos los componentes
 
