@@ -1,8 +1,7 @@
-// Importamos los hooks.
-import { useEffect, useState } from 'react';
-//importamos la funcion toast
-import toast from 'react-hot-toast';
-//Importamos la URL del servidor.
+// Importamos los hooks useState y useEffect de React
+import { useState, useEffect } from 'react';
+
+// Obtenemos la URL de la API desde las variables de entorno
 const { VITE_API_URL } = import.meta.env;
 
 const useAnOffice = (idOffice) => {
@@ -13,24 +12,28 @@ const useAnOffice = (idOffice) => {
     const fetchOficina = async () => {
       try {
         const res = await fetch(`${VITE_API_URL}/api/office/${idOffice}`);
-        //Obtenemos el body.
+        // Obtenemos el body.
         const body = await res.json();
 
         if (body.status === 'error') {
           throw new Error(body.message);
         }
+
         setOficina(body.data.offices);
-        setLoading(false);
       } catch (err) {
         toast.error(err.message, {
           id: 'officeDetails',
         });
+      } finally {
+        // Esta línea se ejecutará siempre, ya sea que haya un error o no.
         setLoading(false);
       }
     };
-    //LLamamos a la funcion anterior.
+
+    // Llamamos a la función anterior.
     fetchOficina();
   }, [idOffice]);
+
   return {
     oficina,
     loading,
