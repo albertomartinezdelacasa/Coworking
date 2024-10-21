@@ -1,13 +1,16 @@
 // Importamos los hooks y el componente Navigate.
-import { useContext, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import useSingleOffice from '../hooks/useSingleOffice';
-import BookAnOfficePage from './BookAnOfficePage';
+import { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import useSingleOffice from "../hooks/useSingleOffice";
+import BookAnOfficePage from "./BookAnOfficePage";
 // Importamos el contexto.
-import { AuthContext } from '../contexts/AuthContext';
+import { AuthContext } from "../contexts/AuthContext";
 
 // Importamos la función toast.
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
+
+// Importamos el carrusel de fotos
+import Carrusel from "../components/CarruselFotosOfi";
 
 // Importamos la URL del servidor.
 const { VITE_API_URL } = import.meta.env;
@@ -40,24 +43,15 @@ const OfficeDetailsPage = () => {
       toast(err.message);
     }
   };
-
   return (
     office && (
       <main>
         <h2>{office.name}</h2>
         {
           // Fotos de la oficina.
-          office.photos.map((photo) => {
-            return (
-              <img
-                src={`${VITE_API_URL}/${photo.name}`}
-                key={photo.id}
-                alt='Foto de la oficina'
-              />
-            );
-          })
+          <Carrusel images={office.photos}></Carrusel>
         }
-        <ul style={{ listStyleType: 'none', padding: '0', margin: '0' }}>
+        <ul style={{ listStyleType: "none", padding: "0", margin: "0" }}>
           <li>
             <strong>{office.name}</strong>
           </li>
@@ -73,7 +67,7 @@ const OfficeDetailsPage = () => {
           <li>Horario de Cierre: {office.closing}</li>
         </ul>
         <button onClick={sendToBooking}>Reservar oficina</button>
-        {authUser.role === 'ADMIN' && (
+        {authUser.role === "ADMIN" && (
           <button onClick={sendToEditOffice}>Editar oficina</button>
         )}
       </main>
