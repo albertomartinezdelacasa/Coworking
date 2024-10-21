@@ -7,6 +7,7 @@ import "/styles/LoginPage.css";
 import "/styles/Footer.css";
 import "/styles/RegisterPage.css";
 import "/styles/Main.css";
+import "/styles/UserProfilePage.css";
 
 // Importamos los componentes
 
