@@ -14,7 +14,7 @@ const bookOfficeByIdController = async (req, res, next) => {
         // Obtenemos el id de la oficina a reservar y el id del usuario
         const { idOffice } = req.params;
         const idUser = req.user.id;
-        const { checkIn, checkOut, guests } = req.body;
+        const { checkIn, checkOut, guests, price } = req.body;
 
         //Obtenemos una conexión con la base de datos
         const pool = await getPool();
@@ -112,6 +112,7 @@ const bookOfficeByIdController = async (req, res, next) => {
 
             Usuario: ${userData[0].name} (ID: ${idUser})
             Oficina: #${idOffice}
+            Precio: €${price}
 
             Por favor, accede al panel de administración para confirmar o rechazar esta reserva.
 
@@ -125,9 +126,9 @@ const bookOfficeByIdController = async (req, res, next) => {
             );
             // Creamos la reserva con estado 'PENDING'
             await pool.query(
-                `INSERT INTO bookings (idUser, idOffice, checkIn, checkOut ,guests, status,createdAt) 
-             VALUES (?, ?, ? , ?, ?,'PENDING',NOW()) `,
-                [idUser, idOffice, checkIn, checkOut, guests],
+                `INSERT INTO bookings (idUser, idOffice, checkIn, checkOut ,guests, status,createdAt, price) 
+             VALUES (?, ?, ? , ?, ?,'PENDING',NOW(), ?) `,
+                [idUser, idOffice, checkIn, checkOut, guests, price],
             );
         }
 
@@ -142,6 +143,7 @@ const bookOfficeByIdController = async (req, res, next) => {
                 checkOut,
                 guests,
                 status: 'PENDING',
+                price,
             },
         });
     } catch (err) {

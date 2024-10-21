@@ -109,6 +109,7 @@ const main = async () => {
                 checkIn DATETIME NOT NULL,
                 checkOut DATETIME NOT NULL,
                 guests INT NOT NULL,
+                price DECIMAL(10, 2) NOT NULL,
                 status ENUM('PENDING', 'CONFIRMED', 'REJECTED', 'CANCELED') DEFAULT 'PENDING',
                 vote TINYINT UNSIGNED DEFAULT 0,
                 comment VARCHAR(255),

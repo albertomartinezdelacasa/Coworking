@@ -1,5 +1,6 @@
 // Importamos los hooks useState y useEffect de React
 import { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 // Obtenemos la URL de la API desde las variables de entorno
 const { VITE_API_URL } = import.meta.env;
