@@ -9,14 +9,7 @@ const BookAnOfficePage = () => {
   const { authUser, authToken } = useContext(AuthContext);
   const { idOffice } = useParams();
 
-  /* const officeData = async ()=>{
-    const { office } = await useSingleOffice(idOffice);
-    return office;
-  }
-  officeData(office); */
-  // Obtenemos la oficina.
   const { oficina, loading } = useAnOffice(idOffice);
-
   const navigate = useNavigate();
 
   const [checkInDate, setCheckInDate] = useState('');
@@ -24,29 +17,55 @@ const BookAnOfficePage = () => {
   const [checkOutDate, setCheckOutDate] = useState('');
   const [checkOutTime, setCheckOutTime] = useState('9');
   const [guests, setGuests] = useState(1);
+  const [totalPrice, setTotalPrice] = useState(0); // Estado para almacenar el precio calculado
 
-  // Si está cargando, mostramos un mensaje de carga
+  useEffect(() => {
+    if (checkInDate) {
+      calcularPrecio();
+    }
+  }, [checkInDate, checkInTime, checkOutTime]);
+
   if (loading) {
     return <div>Cargando oficina...</div>;
   }
 
-  // Verificar si oficina tiene datos antes de continuar con la lógica
-  // Esto es porque a veces tarda el fetch y oficina termina siendo Null.
-  if (!oficina || !oficina.closing || !oficina.opening) {
+  if (!oficina) {
     return <div>No se encontraron los datos de la oficina.</div>;
   }
-  // Verificamos cuantas horas esta abierto.
+
   const open = parseInt(oficina.opening);
   const close = parseInt(oficina.closing);
-  const horasAbierto = close - open + 1;
+  const horasAbierto = close - open;
+  const calcularPrecio = () => {
+    const precioPorHora = parseFloat(oficina.price);
 
+    if (isNaN(precioPorHora)) {
+      console.error('El precio por hora es inválido');
+      setTotalPrice(0);
+      return;
+    }
+
+    const horaCheckIn = parseInt(checkInTime);
+    const horaCheckOut = parseInt(checkOutTime);
+
+    // Calcular las horas reservadas
+    const horasReservadas = horaCheckOut - horaCheckIn;
+
+    // Calcular el precio total
+    const precioTotal = horasReservadas * precioPorHora;
+    if (horaCheckOut <= horaCheckIn) {
+      setTotalPrice(0);
+    } else {
+      setTotalPrice(precioTotal);
+    }
+  };
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
 
       // Combinar la fecha y la hora en un solo string para enviar al backend
       const checkIn = `${checkInDate}T${checkInTime.padStart(2, '0')}:00:00`;
-      const checkOut = `${checkOutDate}T${checkOutTime.padStart(2, '0')}:00:00`;
+      const checkOut = `${checkInDate}T${checkOutTime.padStart(2, '0')}:00:00`;
 
       const res = await fetch(`${VITE_API_URL}/api/booking/${idOffice}`, {
         method: 'POST',
@@ -58,6 +77,7 @@ const BookAnOfficePage = () => {
           checkIn,
           checkOut,
           guests,
+          price: totalPrice,
         }),
       });
 
@@ -66,7 +86,7 @@ const BookAnOfficePage = () => {
       if (body.status === 'error') {
         throw new Error(body.message);
       }
-      navigate('/');
+      navigate('/booking/list');
 
       toast.success(body.message, {
         id: 'newBooking',
@@ -88,7 +108,7 @@ const BookAnOfficePage = () => {
       <form onSubmit={handleSubmit}>
         <ul>
           <li>
-            <label htmlFor='checkInDate'>Check In - Fecha:</label>
+            <label htmlFor='checkInDate'>Fecha de reserva:</label>
             <input
               type='date'
               id='checkInDate'
@@ -107,24 +127,12 @@ const BookAnOfficePage = () => {
             >
               {Array.from({ length: horasAbierto }, (_, i) => i + open).map(
                 (hour) => (
-                  <>
-                    <option key={hour} value={hour}>
-                      {`${hour}:00`}
-                    </option>
-                  </>
+                  <option key={hour} value={hour}>
+                    {`${hour}:00`}
+                  </option>
                 )
               )}
             </select>
-          </li>
-          <li>
-            <label htmlFor='checkOutDate'>Check Out - Fecha:</label>
-            <input
-              type='date'
-              id='checkOutDate'
-              value={checkOutDate}
-              onChange={(e) => setCheckOutDate(e.target.value)}
-              required
-            />
           </li>
           <li>
             <label htmlFor='checkOutTime'>Check Out - Hora:</label>
@@ -157,6 +165,9 @@ const BookAnOfficePage = () => {
             />
           </li>
         </ul>
+        <div>
+          <strong>Precio total: {totalPrice.toFixed(2)} €</strong>
+        </div>
         <button type='submit'>Reservar</button>
       </form>
     </main>
