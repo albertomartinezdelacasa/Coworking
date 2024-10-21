@@ -57,17 +57,20 @@ const OfficeDetailsPage = () => {
             );
           })
         }
-        <ul>
+        <ul style={{ listStyleType: 'none', padding: '0', margin: '0' }}>
           <li>
-            <h2>{office.address}</h2>
+            <strong>{office.name}</strong>
           </li>
-          <li>Tipo: {office.workspace}</li>
+
+          <li>{office.address}</li>
           <li>Capacidad: {office.capacity}</li>
+
+          <li>€{office.price}</li>
+          <li>{office.workspace}</li>
           <li>{office.description}</li>
-          <li>Precio: {office.price}</li>
-          <li>{office.description}</li>
-          <li>Valoracion: {parseFloat(office.votesAvg).toFixed(2)}⭐</li>
-          <li>De {office.totalVotes} votos</li>
+
+          <li>Horario de Apertura: {office.opening}</li>
+          <li>Horario de Cierre: {office.closing}</li>
         </ul>
         <button onClick={sendToBooking}>Reservar oficina</button>
         {authUser.role === 'ADMIN' && (

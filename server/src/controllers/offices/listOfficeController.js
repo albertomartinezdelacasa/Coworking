@@ -18,7 +18,7 @@ const listOfficeController = async (req, res, next) => {
 
         const [offices] = await pool.query(
             `
-        SELECT 
+       SELECT 
             o.id,
             o.name,
             o.price,
@@ -26,6 +26,8 @@ const listOfficeController = async (req, res, next) => {
             o.capacity,
             o.address,
             o.createdAt,
+            o.opening,      
+            o.closing,     
             AVG(b.vote) AS votesAvg,
             COUNT(b.vote) AS totalVotes
         FROM offices o
