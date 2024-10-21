@@ -161,21 +161,31 @@ const AddOfficeAdminPage = () => {
           required
         />
         <label htmlFor='opening'>Horario de Apertura: </label>
-        <input
-          type='time'
+        <select
           id='opening'
           value={opening}
           onChange={(e) => setOpening(e.target.value)}
           required
-        />
+        >
+          {Array.from({ length: 24 }, (_, i) => (
+            <option key={i} value={`${i.toString().padStart(2, '0')}:00`}>
+              {`${i.toString().padStart(2, '0')}:00`}
+            </option>
+          ))}
+        </select>
         <label htmlFor='closing'>Horario de Cierre: </label>
-        <input
-          type='time'
+        <select
           id='closing'
           value={closing}
           onChange={(e) => setClosing(e.target.value)}
           required
-        />
+        >
+          {Array.from({ length: 24 }, (_, i) => (
+            <option key={i} value={`${i.toString().padStart(2, '0')}:00`}>
+              {`${i.toString().padStart(2, '0')}:00`}
+            </option>
+          ))}
+        </select>
         <label htmlFor='photos'>FOTOS:</label>
         <input
           type='file'
