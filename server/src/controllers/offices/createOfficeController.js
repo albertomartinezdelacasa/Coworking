@@ -21,6 +21,8 @@ const createOfficeController = async (req, res, next) => {
             workspace,
             capacity,
             equipments,
+            opening,
+            closing,
         } = req.body;
 
         // Verificamos si `equipments` ya es un array o si es una cadena JSON y la convertimos.
@@ -47,6 +49,8 @@ const createOfficeController = async (req, res, next) => {
             workspace,
             capacity,
             equipmentsArray,
+            opening,
+            closing,
         };
         for (const [key, value] of Object.entries(requiredFields)) {
             if (!value) {
@@ -63,9 +67,18 @@ const createOfficeController = async (req, res, next) => {
 
         // Insertamos la oficina en la tabla `offices`.
         const [newOffice] = await pool.query(
-            `INSERT INTO offices (name, price, description, address, workspace, capacity) 
-             VALUES (?, ?, ?, ?, ?, ?)`,
-            [name, price, description, address, workspace, capacity],
+            `INSERT INTO offices (name, price, description, address, workspace, capacity, opening, closing) 
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+            [
+                name,
+                price,
+                description,
+                address,
+                workspace,
+                capacity,
+                opening,
+                closing,
+            ],
         );
 
         // Obtenemos el ID de la nueva oficina.

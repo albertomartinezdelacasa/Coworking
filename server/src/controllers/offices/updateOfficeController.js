@@ -13,8 +13,16 @@ const updateOfficeController = async (req, res, next) => {
 
         // obtenemos los datos del body .
 
-        const { name, price, description, address, workspace, capacity } =
-            req.body;
+        const {
+            name,
+            price,
+            description,
+            address,
+            workspace,
+            capacity,
+            opening,
+            closing,
+        } = req.body;
 
         // Si faltan los dos campos lanzamos un error. Esto es porque si el usuario solo quiere editar
         // uno de ellos quiero permitírselo sin necesidad de que me envíe ambos valores.
@@ -24,7 +32,9 @@ const updateOfficeController = async (req, res, next) => {
             !description &&
             !address &&
             !workspace &&
-            !capacity
+            !capacity &&
+            !opening &&
+            !closing
         ) {
             generateErrorUtil('Faltan campos', 400);
         }
@@ -89,7 +99,20 @@ const updateOfficeController = async (req, res, next) => {
                 idOffice,
             ]);
         }
-
+        // Si el Admin ha modifiado el apertura del escpacio la actualizamos.
+        if (opening) {
+            await pool.query(`UPDATE offices SET opening = ? WHERE id = ?`, [
+                opening,
+                idOffice,
+            ]);
+        }
+        // Si el Admin ha modifiado la capacidad del escpacio la actualizamos.
+        if (closing) {
+            await pool.query(`UPDATE offices SET closing = ? WHERE id = ?`, [
+                closing,
+                idOffice,
+            ]);
+        }
         // Enviamos una respuesta al cliente.
         res.send({
             status: 'ok',
@@ -102,6 +125,8 @@ const updateOfficeController = async (req, res, next) => {
                     address,
                     workspace,
                     capacity,
+                    opening,
+                    closing,
                 },
             },
         });

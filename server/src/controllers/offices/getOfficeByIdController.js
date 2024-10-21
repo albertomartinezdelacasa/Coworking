@@ -28,6 +28,8 @@ const getOfficeByIdController = async (req, res, next) => {
               o.workspace,
               o.capacity,
               o.price,
+              o.opening,
+              o.closing,
               o.createdAt,
               AVG(b.vote) AS votesAvg,
               COUNT(b.vote) AS totalVotes
