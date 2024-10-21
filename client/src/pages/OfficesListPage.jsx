@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 // Importamos la URL del servidor.
 const { VITE_API_URL } = import.meta.env;
@@ -9,6 +10,7 @@ const OfficeListPage = () => {
   const [filteredOffices, setFilteredOffices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   // Estado para los filtros
   const [filters, setFilters] = useState({
@@ -123,6 +125,7 @@ const OfficeListPage = () => {
         {filteredOffices.map((office) => (
           <div
             key={office.id}
+            onClick={() => navigate(`/office/details/${office.id}`)}
             style={{
               display: 'flex',
               flexDirection: 'row',
@@ -132,24 +135,22 @@ const OfficeListPage = () => {
               padding: '10px',
               margin: '10px 30px',
               width: '500px',
+              cursor: 'pointer',
             }}
           >
             <div>
               {office.photos && office.photos.length > 0 ? (
-                office.photos.map((photo) => (
-                  <img
-                    key={photo.id}
-                    src={`${VITE_API_URL}/${photo.name}`}
-                    alt={`Foto ${photo.name}`}
-                    style={{
-                      width: '200px',
-                      height: '200px',
-                      objectFit: 'cover',
-                      boxShadow: '11px 10px 5px -8px rgba(0,0,0,0.11)',
-                      borderRadius: '10px',
-                    }}
-                  />
-                ))
+                <img
+                  src={`${VITE_API_URL}/${office.photos[0].name}`}
+                  alt={`Foto ${office.photos[0].name}`}
+                  style={{
+                    width: '200px',
+                    height: '200px',
+                    objectFit: 'cover',
+                    boxShadow: '11px 10px 5px -8px rgba(0,0,0,0.11)',
+                    borderRadius: '10px',
+                  }}
+                />
               ) : (
                 <p>No hay fotos disponibles.</p>
               )}
