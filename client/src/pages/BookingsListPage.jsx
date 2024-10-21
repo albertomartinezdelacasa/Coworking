@@ -134,9 +134,8 @@ const BookingsListPage = () => {
               <div>
                 {booking.photos && booking.photos.length > 0 ? (
                   <img
-                    key={photo.id}
-                    src={`${VITE_API_URL}/${booking.photos[0].name}`} // Nota Alex :no estoy seguro que hay que hace aqui
-                    alt={`Foto ${photo.name}`}
+                    src={`${VITE_API_URL}/${booking.photos[0].name}`}
+                    alt={`Foto ${booking.photos[0].name}`}
                     style={{
                       width: "200px",
                       height: "200px",
