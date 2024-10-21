@@ -1,6 +1,12 @@
 import { Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import "/App.css";
+import "/styles/General.css";
+import "/styles/Home.css";
+import "/styles/Header.css";
+import "/styles/LoginPage.css";
+import "/styles/Footer.css";
+import "/styles/RegisterPage.css";
+import "/styles/Main.css";
 
 // Importamos los componentes
 
