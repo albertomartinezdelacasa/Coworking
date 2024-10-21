@@ -11,6 +11,7 @@ const { VITE_API_URL } = import.meta.env;
 const useSingleOffice = (idOffice) => {
   // Declaramos una variable en el State que permita almacenar la info de la oficina.
   const [office, setOffice] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   // Obtenemos la oficina cuando se monta el componente.
   useEffect(() => {
@@ -29,12 +30,15 @@ const useSingleOffice = (idOffice) => {
         }
 
         /* console.log(body.data.offices.name); */
+
         // Almacenamos la oficina.
         setOffice(body.data.offices);
       } catch (err) {
         toast.error(err.message, {
           id: 'OfficeDetails',
         });
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -44,7 +48,8 @@ const useSingleOffice = (idOffice) => {
 
   // Retornamos las variables y funciones necesarias.
   return {
-    office: office,
+    office,
+    loading,
   };
 };
 

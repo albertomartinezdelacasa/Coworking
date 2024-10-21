@@ -17,20 +17,20 @@ const OfficeListPage = () => {
     workspace: '',
   });
 
+  // Fetch para obtener las oficinas
   useEffect(() => {
     const fetchOffices = async () => {
       try {
         const res = await fetch(`${VITE_API_URL}/api/office/list`);
-        const body = await res.json();
-
-        if (body.status === 'error') {
-          throw new Error(body.message);
+        if (!res.ok) {
+          throw new Error('Error al cargar las oficinas');
         }
+        const body = await res.json();
 
         setOffices(body.data.offices);
         setFilteredOffices(body.data.offices); // Inicializamos las oficinas filtradas con todas las oficinas
       } catch (err) {
-        setError('Error al cargar las oficinas');
+        setError(`Error al cargar las oficinas: ${err.message}`);
       } finally {
         setLoading(false);
       }
@@ -39,7 +39,7 @@ const OfficeListPage = () => {
     fetchOffices();
   }, []);
 
-  // Función para aplicar los filtros
+  // Función para manejar los cambios en los filtros
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters((prevFilters) => ({
@@ -48,6 +48,7 @@ const OfficeListPage = () => {
     }));
   };
 
+  // Filtrar oficinas cuando cambian los filtros o las oficinas originales
   useEffect(() => {
     const filterOffices = () => {
       const filtered = offices.filter((office) => {
@@ -86,7 +87,7 @@ const OfficeListPage = () => {
 
   return (
     <div style={{ margin: '30px' }}>
-      <h1>Lista de Oficinas</h1>
+      <h1>Coworking Spaces :</h1>
 
       {/* Formulario para filtros */}
       <div style={{ marginBottom: '20px' }}>
@@ -125,12 +126,12 @@ const OfficeListPage = () => {
             style={{
               display: 'flex',
               flexDirection: 'row',
-              justifyContent: 'space-between',
+              gap: '2rem',
               alignItems: 'center',
               boxShadow: '11px 10px 5px -8px rgba(0,0,0,0.11)',
               padding: '10px',
               margin: '10px 30px',
-              width: '400px',
+              width: '500px',
             }}
           >
             <div>
@@ -159,13 +160,14 @@ const OfficeListPage = () => {
                   <strong>{office.name}</strong>
                 </li>
                 <li>{office.address}</li>
-                <li>{office.description}</li>
                 <li>Capacidad: {office.capacity}</li>
                 <li>€{office.price}</li>
                 <li>{office.workspace}</li>
+                <li>Horario de Apertura: {office.opening}</li>
+                <li>Horario de Cierre: {office.closing}</li>
                 <li>
                   <NavLink to={`/office/details/${office.id}`}>
-                    Mas detalles
+                    Más detalles
                   </NavLink>
                 </li>
               </ul>
