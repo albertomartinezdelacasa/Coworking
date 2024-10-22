@@ -1,0 +1,31 @@
+.list-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #ffffff;
+  padding: 20px;
+}
+.list-page h1 {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 16px;
+  color: black;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+.list-page form {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 300px;
+}
+.list-page input {
+  width: 300px;
+  height: 44px;
+  padding: 0 10px;
+  margin-bottom: 15px;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}

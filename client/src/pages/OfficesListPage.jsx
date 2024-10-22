@@ -88,18 +88,17 @@ const OfficeListPage = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div style={{ margin: "30px" }}>
+    <main className="list-page">
       <h1>Coworking Spaces :</h1>
 
       {/* Formulario para filtros */}
-      <div style={{ marginBottom: "20px" }}>
+      <form>
         <input
           type="number"
           name="capacity"
           placeholder="Capacidad mínima"
           value={filters.capacity}
           onChange={handleFilterChange}
-          style={{ marginRight: "10px" }}
         />
         <input
           type="number"
@@ -107,23 +106,22 @@ const OfficeListPage = () => {
           placeholder="Precio máximo"
           value={filters.price}
           onChange={handleFilterChange}
-          style={{ marginRight: "10px" }}
         />
         <select
           name="workspace"
           value={filters.workspace}
           onChange={handleFilterChange}
-          style={{ marginRight: "10px" }}
         >
           <option value="">Tipo de Espacio</option>
           <option value="OFFICE">Office</option>
           <option value="DESK">Desk</option>
         </select>
-      </div>
-
-      <div>
+      </form>
+      {/* Lista de oficinas */}
+      <ul>
         {filteredOffices.map((office) => (
-          <div
+          <li
+            className="element"
             key={office.id}
             onClick={() => navigate(`/office/details/${office.id}`)}
             style={{
@@ -138,7 +136,7 @@ const OfficeListPage = () => {
               cursor: "pointer",
             }}
           >
-            <div>
+            <div className="photo">
               {office.photos && office.photos.length > 0 ? (
                 <img
                   src={`${VITE_API_URL}/${office.photos[0].name}`}
@@ -155,25 +153,26 @@ const OfficeListPage = () => {
                 <p>No hay fotos disponibles.</p>
               )}
             </div>
-            <div>
-              <ul style={{ listStyleType: "none", padding: "0", margin: "0" }}>
-                <li>
-                  <strong>{office.name}</strong>
-                </li>
-                <li>{office.address}</li>
-                <li>Capacidad: {office.capacity}</li>
-                <li>€{office.price}</li>
-                <li>{office.workspace}</li>
-                <li>Horario de Apertura: {office.opening}</li>
-                <li>Horario de Cierre: {office.closing}</li>
-                <li>Valoración: {Number(office.votesAvg).toFixed(1)}/5</li>
-                <li>Cantidad de valoraciones: {office.totalVotes}</li>
-              </ul>
-            </div>
-          </div>
+            <ul
+              className="element-details"
+              style={{ listStyleType: "none", padding: "0", margin: "0" }}
+            >
+              <li className="element-title">
+                <strong>{office.name}</strong>
+              </li>
+              <li>{office.address}</li>
+              <li>Capacidad: {office.capacity}</li>
+              <li>€{office.price}</li>
+              <li>{office.workspace}</li>
+              <li>Horario de Apertura: {office.opening}</li>
+              <li>Horario de Cierre: {office.closing}</li>
+              <li>Valoración: {Number(office.votesAvg).toFixed(1)}/5</li>
+              <li>Cantidad de valoraciones: {office.totalVotes}</li>
+            </ul>
+          </li>
         ))}
-      </div>
-    </div>
+      </ul>
+    </main>
   );
 };
 
