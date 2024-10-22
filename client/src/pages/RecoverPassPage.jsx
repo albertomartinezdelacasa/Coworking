@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
+// Asegúrate de que la ruta al logo sea correcta
+
 const { VITE_API_URL } = import.meta.env;
 
 const RecoverPassPage = () => {
@@ -40,21 +42,25 @@ const RecoverPassPage = () => {
   };
 
   return (
-    <main>
-      <h2>Recuperar Contraseña</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <button type="submit" disabled={loading}>
-          Enviar correo de recuperación
-        </button>
-      </form>
+    <main className="recover-pass-container">
+      <div className="recover-pass-form">
+        <img src="/Logo-limpio.png" alt="Logo" className="recover-pass-logo" />
+        <h2>Recuperar Contraseña</h2>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            placeholder="Ingresa tu email"
+          />
+          <button type="submit" disabled={loading}>
+            Enviar código de recuperación
+          </button>
+        </form>
+      </div>
     </main>
   );
 };

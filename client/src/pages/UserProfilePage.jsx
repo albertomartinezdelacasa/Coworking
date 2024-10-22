@@ -18,7 +18,7 @@ const UserProfilePage = () => {
     useContext(AuthContext);
 
   // Creamos una variable en el State por cada input.
-  const [avatar, setAvatar] = useState("");
+  const [avatar, setAvatar] = useState(null);
   const [newPassword, setNewPassword] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [repeatNewPassword, setRepeatNewPassword] = useState("");
@@ -107,45 +107,57 @@ const UserProfilePage = () => {
     }
   };
 
+  // Función para manejar el clic en la imagen del avatar
+  const handleAvatarClick = () => {
+    document.getElementById("avatarInput").click();
+  };
+
+  // Función para manejar el cambio de archivo
+  const handleFileChange = (e) => {
+    if (e.target.files[0]) {
+      setAvatar(e.target.files[0]);
+    }
+  };
+
   //Si no estamos logueados redirigimos a la página de login.
   if (!authUser) {
     return <Navigate to="/login" />;
   }
 
   return (
-    <main>
-      <h2>Hola, {authUser.username}</h2>
+    <main className="user-profile-page">
+      <h2 className="profile-title">Hola, {authUser.username}</h2>
 
-      <div>
-        {authUser.avatar ? (
-          <img
-            src={`${VITE_API_URL}/${authUser.avatar}`}
-            alt={`profile picture ${authUser.username}`}
-            className="profile-image"
+      <div className="avatar-update-container">
+        <div className="avatar-container" onClick={handleAvatarClick}>
+          {authUser.avatar ? (
+            <img
+              src={`${VITE_API_URL}/${authUser.avatar}`}
+              alt={`foto de perfil de ${authUser.username}`}
+              className="profile-image"
+            />
+          ) : (
+            <img
+              src="/default-avatar.png"
+              alt={`foto de perfil de ${authUser.username}`}
+              className="profile-image"
+            />
+          )}
+          <input
+            type="file"
+            id="avatarInput"
+            onChange={handleFileChange}
+            accept="image/jpeg, image/png"
+            style={{ display: "none" }}
           />
-        ) : (
-          <img
-            src="/default-avatar.png"
-            alt={`profile picture ${authUser.username}`}
-            className="profile-image"
-          />
-        )}
+        </div>
+
+        <form onSubmit={handleUpdateAvatar}>
+          <button className="update-avatar-button">Actualizar avatar</button>
+        </form>
       </div>
 
-      <form onSubmit={handleUpdateAvatar}>
-        <label htmlFor="avatar">Actualizar avatar:</label>
-        <input
-          type="file"
-          id="avatar"
-          onChange={(e) => setAvatar(e.target.files[0])}
-          accept="image/jpeg, image/png"
-          required
-        />
-
-        <button>Actualizar avatar</button>
-      </form>
-
-      <form onSubmit={handleChangePassword}>
+      <form onSubmit={handleChangePassword} className="password-change-form">
         <h3>Cambiar contraseña</h3>
         <label htmlFor="currentPassword">Contraseña actual:</label>
         <input

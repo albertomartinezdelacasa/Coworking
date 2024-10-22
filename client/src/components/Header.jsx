@@ -44,7 +44,7 @@ const Header = () => {
                   />
                 )}
               </NavLink>
-              {" | "}
+              
               {/* Botón de cerrar sesión */}
               <button
                 onClick={() => {

@@ -1,0 +1,228 @@
+/* Estilos existentes ... */
+
+/* Nuevos estilos para el layout de la página */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.user-profile-page {
+  flex: 1 0 auto;
+  padding: 20px;
+}
+
+.footer {
+  flex-shrink: 0;
+  background-color: #f8f9fa;
+  padding: 20px;
+  text-align: center;
+  border-top: 1px solid #e9ecef;
+}
+
+/* Resto de los estilos existentes ... */
+
+.user-profile-page {
+  font-family: 'IBM Plex Sans', sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.profile-title {
+  font-size: 24px;
+  font-weight: 600;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.avatar-update-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  width: 100%;
+  max-width: 1060px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.avatar-container {
+  margin-bottom: 10px;
+}
+
+.profile-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border: 5px solid #f0f0f0;
+  border-radius: 50%;
+  transition: border-color 0.3s ease, opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.profile-image:hover {
+  opacity: 0.7;
+  border-color: #6433A7;
+}
+
+.update-avatar-button {
+  padding: 8px 16px;
+  background-color: #6433A7;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  align-self: flex-start; /* Alineamos el botón a la izquierda */
+}
+
+.update-avatar-button:hover {
+  background-color: #522a8a;
+}
+
+.avatar-form-container {
+  width: 1060px;
+  height: 178px;
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.avatar-form-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Esto crea el espacio vertical entre los elementos */
+}
+
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  color: #000;
+}
+
+.form-input {
+  width: 100%;
+  height: 25px;
+  padding: 0 5px;
+  border: 1px solid #ccc;
+}
+
+.form-input::placeholder {
+  color: #ccc;
+}
+
+.form-input:hover {
+  border-color: #999;
+}
+
+.form-button {
+  width: 100%;
+  padding: 8px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.form-button:hover {
+  background-color: #0056b3;
+}
+
+/* Nuevos estilos para el formulario de cambio de contraseña */
+.password-change-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1060px;
+  margin-top: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.password-change-form h3 {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.password-change-form label {
+  align-self: flex-start;
+  margin-bottom: 5px;
+  width: 100%;
+}
+
+.password-change-form input {
+  width: 100%;
+  max-width: 300px; /* Ajusta este valor según sea necesario */
+  margin-bottom: 15px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px; /* Ajusta el tamaño de la fuente para que coincida con el placeholder */
+}
+
+.password-change-form input::placeholder {
+  font-size: 14px; /* Asegúrate de que el tamaño de la fuente del placeholder coincida */
+}
+
+.password-change-form button {
+  align-self: flex-start;
+  padding: 8px 16px;
+  background-color: #6433A7;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.password-change-form button:hover {
+  background-color: #522a8a;
+}
+
+/* Media queries para responsividad */
+@media (max-width: 768px) {
+  .user-profile-page {
+    padding: 10px;
+  }
+
+  .avatar-update-container,
+  .password-change-form {
+    padding: 15px;
+  }
+
+  .profile-title {
+    font-size: 20px;
+  }
+
+  .update-avatar-button,
+  .password-change-form button {
+    width: 100%;
+  }
+
+  .password-change-form input {
+    max-width: 100%; /* Permite que los inputs ocupen todo el ancho en pantallas más pequeñas */
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-title {
+    font-size: 18px;
+  }
+
+  .avatar-update-container,
+  .password-change-form {
+    padding: 10px;
+  }
+}
