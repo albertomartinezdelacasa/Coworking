@@ -20,10 +20,15 @@ const updateOfficeController = async (req, res, next) => {
             address,
             workspace,
             capacity,
+            equipments,
             opening,
             closing,
         } = req.body;
 
+        // Verificamos si `equipments` ya es un array o si es una cadena JSON y la convertimos.
+        const equipmentsArray = Array.isArray(equipments)
+            ? equipments
+            : JSON.parse(equipments);
         // Si faltan los dos campos lanzamos un error. Esto es porque si el usuario solo quiere editar
         // uno de ellos quiero permitírselo sin necesidad de que me envíe ambos valores.
         if (
@@ -33,6 +38,7 @@ const updateOfficeController = async (req, res, next) => {
             !address &&
             !workspace &&
             !capacity &&
+            !equipmentsArray &&
             !opening &&
             !closing
         ) {
@@ -113,6 +119,19 @@ const updateOfficeController = async (req, res, next) => {
                 idOffice,
             ]);
         }
+
+        // Validamos y guardamos los equipamientos asociados a la oficina en `officesEquipments`.
+        //const equipmentValues = [];
+        for (const idEquipment of equipmentsArray) {
+            // Preparamos los valores a insertar en la relación.
+            //equipmentValues.push([idOffice, idEquipment]);
+            // Insertamos todas las relaciones de `officesEquipments` de una sola vez.
+            await pool.query(
+                `INSERT INTO officesEquipments (idOffice, idEquipment) VALUES (?,?) `,
+                [idOffice, idEquipment],
+            );
+        }
+
         // Enviamos una respuesta al cliente.
         res.send({
             status: 'ok',
