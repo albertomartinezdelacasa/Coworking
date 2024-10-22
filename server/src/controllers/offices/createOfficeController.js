@@ -25,6 +25,14 @@ const createOfficeController = async (req, res, next) => {
             closing,
         } = req.body;
 
+        // Verificamos que el horario este bien.
+        if (opening >= closing) {
+            throw generateErrorUtil(
+                'El horario de cierre tiene que ser posterior al de apertura',
+                400,
+            );
+        }
+
         // Verificamos si `equipments` ya es un array o si es una cadena JSON y la convertimos.
         const equipmentsArray = Array.isArray(equipments)
             ? equipments
