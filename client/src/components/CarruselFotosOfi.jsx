@@ -1,7 +1,7 @@
-import React from "react";
-import Slider from "react-slick"; // Importamos el componente Slider
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import React from 'react';
+import Slider from 'react-slick'; // Importamos el componente Slider
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 // Importamos la URL del servidor.
 const { VITE_API_URL } = import.meta.env;
@@ -27,8 +27,8 @@ const Carrusel = ({ images }) => {
           <img
             src={`${VITE_API_URL}/${image.name}`}
             key={image.id}
-            alt={"Imagen del carrusel"}
-            style={{ width: "400px", height: "400px" }}
+            alt={'Imagen del carrusel'}
+            style={{ width: '400px', height: '400px' }}
           />
         </div>
       ))}
