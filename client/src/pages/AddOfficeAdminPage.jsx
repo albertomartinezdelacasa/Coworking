@@ -40,7 +40,7 @@ const AddOfficeAdminPage = () => {
 
         const body = await res.json();
         if (body.status === "ok") {
-          setEquipments(body.data.equipments[0]); // Asegúrate de que esta es la estructura correcta
+          setEquipments(body.data.equipments); 
         } else {
           toast.error(body.message);
         }
