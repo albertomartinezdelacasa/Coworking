@@ -15,6 +15,10 @@ header, .portada {
   padding-right: 0;
 }
 
+header {
+  margin-top: 15px;
+}
+
 .portada {
   display: flex;
   justify-content: flex-start;
@@ -30,7 +34,7 @@ header, .portada {
   width: 600px;
   margin-top: 2rem;
   padding: 1rem;
-  background-color: rgb(244, 244, 244);
+  background-color: rgb(255, 255, 255);
 }
 
 @media (max-width: 768px) {
