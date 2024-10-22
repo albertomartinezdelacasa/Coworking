@@ -1,24 +1,13 @@
-// Importación de los hooks useState y useContext de React
-import { useState, useContext } from 'react';
-
-// Importación de los componentes useNavigate y Navigate de react-router-dom
-import { useNavigate, Navigate } from 'react-router-dom';
-
-// Importación del contexto de autenticación
+import { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
-
-// Importación de la función toast para mostrar notificaciones
 import toast from 'react-hot-toast';
 
 // Obtención de la URL de la API desde las variables de entorno
 const { VITE_API_URL } = import.meta.env;
 
-// Definición del componente funcional AddOfficeAdmin
 const AddOfficeAdminPage = () => {
-  // Extracción de authToken y authUser del contexto de autenticación
-  const { authToken, authUser } = useContext(AuthContext);
-
-  // Hook para la navegación programática
+  const { authToken } = useContext(AuthContext);
   const navigate = useNavigate();
 
   // Estados para los campos del formulario
@@ -31,26 +20,41 @@ const AddOfficeAdminPage = () => {
   const [opening, setOpening] = useState('');
   const [closing, setClosing] = useState('');
   const [photos, setPhotos] = useState([]);
+  const [equipments, setEquipments] = useState([]); // Estado para los equipamientos
+  const [selectedEquipments, setSelectedEquipments] = useState([]); // Equipamientos seleccionados
 
-  // Función para manejar la selección de archivos
-  const handleFile = (e) => {
-    // Mueve esta función fuera de handleAddSpace
-    const file = Array.from(e.target.files);
-    if (file.length <= 5) {
-      setPhotos(file);
-    } else {
-      toast.error('No puedes subir más de 5 fotos');
-      e.target.value = null;
-    }
-  };
+  // Obtener equipamientos al montar el componente
+  useEffect(() => {
+    const fetchEquipments = async () => {
+      try {
+        const res = await fetch(`${VITE_API_URL}/api/office/equipments`, {
+          headers: {
+            Authorization: authToken,
+          },
+        });
+
+        if (!res.ok) {
+          throw new Error('Error al obtener los equipamientos'); // Manejar error si no es 2xx
+        }
+
+        const body = await res.json();
+        if (body.status === 'ok') {
+          setEquipments(body.data.equipments[0]); // Asegúrate de que esta es la estructura correcta
+        } else {
+          toast.error(body.message);
+        }
+      } catch (err) {
+        toast.error(err.message);
+      }
+    };
+
+    fetchEquipments();
+  }, [authToken]);
 
   // Función para manejar el envío del formulario
   const handleAddSpace = async (e) => {
     try {
       e.preventDefault();
-
-      // esto es por que en SQL solo el formato time te pide 00:00:00,
-      //pero el time del form solo 00:00 asi que hay que meter los segundos
 
       const formattedOpening = opening.length === 5 ? `${opening}:00` : opening;
       const formattedClosing = closing.length === 5 ? `${closing}:00` : closing;
@@ -66,7 +70,8 @@ const AddOfficeAdminPage = () => {
       formData.append('opening', formattedOpening);
       formData.append('closing', formattedClosing);
 
-      formData.append('equipments', JSON.stringify([1]));
+      // Agregar los equipamientos seleccionados al FormData
+      formData.append('equipments', JSON.stringify(selectedEquipments));
 
       // Agregar las fotos al FormData
       for (let i = 0; i < photos.length; i++) {
@@ -74,14 +79,16 @@ const AddOfficeAdminPage = () => {
       }
 
       // Envío de la solicitud POST a la API
-      const res = await fetch(`${VITE_API_URL}/api/office/create`, {
-        method: 'POST',
-        headers: {
-          /*  "Content-Type": "application/json", */
-          Authorization: authToken,
-        },
-        body: formData,
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/office/create`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: authToken,
+          },
+          body: formData,
+        }
+      );
 
       // Procesamiento de la respuesta
       const body = await res.json();
@@ -91,71 +98,78 @@ const AddOfficeAdminPage = () => {
       }
 
       // Mostrar mensaje de éxito y navegar a la página principal
-      toast.success(body.message, { id: 'newOffice' });
-
+      toast.success(body.message);
       navigate('/');
     } catch (err) {
-      // Mostrar mensaje de error en caso de fallo
-      toast.error(err.message, { id: 'newOffice' });
+      toast.error(err.message);
     }
   };
 
-  /*     // Redirección si el usuario no está autenticado o no es admin
-    if (!authUser||authUser.role !== "ADMIN") {
-        <Navigate to="/" />;
-    } hace falta meter el suthuserloading */
+  // Manejo de selección de equipamientos
+  const handleEquipmentChange = (e) => {
+    const { value, checked } = e.target;
+    const id = Number(value); // Asegúrate de convertir el valor a número
+    if (checked) {
+      setSelectedEquipments((prev) => [...prev, id]); // Añadir el ID como número
+    } else {
+      setSelectedEquipments((prev) =>
+        prev.filter((id) => id !== Number(value))
+      ); // Filtrar el ID como número
+    }
+  };
+
+  // Función para manejar la selección de archivos
+  const handleFile = (e) => {
+    const file = Array.from(e.target.files);
+    if (file) {
+      setPhotos(file); // Asigna las fotos seleccionadas al estado
+    }
+  };
 
   return (
-    <main>
-      <h2>Página de creación de oficinas.</h2>
+    <div>
+      <h1>Añadir Oficina</h1>
       <form onSubmit={handleAddSpace}>
-        <label htmlFor='name'>NOMBRE: </label>
         <input
           type='text'
-          id='name'
+          placeholder='Nombre'
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
         />
-        <label htmlFor='address'>DIRECCIÓN: </label>
         <input
           type='text'
-          id='address'
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-          required
-        />
-        <label htmlFor='description'>DESCRIPCIÓN: </label>
-        <input
-          type='text'
-          id='description'
+          placeholder='Descripción'
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           required
         />
-        <label htmlFor='capacity'>CAPACIDAD: </label>
         <input
-          type='number'
-          id='capacity'
-          value={capacity}
-          onChange={(e) => setCapacity(e.target.value)}
+          type='text'
+          placeholder='Dirección'
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
           required
         />
-        <label htmlFor='workspace'>WORKSPACE: </label>
         <select
-          id='workspace'
           value={workspace}
           onChange={(e) => setWorkspace(e.target.value)}
           required
         >
-          <option value='OFFICE'>OFFICE</option>
-          <option value='DESK'>DESK</option>
+          <option value=''>Seleccionar tipo de espacio</option>
+          <option value='OFFICE'>Oficina</option>
+          <option value='DESK'>Escritorio</option>
         </select>
-
-        <label htmlFor='price'>PRECIO: </label>
         <input
           type='number'
-          id='price'
+          placeholder='Capacidad'
+          value={capacity}
+          onChange={(e) => setCapacity(e.target.value)}
+          required
+        />
+        <input
+          type='number'
+          placeholder='Precio'
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           required
@@ -195,11 +209,28 @@ const AddOfficeAdminPage = () => {
           multiple
           required
         />
-        <button type='submit'>Crear</button>
+
+        <h2>Equipamientos disponibles</h2>
+
+        {Array.isArray(equipments) &&
+          equipments.map((equipment) => (
+            <div key={equipment.id}>
+              <label>
+                <input
+                  type='checkbox'
+                  value={equipment.id} // Valor como número
+                  onChange={handleEquipmentChange}
+                  checked={selectedEquipments.includes(equipment.id)} // Comparar directamente como número
+                />
+                {equipment.name}
+              </label>
+            </div>
+          ))}
+
+        <button type='submit'>Crear Oficina</button>
       </form>
-    </main>
+    </div>
   );
 };
 
-// Exportación del componente
 export default AddOfficeAdminPage;
