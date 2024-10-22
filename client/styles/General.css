@@ -37,3 +37,8 @@ input:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px #6433A7;
 }
+
+h1, h2, h3 {
+    letter-spacing: 0.5px;
+}
+
