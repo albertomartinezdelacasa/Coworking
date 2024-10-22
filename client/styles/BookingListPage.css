@@ -1,0 +1,249 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&display=swap');
+
+.bookings-list-page {
+  padding: 20px;
+  min-height: calc(100vh - 60px); /* Ajusta el 60px según la altura de tu header */
+  display: flex;
+  flex-direction: column;
+}
+
+.bookings-list {
+  list-style-type: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.booking-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.booking-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.booking-image {
+  height: 200px;
+  overflow: hidden;
+}
+
+.booking-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.booking-info {
+  padding: 25px 15px 15px;
+}
+
+.booking-info h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: black;
+  letter-spacing: 0.5px;
+}
+
+.booking-info ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.booking-info li {
+  margin-bottom: 5px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: black;
+  letter-spacing: 0.5px;
+}
+
+.booking-info .booking-status {
+  color: #6433A7;
+}
+
+.admin-info {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+}
+
+footer {
+  margin-top: auto;
+  padding: 20px 0;
+  background-color: #f8f8f8;
+  text-align: center;
+}
+
+.filter-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.page-title {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: black;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+  margin-right: 20px;
+  flex-grow: 1;
+}
+
+.status-filter-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+#statusFilter {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: black;
+  padding: 8px 12px 8px 35px;
+  padding-right: 30px; /* Espacio para la flecha */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: white;
+  cursor: pointer;
+  width: auto;
+  max-width: 200px;
+  transition: background-color 0.3s ease;
+}
+
+.status-filter-wrapper::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  pointer-events: none;
+}
+
+.status-filter-wrapper::after {
+  content: '\25BC';
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+#statusFilter:hover {
+  background-color: #CBC5EA;
+}
+
+#statusFilter:focus {
+  outline: none;
+  border-color: #6433A7;
+  box-shadow: 0 0 0 2px rgba(100, 51, 167, 0.2);
+}
+
+/* Media queries para diseño responsive */
+@media screen and (max-width: 768px) {
+  .bookings-list {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+
+  .page-title,
+  #statusFilter,
+  label[for="statusFilter"] {
+    font-size: 18px;
+  }
+
+  .booking-info li {
+    font-size: 14px;
+  }
+
+  .filter-container {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .page-title {
+    margin-bottom: 0;
+  }
+
+  .status-filter {
+    width: 100%;
+  }
+
+  #statusFilter {
+    max-width: 150px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .bookings-list-page {
+    padding: 10px;
+  }
+
+  .bookings-list {
+    grid-template-columns: 1fr;
+  }
+
+  .booking-image {
+    height: 180px;
+  }
+
+  .booking-info {
+    padding: 20px 10px 10px;
+  }
+
+  .page-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+    margin-right: 0;
+  }
+
+  .booking-info li {
+    font-size: 14px;
+  }
+
+  .status-filter {
+    font-size: 14px;
+  }
+
+  .filter-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #statusFilter,
+  label[for="statusFilter"] {
+    font-size: 14px;
+    margin-left: 0;
+  }
+
+  #statusFilter {
+    max-width: none;
+    width: 100%;
+    margin-top: 5px;
+  }
+}

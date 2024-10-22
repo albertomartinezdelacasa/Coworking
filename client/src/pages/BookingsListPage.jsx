@@ -96,25 +96,25 @@ const BookingsListPage = () => {
   };
 
   return (
-    <main>
-      {/* Menú desplegable para filtrar por estado */}
-      <label htmlFor="statusFilter">Filtrar por estado:</label>
-      <select
-        id="statusFilter"
-        value={filterStatus}
-        onChange={handleStatusChange}
-      >
-        <option value="">Todas</option>
-        <option value="CONFIRMED">Confirmadas</option>
-        <option value="CANCELED">Canceladas</option>
-        <option value="PENDING">Pendientes</option>
-        <option value="REJECTED">Rechazadas</option>
-      </select>
-      <h2>Listado de reservas</h2>
+    <main className="bookings-list-page">
+      <div className="filter-container">
+        <h1 className="page-title">Listado de reservas</h1>
+        <select
+          id="statusFilter"
+          value={filterStatus}
+          onChange={handleStatusChange}
+          placeholder="Filtrar por estado"
+        >
+          <option value="">Todas</option>
+          <option value="CONFIRMED">Confirmadas</option>
+          <option value="CANCELED">Canceladas</option>
+          <option value="PENDING">Pendientes</option>
+          <option value="REJECTED">Rechazadas</option>
+        </select>
+      </div>
 
-      {/* Si no hay reservas, muestra un mensaje */}
       {filteredBookings.length === 0 ? (
-        <>
+        <div>
           <p>
             No hay reservas disponibles. Haz click en el siguiente enlace para
             hacer una reserva:
@@ -122,39 +122,31 @@ const BookingsListPage = () => {
           <NavLink to="/office/list">
             Ver listado de oficinas disponibles
           </NavLink>
-        </>
+        </div>
       ) : (
-        <ul>
+        <ul className="bookings-list">
           {filteredBookings.map((booking) => (
             <li
+              key={booking.idBooking}
+              className="booking-card"
               onClick={() =>
                 handleClikList(`/users/bookings/${booking.idBooking}`)
               }
             >
-              <div>
+              <div className="booking-image">
                 {booking.photos && booking.photos.length > 0 ? (
                   <img
                     src={`${VITE_API_URL}/${booking.photos[0].name}`}
                     alt={`Foto ${booking.photos[0].name}`}
-                    style={{
-                      width: "200px",
-                      height: "200px",
-                      objectFit: "cover",
-                      boxShadow: "11px 10px 5px -8px rgba(0,0,0,0.11)",
-                      borderRadius: "10px",
-                    }}
+                    className="booking-photo"
                   />
                 ) : (
                   <p>No hay fotos disponibles.</p>
                 )}
               </div>
-              <li key={booking.idBooking}>
+              <div className="booking-info">
+                <h2>{booking.nameOffice}</h2>
                 <ul>
-                  {/* Información de la reserva */}
-
-                  <li>
-                    <h2>{booking.nameOffice}</h2>
-                  </li>
                   <li>
                     Check In:{" "}
                     {moment(booking.checkIn).format("DD/MM/YYYY [a las] HH:mm")}
@@ -165,19 +157,20 @@ const BookingsListPage = () => {
                       "DD/MM/YYYY [a las] HH:mm"
                     )}
                   </li>
-                  <li>Estado de reserva: {booking.status}</li>
+                  <li className="booking-status">
+                    Estado de reserva: {booking.status}
+                  </li>
                   <li>Precio: {booking.price} €</li>
                 </ul>
-                {/* Si es admin, añade esta información */}
                 {authUser.role === "ADMIN" && (
-                  <ul>
+                  <ul className="admin-info">
                     <li>Usuario: {booking.username}</li>
                     <li>
                       {booking.guests} Invitados / {booking.capacity} Capacidad
                     </li>
                   </ul>
                 )}
-              </li>
+              </div>
             </li>
           ))}
         </ul>
