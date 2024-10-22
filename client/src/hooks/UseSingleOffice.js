@@ -29,7 +29,7 @@ const useSingleOffice = (idOffice) => {
           throw new Error(body.message);
         }
 
-        /* console.log(body.data.offices.name); */
+        console.log('body que llega al UsesingleOffice', body.data); // Aquí revisamos qué estructura tiene la respuesta
 
         // Almacenamos la oficina.
         setOffice(body.data.offices);
