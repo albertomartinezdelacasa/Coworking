@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // Importamos la URL del servidor.
 const { VITE_API_URL } = import.meta.env;
@@ -14,9 +14,9 @@ const OfficeListPage = () => {
 
   // Estado para los filtros
   const [filters, setFilters] = useState({
-    capacity: '',
-    price: '',
-    workspace: '',
+    capacity: "",
+    price: "",
+    workspace: "",
   });
 
   // Fetch para obtener las oficinas
@@ -25,7 +25,7 @@ const OfficeListPage = () => {
       try {
         const res = await fetch(`${VITE_API_URL}/api/office/list`);
         if (!res.ok) {
-          throw new Error('Error al cargar las oficinas');
+          throw new Error("Error al cargar las oficinas");
         }
         const body = await res.json();
 
@@ -88,36 +88,36 @@ const OfficeListPage = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div style={{ margin: '30px' }}>
+    <div style={{ margin: "30px" }}>
       <h1>Coworking Spaces :</h1>
 
       {/* Formulario para filtros */}
-      <div style={{ marginBottom: '20px' }}>
+      <div style={{ marginBottom: "20px" }}>
         <input
-          type='number'
-          name='capacity'
-          placeholder='Capacidad mínima'
+          type="number"
+          name="capacity"
+          placeholder="Capacidad mínima"
           value={filters.capacity}
           onChange={handleFilterChange}
-          style={{ marginRight: '10px' }}
+          style={{ marginRight: "10px" }}
         />
         <input
-          type='number'
-          name='price'
-          placeholder='Precio máximo'
+          type="number"
+          name="price"
+          placeholder="Precio máximo"
           value={filters.price}
           onChange={handleFilterChange}
-          style={{ marginRight: '10px' }}
+          style={{ marginRight: "10px" }}
         />
         <select
-          name='workspace'
+          name="workspace"
           value={filters.workspace}
           onChange={handleFilterChange}
-          style={{ marginRight: '10px' }}
+          style={{ marginRight: "10px" }}
         >
-          <option value=''>Tipo de Espacio</option>
-          <option value='OFFICE'>Office</option>
-          <option value='DESK'>Desk</option>
+          <option value="">Tipo de Espacio</option>
+          <option value="OFFICE">Office</option>
+          <option value="DESK">Desk</option>
         </select>
       </div>
 
@@ -127,15 +127,15 @@ const OfficeListPage = () => {
             key={office.id}
             onClick={() => navigate(`/office/details/${office.id}`)}
             style={{
-              display: 'flex',
-              flexDirection: 'row',
-              gap: '2rem',
-              alignItems: 'center',
-              boxShadow: '11px 10px 5px -8px rgba(0,0,0,0.11)',
-              padding: '10px',
-              margin: '10px 30px',
-              width: '500px',
-              cursor: 'pointer',
+              display: "flex",
+              flexDirection: "row",
+              gap: "2rem",
+              alignItems: "center",
+              boxShadow: "11px 10px 5px -8px rgba(0,0,0,0.11)",
+              padding: "10px",
+              margin: "10px 30px",
+              width: "500px",
+              cursor: "pointer",
             }}
           >
             <div>
@@ -144,11 +144,11 @@ const OfficeListPage = () => {
                   src={`${VITE_API_URL}/${office.photos[0].name}`}
                   alt={`Foto ${office.photos[0].name}`}
                   style={{
-                    width: '200px',
-                    height: '200px',
-                    objectFit: 'cover',
-                    boxShadow: '11px 10px 5px -8px rgba(0,0,0,0.11)',
-                    borderRadius: '10px',
+                    width: "200px",
+                    height: "200px",
+                    objectFit: "cover",
+                    boxShadow: "11px 10px 5px -8px rgba(0,0,0,0.11)",
+                    borderRadius: "10px",
                   }}
                 />
               ) : (
@@ -156,7 +156,7 @@ const OfficeListPage = () => {
               )}
             </div>
             <div>
-              <ul style={{ listStyleType: 'none', padding: '0', margin: '0' }}>
+              <ul style={{ listStyleType: "none", padding: "0", margin: "0" }}>
                 <li>
                   <strong>{office.name}</strong>
                 </li>
@@ -166,11 +166,8 @@ const OfficeListPage = () => {
                 <li>{office.workspace}</li>
                 <li>Horario de Apertura: {office.opening}</li>
                 <li>Horario de Cierre: {office.closing}</li>
-                <li>
-                  <NavLink to={`/office/details/${office.id}`}>
-                    Más detalles
-                  </NavLink>
-                </li>
+                <li>Valoración: {Number(office.votesAvg).toFixed(1)}/5</li>
+                <li>Cantidad de valoraciones: {office.totalVotes}</li>
               </ul>
             </div>
           </div>

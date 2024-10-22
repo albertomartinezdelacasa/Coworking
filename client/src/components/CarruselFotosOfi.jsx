@@ -18,8 +18,6 @@ const Carrusel = ({ images }) => {
     autoplaySpeed: 3000, // Cambia cada 3 segundos
   };
 
-  console.log(images);
-
   return (
     <Slider {...settings}>
       {images.map((image) => (
