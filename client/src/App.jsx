@@ -12,6 +12,7 @@ import '/styles/RecoverPass.css';
 // import "/styles/Lists.css";
 import "/styles/NotFound.css";
 import "/styles/AddOfficeAdminPage.css"
+import "/styles/BookingListPage.css";
 
 // Importamos los componentes
 
