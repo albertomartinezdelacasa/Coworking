@@ -1,5 +1,5 @@
 // Importamos los hooks y el componente Navigate.
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import useSingleOffice from '../hooks/useSingleOffice';
 import BookAnOfficePage from './BookAnOfficePage';
@@ -19,11 +19,11 @@ const { VITE_API_URL } = import.meta.env;
 const OfficeDetailsPage = () => {
   // Obtenemos los path params necesarios.
   const { idOffice } = useParams();
-  //Recibimos los datos del usuario.
-  const { authToken, authUser } = useContext(AuthContext);
+  // Recibimos los datos del usuario.
+  const { authUser } = useContext(AuthContext);
 
   // Obtenemos la oficina.
-  const { office, updateOfficeState } = useSingleOffice(idOffice);
+  const { office } = useSingleOffice(idOffice);
 
   const navigate = useNavigate();
 
@@ -35,6 +35,7 @@ const OfficeDetailsPage = () => {
       toast(err.message);
     }
   };
+
   const sendToEditOffice = async (e) => {
     try {
       e.preventDefault();
@@ -43,6 +44,7 @@ const OfficeDetailsPage = () => {
       toast(err.message);
     }
   };
+
   return (
     office && (
       <main>
@@ -75,8 +77,11 @@ const OfficeDetailsPage = () => {
             </ul>
           </li>
         </ul>
+        {/* Este botón es visible para todos los usuarios */}
         <button onClick={sendToBooking}>Reservar oficina</button>
-        {authUser.role === 'ADMIN' && (
+
+        {/* Este botón solo es visible si el usuario tiene el rol de ADMIN */}
+        {authUser && authUser.role === 'ADMIN' && (
           <button onClick={sendToEditOffice}>Editar oficina</button>
         )}
       </main>
