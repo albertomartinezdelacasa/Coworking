@@ -1,14 +1,14 @@
 // Importamos las prop-types.
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 // Importamos los hooks.
-import { useContext, useState } from 'react';
+import { useContext, useState } from "react";
 
 // Importamos el contexto.
-import { AuthContext } from '../contexts/AuthContext';
+import { AuthContext } from "../contexts/AuthContext";
 
 // Importamos la función toast.
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 
 // Importamos la URL del servidor.
 const { VITE_API_URL } = import.meta.env;
@@ -20,7 +20,8 @@ const AddVoteForm = ({ idBooking, onVoteSubmit }) => {
 
   // Declaramos una variable en el estado para almacenar el valor del input.
   const [vote, setVote] = useState(5);
-  const [comment, setComment] = useState('');
+  // Variable de estado para comentarios
+  const [comment, setComment] = useState("");
 
   // Función que permite votar una entrada.
   const handleVoteEntry = async (e) => {
@@ -32,9 +33,9 @@ const AddVoteForm = ({ idBooking, onVoteSubmit }) => {
       const res = await fetch(
         `${VITE_API_URL}/api/bookings/${idBooking}/vote`,
         {
-          method: 'PATCH',
+          method: "PATCH",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             Authorization: authToken,
           },
           body: JSON.stringify({
@@ -49,7 +50,7 @@ const AddVoteForm = ({ idBooking, onVoteSubmit }) => {
       const body = await res.json();
 
       // Si hay algún error lo lanzamos.
-      if (body.status === 'error') {
+      if (body.status === "error") {
         throw new Error(body.message);
       }
 
@@ -58,36 +59,62 @@ const AddVoteForm = ({ idBooking, onVoteSubmit }) => {
       onVoteSubmit(vote);
       // Indicamos al usuario que todo ha ido bien.
       toast.success(body.message, {
-        id: 'Voto enviado con exito',
+        id: "Voto enviado con exito",
       });
     } catch (err) {
       toast.error(err.message, {
-        id: 'entryDetails',
+        id: "entryDetails",
       });
     }
   };
 
+  // Actualiza el voto cuando se hace clic en una estrella
+  const handleClick = (value) => {
+    setVote(value);
+  };
+
   return (
     <form onSubmit={handleVoteEntry}>
-      <label htmlFor='vote'>Votar:</label>
-      <input
-        type='number'
-        id='vote'
-        value={vote}
-        onChange={(e) => setVote(e.target.value)}
-        min='1'
-        max='5'
-        required
-      />
+      <label htmlFor="vote">Votar:</label>
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        {[...Array(5)].map((_, index) => {
+          const starValue = index + 1;
+          return (
+            <label key={index}>
+              <input
+                type="radio"
+                name="rating"
+                value={starValue}
+                onClick={() => handleClick(starValue)}
+                style={{ display: "none" }} // Ocultamos el radio button
+              />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill={starValue <= vote ? "#FFD700" : "#e4e5e9"} // Cambia el color de la estrella según el voto
+                viewBox="0 0 24 24"
+                strokeWidth="1"
+                stroke="currentColor"
+                style={{ width: "30px", cursor: "pointer" }} // Añade el cursor tipo pointer
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 17.27l-6.18 3.73 1.64-7.03L2 8.24l7.19-.61L12 2l2.81 5.63 7.19.61-5.46 5.73 1.64 7.03z"
+                />
+              </svg>
+            </label>
+          );
+        })}
+      </div>
       <br />
       <textarea
         value={comment}
         onChange={(e) => setComment(e.target.value)}
-        placeholder='Deja un comentario (opcional)'
+        placeholder="Deja un comentario (opcional)"
       />
       <br />
       {/* Habilitamos o deshabilitamos el botón en función de si estamos haciendo un fetch o no. */}
-      <button type='submit'>Votar</button>
+      <button type="submit">Votar</button>
     </form>
   );
 };

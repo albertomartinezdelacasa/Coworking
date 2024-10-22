@@ -10,7 +10,7 @@ const Carrusel = ({ images }) => {
   // Configuración del carrusel
   const settings = {
     dots: true, // Muestra los puntos de navegación
-    infinite: true, // Hace que el carrusel sea infinito
+    infinite: images.length > 1, // Desactiva "infinite" si hay solo una imagen
     speed: 500, // Velocidad de la transición
     slidesToShow: 1, // Muestra una imagen por vez
     slidesToScroll: 1, // Cambia una imagen por vez
