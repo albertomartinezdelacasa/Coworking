@@ -131,7 +131,7 @@ const main = async () => {
         console.log('Insertamos equipamientos...');
         await pool.query(`
             INSERT INTO equipments (name) VALUES
-                ("Pizarra"), ("Proyector"), ("Wi-fi"),("extra Silla"),("monitor"),("equipo de sonido"),("television")
+                ("Pizarra"), ("Proyector"), ("Catering"), ("Cafetera"), ("Monitor"), ("Equipo de sonido"), ("TV"), ("Dispensador de Agua")
             `);
         console.log('¡Equipamientos añadidos!');
 
