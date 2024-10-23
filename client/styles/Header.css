@@ -9,8 +9,8 @@
 }
 
 .logo {
-  width: 230px;
-  height: 73px;
+  width: 200px;
+  height: 55px;
 }
 
 .auth-buttons {
@@ -28,7 +28,8 @@
 
 .auth-buttons a,
 .auth-buttons button {
-  width: 89px;
+  width: auto;
+  min-width: 89px;
   height: 32px;
   border-radius: 8px;
   display: flex;
@@ -42,6 +43,8 @@
   font-style: normal;
   border: none;
   cursor: pointer;
+  padding: 0 10px;
+  white-space: nowrap;
 }
 
 .auth-buttons a[href="/Register"],
