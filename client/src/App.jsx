@@ -9,10 +9,11 @@ import '/styles/RegisterPage.css';
 import '/styles/Main.css';
 import '/styles/UserProfilePage.css';
 import '/styles/RecoverPass.css';
-// import "/styles/Lists.css";
-import "/styles/NotFound.css";
-import "/styles/AddOfficeAdminPage.css"
-import "/styles/BookingListPage.css";
+import '/styles/Lists.css';
+import '/styles/NotFound.css';
+import '/styles/AddOfficeAdminPage.css';
+import '/styles/BookingListPage.css';
+import '/styles/BookingDetailsPage.css';
 
 // Importamos los componentes
 
