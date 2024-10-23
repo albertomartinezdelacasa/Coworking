@@ -17,8 +17,8 @@ const AddOfficeAdminPage = () => {
   const [workspace, setWorkspace] = useState("");
   const [capacity, setCapacity] = useState("");
   const [price, setPrice] = useState("");
-  const [opening, setOpening] = useState("");
-  const [closing, setClosing] = useState("");
+  const [opening, setOpening] = useState("08:00");
+  const [closing, setClosing] = useState("19:00");
   const [photos, setPhotos] = useState([]);
   const [equipments, setEquipments] = useState([]); // Estado para los equipamientos
   const [selectedEquipments, setSelectedEquipments] = useState([]); // Equipamientos seleccionados
@@ -40,7 +40,7 @@ const AddOfficeAdminPage = () => {
 
         const body = await res.json();
         if (body.status === "ok") {
-          setEquipments(body.data.equipments); 
+          setEquipments(body.data.equipments);
         } else {
           toast.error(body.message);
         }
@@ -119,23 +119,34 @@ const AddOfficeAdminPage = () => {
     }
   };
 
+  // Función para generar un ID único
+  const generateUniqueId = () => {
+    return Date.now() + Math.random().toString(36).substr(2, 9);
+  };
+
   // Función para manejar la selección de archivos
   const handleFile = (e) => {
     const files = Array.from(e.target.files);
     setPhotos((prevPhotos) => [...prevPhotos, ...files]);
 
-    // Crear previsualizaciones
+    // Crear previsualizaciones con ID único
     const newPreviews = files.map((file) => ({
+      id: generateUniqueId(),
       url: URL.createObjectURL(file),
       file: file,
     }));
     setPhotoPreview((prevPreviews) => [...prevPreviews, ...newPreviews]);
+
+    // Limpiar el valor del input de archivo
+    e.target.value = null;
   };
 
-  const removePhoto = (index) => {
-    setPhotos((prevPhotos) => prevPhotos.filter((_, i) => i !== index));
+  const removePhoto = (id) => {
+    setPhotos((prevPhotos) =>
+      prevPhotos.filter((_, i) => photoPreview[i].id !== id)
+    );
     setPhotoPreview((prevPreviews) =>
-      prevPreviews.filter((_, i) => i !== index)
+      prevPreviews.filter((preview) => preview.id !== id)
     );
   };
 
@@ -152,7 +163,7 @@ const AddOfficeAdminPage = () => {
       <form onSubmit={handleAddSpace} className="add-office-form">
         <div className="form-row">
           <div className="form-group">
-            <label htmlFor="name">Nombre</label>
+            <label htmlFor="name">Nombre del Espacio</label>
             <input
               id="name"
               type="text"
@@ -181,7 +192,7 @@ const AddOfficeAdminPage = () => {
             <input
               id="address"
               type="text"
-              placeholder="Dirección"
+              placeholder="Calle, número, ciudad"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               required
@@ -205,30 +216,30 @@ const AddOfficeAdminPage = () => {
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="capacity">Capacidad</label>
-            <select
-              id="capacity"
-              value={capacity}
-              onChange={(e) => setCapacity(e.target.value)}
-              required
-            >
-              <option value="">Seleccionar capacidad</option>
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
-                <option key={num} value={num}>
-                  {num}
-                </option>
-              ))}
-              <option value="11+">11+</option>
-            </select>
+            <div className="capacity-input-container">
+              <input
+                id="capacity"
+                type="number"
+                placeholder="0"
+                value={capacity}
+                onChange={(e) => setCapacity(e.target.value)}
+                min="1"
+                required
+              />
+              <span className="people-symbol">Personas</span>
+            </div>
           </div>
           <div className="form-group">
-            <label htmlFor="price">Precio</label>
+            <label htmlFor="price">Precio por Hora</label>
             <div className="price-input-container">
               <input
                 id="price"
                 type="number"
-                placeholder="Precio"
+                placeholder="0"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
+                min="0"
+                step="0.01"
                 required
               />
               <span className="euro-symbol">€</span>
@@ -238,7 +249,7 @@ const AddOfficeAdminPage = () => {
 
         <div className="form-row">
           <div className="form-group">
-            <label htmlFor="opening">Horario de Apertura</label>
+            <label htmlFor="opening">Hora de Apertura</label>
             <select
               id="opening"
               value={opening}
@@ -253,7 +264,7 @@ const AddOfficeAdminPage = () => {
             </select>
           </div>
           <div className="form-group">
-            <label htmlFor="closing">Horario de Cierre</label>
+            <label htmlFor="closing">Hora de Cierre</label>
             <select
               id="closing"
               value={closing}
@@ -270,50 +281,55 @@ const AddOfficeAdminPage = () => {
         </div>
 
         <div className="form-group photo-upload">
-          <label htmlFor="photos">Imagenes</label>
-          <div className="photo-upload-container">
-            <input
-              type="file"
-              id="photos"
-              onChange={handleFile}
-              accept="image/jpeg, image/png"
-              multiple
-            />
-            <div className="photo-upload-button">
-              <span>+</span>
-            </div>
-          </div>
-          <div className="photo-previews">
-            {photoPreview.map((preview, index) => (
-              <div key={index} className="photo-preview-item">
-                <img src={preview.url} alt={`Vista previa ${index + 1}`} />
-                <div
-                  className="photo-remove-button"
-                  onClick={() => removePhoto(index)}
-                >
-                  <span>-</span>
-                </div>
+          <label htmlFor="photos">Fotos</label>
+          <div className="photo-upload-content">
+            <div className="photo-upload-container">
+              <input
+                type="file"
+                id="photos"
+                onChange={handleFile}
+                accept="image/jpeg, image/png"
+                multiple
+              />
+              <div className="photo-upload-button">
+                <span>+</span>
               </div>
-            ))}
+            </div>
+            <div className="photo-previews">
+              {photoPreview.map((preview) => (
+                <div key={preview.id} className="photo-preview-item">
+                  <img src={preview.url} alt={`Vista previa ${preview.id}`} />
+                  <button
+                    className="photo-remove-button"
+                    onClick={() => removePhoto(preview.id)}
+                    aria-label="Eliminar imagen"
+                  >
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        <h2>Equipamientos disponibles</h2>
-        <div className="equipment-list">
-          {Array.isArray(equipments) &&
-            equipments.map((equipment) => (
-              <div key={equipment.id} className="equipment-item">
-                <label>
-                  <input
-                    type="checkbox"
-                    value={equipment.id}
-                    onChange={handleEquipmentChange}
-                    checked={selectedEquipments.includes(equipment.id)}
-                  />
-                  {equipment.name}
-                </label>
-              </div>
-            ))}
+        <div className="equipment-section">
+          <h2>Equipamientos disponibles</h2>
+          <div className="equipment-list">
+            {Array.isArray(equipments) &&
+              equipments.map((equipment) => (
+                <div key={equipment.id} className="equipment-item">
+                  <label>
+                    <input
+                      type="checkbox"
+                      value={equipment.id}
+                      onChange={handleEquipmentChange}
+                      checked={selectedEquipments.includes(equipment.id)}
+                    />
+                    {equipment.name.toLowerCase()}
+                  </label>
+                </div>
+              ))}
+          </div>
         </div>
 
         <button type="submit">Crear Oficina</button>
