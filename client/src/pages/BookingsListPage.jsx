@@ -103,7 +103,6 @@ const BookingsListPage = () => {
           id="statusFilter"
           value={filterStatus}
           onChange={handleStatusChange}
-          placeholder="Filtrar por estado"
         >
           <option value="">Todas</option>
           <option value="CONFIRMED">Confirmadas</option>
