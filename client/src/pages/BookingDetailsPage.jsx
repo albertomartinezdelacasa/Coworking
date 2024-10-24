@@ -2,6 +2,7 @@
 import { useContext, useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import useSingleBooking from '../hooks/useSingleBooking';
+import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 const { VITE_API_URL } = import.meta.env;
@@ -137,26 +138,54 @@ const BookingDetailsPage = () => {
       <main className='booking-details-page'>
         <h1 className='page-title'>Gestión Reservas</h1>
         <div className='booking-details-card'>
-          {<Carrusel images={booking.photos}></Carrusel>}
-          <ul>
-            <li>
-              <h2>{booking.officeName}</h2>
-            </li>
-            <li>
-              Check In:{' '}
-              {moment(booking.checkIn).format('DD/MM/YYYY [a las] HH:mm')}
-            </li>
-            <li>
-              Check Out:{' '}
-              {moment(booking.checkOut).format('DD/MM/YYYY [a las] HH:mm')}
-            </li>
-            <li>Numero de usuarios: {booking.guests}</li>
-            <li>Estado de reserva: {booking.status}</li>
-            <li>
-              Creado el{' '}
-              {moment(booking.createdAt).format('DD/MM/YYYY [a las] HH:mm')}
-            </li>
-          </ul>
+          <div className='booking-details-content'>
+            <div className='carruselIMG'>
+              {<Carrusel images={booking.photos}></Carrusel>}
+            </div>
+            <ul className='booking-info'>
+              <li>
+                <h2>{booking.officeName}</h2>
+              </li>
+              <li>
+                <strong>Check In:</strong>
+                <span>
+                  {' '}
+                  {moment(booking.checkIn).format('DD/MM/YYYY [a las] HH:mm')}
+                </span>
+              </li>
+              <li>
+                <strong>Check Out:</strong>
+                <span>
+                  {' '}
+                  {moment(booking.checkOut).format('DD/MM/YYYY [a las] HH:mm')}
+                </span>
+              </li>
+              <li>
+                <strong>Numero de usuarios:</strong>
+                <span> {booking.guests}</span>
+              </li>
+              <li>
+                <strong>Estado de reserva:</strong>
+                <span> {booking.status}</span>
+              </li>
+              <li>
+                <strong>Fecha de reserva:</strong>
+                <span>
+                  {' '}
+                  {moment(booking.createdAt).format('DD/MM/YYYY [a las] HH:mm')}
+                </span>
+              </li>
+              <li>
+                <Link to='/booking/list'>Volver a reservas</Link>
+              </li>
+              {canVote && (
+                <li>
+                  Nos encantaría conocer tu opinión sobre
+                  <strong> {booking.officeName}</strong>
+                </li>
+              )}
+            </ul>
+          </div>
           {booking.status !== 'CANCELED' && booking.status !== 'REJECTED' && (
             <>
               {authUser.role === 'ADMIN' && booking.status !== 'CONFIRMED' && (
@@ -176,8 +205,6 @@ const BookingDetailsPage = () => {
                 ))}
             </>
           )}
-
-          {/* Comprobamos si se puede votar. */}
           {canVote && (
             <AddVoteForm
               idBooking={idBooking}

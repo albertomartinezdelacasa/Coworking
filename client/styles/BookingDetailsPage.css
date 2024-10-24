@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&display=swap');
 
+/* Estilos globales y principales para móviles */
 .page-title {
   font-family: 'IBM Plex Sans', sans-serif;
   font-weight: 700;
@@ -13,7 +14,8 @@
   flex-direction: column;
   margin-left: 1rem;
 }
-button {
+
+.booking-details-card button {
   background-color: var(--color-marca-Primario);
   color: var(--color-fondo);
   width: 130px;
@@ -23,41 +25,57 @@ button {
   margin-top: 0.5rem;
   margin-bottom: 1rem;
 }
-button:hover {
+
+.booking-details-card button:hover {
   background-color: var(--color-marca-Secundario);
   color: var(--color-texto-Primario);
-
-  width: 130px;
-  height: 50px;
-  border: none;
-  border-radius: 8px;
 }
 
-.booking-details-page > ul,
-li {
+.booking-details-page ul,
+.booking-details-page li {
   list-style: none;
-  padding: 0.25rem;
 }
-.booking-details-page > li,
-h2 {
+
+.booking-details-page h2 {
   font-family: 'IBM Plex Sans', sans-serif;
   font-weight: 600;
-
-  font-style: normal;
   color: var(--color-texto-Primario);
+}
+
+.booking-details-page a {
+  color: var(--color-marca-Primario);
+  text-decoration: none;
+}
+
+.booking-details-page a:hover {
+  text-decoration: underline;
 }
 
 .estrellitas {
-  width: 30px;
+  width: 40px;
   transition: width 0.3s ease;
+  margin-top: 10px;
 }
 
 .estrellitas:hover {
   width: 60px;
-  height: 50px;
 }
+
+.carrusel-container {
+  width: 100%;
+  max-width: 600px; /* Tamaño máximo para el carrusel */
+  margin: 0 auto;
+  padding: 0;
+}
+
+.carrusel {
+  width: 100%; /* Ajusta la imagen al tamaño del contenedor */
+  height: auto;
+  max-height: 400px; /* Tamaño máximo de altura */
+}
+
 .text-area {
-  width: 80%;
+  width: 90vw;
   height: 150px;
   padding: 10px;
   font-size: 16px;
@@ -85,38 +103,77 @@ h2 {
   color: #aaa;
   font-style: italic;
 }
-@media (min-width: 768px) {
-  .booking-details-card {
-    display: flex;
-    flex-direction: row;
-    justify-content: start;
-    gap: 2rem;
-    align-items: center;
-    margin: 20px;
-    padding: 10px;
-    min-width: 800px;
-    max-width: 900px;
-    border: 1px solid black;
-    border-radius: 8px;
-  }
 
-  .carrusel img {
-    border-radius: 10px;
-  }
+/* Ajustes de estilo para móviles */
+.booking-details-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
 
+.carruselIMG img {
+  width: 100%; /* Imagen se ajusta al contenedor */
+  height: auto;
+}
+
+.booking-info {
+  list-style: none;
+  padding: 0;
+}
+
+.booking-info li {
+  margin-bottom: 1rem;
+}
+
+/* Media query para tablets (min-width: 768px y max-width: 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
   .text-area {
-    width: 100%;
-    height: 200px;
-    resize: horizontal;
+    width: 50vw;
+  }
+
+  .carrusel-container {
+    max-width: 700px;
+  }
+  .carrusel-container button {
+    width: 20px;
+  }
+
+  .carrusel {
+    max-height: 350px; /* Ajustamos la altura máxima en tablets */
+  }
+
+  .booking-details-content {
+    flex-direction: row; /* Cambia la disposición a filas */
+    gap: 2rem; /* Espacio entre la imagen y el contenido */
   }
 }
 
-/* @media (max-width: 480px) {
-  .portada {
-    min-height: 200px;
+/* Media query para pantallas grandes (escritorio) */
+@media (min-width: 1024px) {
+  .text-area {
+    width: 40vw;
   }
 
-  .portada > div {
-    width: 90%;
+  .carrusel-container {
+    margin: 0;
+    padding: 0;
+    max-width: 800px;
   }
-} */
+
+  .carrusel {
+    max-height: 400px;
+  }
+
+  .booking-details-content {
+    align-items: flex-start; /* Alinea la imagen y el texto al inicio */
+  }
+}
+
+.booking-info span {
+  display: block; /* Esto hará que el span se comporte como un bloque */
+  margin-top: 4px; /* Espacio entre las líneas */
+}
+
+.booking-info strong {
+  color: rgb(112, 130, 248);
+}
