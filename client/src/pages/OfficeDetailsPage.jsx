@@ -210,7 +210,7 @@ const OfficeDetailsPage = () => {
                     onClick={handleUpdateOffice}
                     className="save-button"
                   >
-                    {loading ? "Enviando..." : "Guardar cambios"}
+                    {loading ? "Enviando..." : "Guardar"}
                   </button>
                 )}
                 <button className="edit-button" onClick={toggleEditMode}>
