@@ -134,60 +134,59 @@ const BookingDetailsPage = () => {
 
   return (
     booking && (
-      <main>
-        <h2>Tu Reserva</h2>
-        {
-          // Fotos de la oficina.
-          <Carrusel images={booking.photos}></Carrusel>
-        }
-        <ul>
-          <li>
-            <h2>{booking.officeName}</h2>
-          </li>
-          <li>
-            Check In:{' '}
-            {moment(booking.checkIn).format('DD/MM/YYYY [a las] HH:mm')}
-          </li>
-          <li>
-            Check Out:{' '}
-            {moment(booking.checkOut).format('DD/MM/YYYY [a las] HH:mm')}
-          </li>
-          <li>Numero de usuarios: {booking.guests}</li>
-          <li>Estado de reserva: {booking.status}</li>
-          <li>
-            Creado el{' '}
-            {moment(booking.createdAt).format('DD/MM/YYYY [a las] HH:mm')}
-          </li>
-        </ul>
-        {booking.status !== 'CANCELED' && booking.status !== 'REJECTED' && (
-          <>
-            {authUser.role === 'ADMIN' && booking.status !== 'CONFIRMED' && (
-              <button onClick={() => handleConfirmBooking('aprobada')}>
-                Confirmar reserva
-              </button>
-            )}
-            {new Date(booking.checkOut) > new Date() &&
-              (authUser.role === 'ADMIN' ? (
-                <button onClick={() => handleConfirmBooking('rechazada')}>
-                  Rechazar reserva
+      <main className='booking-details-page'>
+        <h1 className='page-title'>Gestión Reservas</h1>
+        <div className='booking-details-card'>
+          {<Carrusel images={booking.photos}></Carrusel>}
+          <ul>
+            <li>
+              <h2>{booking.officeName}</h2>
+            </li>
+            <li>
+              Check In:{' '}
+              {moment(booking.checkIn).format('DD/MM/YYYY [a las] HH:mm')}
+            </li>
+            <li>
+              Check Out:{' '}
+              {moment(booking.checkOut).format('DD/MM/YYYY [a las] HH:mm')}
+            </li>
+            <li>Numero de usuarios: {booking.guests}</li>
+            <li>Estado de reserva: {booking.status}</li>
+            <li>
+              Creado el{' '}
+              {moment(booking.createdAt).format('DD/MM/YYYY [a las] HH:mm')}
+            </li>
+          </ul>
+          {booking.status !== 'CANCELED' && booking.status !== 'REJECTED' && (
+            <>
+              {authUser.role === 'ADMIN' && booking.status !== 'CONFIRMED' && (
+                <button onClick={() => handleConfirmBooking('aprobada')}>
+                  Confirmar reserva
                 </button>
-              ) : (
-                <button onClick={() => handleDeleteBooking()}>
-                  Cancelar reserva
-                </button>
-              ))}
-          </>
-        )}
+              )}
+              {new Date(booking.checkOut) > new Date() &&
+                (authUser.role === 'ADMIN' ? (
+                  <button onClick={() => handleConfirmBooking('rechazada')}>
+                    Rechazar reserva
+                  </button>
+                ) : (
+                  <button onClick={() => handleDeleteBooking()}>
+                    Cancelar reserva
+                  </button>
+                ))}
+            </>
+          )}
 
-        {/* Comprobamos si se puede votar. */}
-        {canVote && (
-          <AddVoteForm
-            idBooking={idBooking}
-            onVoteSubmit={() => {
-              setCanVote(false);
-            }}
-          />
-        )}
+          {/* Comprobamos si se puede votar. */}
+          {canVote && (
+            <AddVoteForm
+              idBooking={idBooking}
+              onVoteSubmit={() => {
+                setCanVote(false);
+              }}
+            />
+          )}
+        </div>
       </main>
     )
   );

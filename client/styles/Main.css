@@ -1,6 +1,6 @@
 main {
-  background-color: #FFFFFF;
-  margin:0px;
+  background-color: #ffffff;
+  margin: 10px;
 }
 
 /* Estilo general para añadir padding a todos los elementos */
@@ -10,7 +10,8 @@ main > *:not(.portada) {
 }
 
 /* Mantener el header y .portada sin padding adicional */
-header, .portada {
+header,
+.portada {
   padding-left: 0;
   padding-right: 0;
 }

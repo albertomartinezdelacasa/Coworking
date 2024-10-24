@@ -23,10 +23,10 @@ const Carrusel = ({ images }) => {
       {images.map((image) => (
         <div key={image.id}>
           <img
+            className='carrusel'
             src={`${VITE_API_URL}/${image.name}`}
             key={image.id}
             alt={'Imagen del carrusel'}
-            style={{ width: '400px', height: '400px' }}
           />
         </div>
       ))}
