@@ -1,0 +1,104 @@
+.book-an-office-main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.book-an-office-form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 80%;
+    margin: 0 auto; /* Centra horizontalmente */
+    align-items: center; /* Centra los elementos hijos horizontalmente */
+    justify-content: center; /* Centra los elementos hijos verticalmente */
+}
+
+
+
+.book-an-office-main,
+h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.book-an-office-form input,
+.book-an-office-form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: var(--font-family);
+    font-size: 16px;
+}
+.book-an-office-form select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.book-an-office-form select option {
+    background-color: #f0f0f0;
+    color: #333;
+}
+.book-an-office-form button {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    align-self: flex-start;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.add-office-form button:hover {
+    background-color: #7a3fc8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+label {
+    font-family: var(--font-family);
+    border-radius: 5px;
+    width: 100%;
+}
+.book-an-office-main h1,
+.book-an-office-main h2,
+.book-an-office-main h3 {
+    font-family: var(--font-family);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.book-an-office-main h1 {
+    font-size: 24px;
+    padding-top: 10px;
+    margin-bottom: 20px;
+}
+
+.book-an-office-main h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.book-an-office-main {
+    flex: 1;
+}
+
+.book-an-office-form select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+}
+
+.add-office-form select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+
