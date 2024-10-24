@@ -15,12 +15,7 @@
 }
 
 /* Estilos para el footer permanente */
-main {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    margin: 0;
-}
+
 
 .book-and-office-form input,
 .book-and-office-form select,
@@ -91,11 +86,4 @@ label {
     border-color: var(--primary-color);
 }
 
-footer {
-    position: sticky;
-    bottom: 0;
-    width: 100%;
-    background-color: #f8f8f8; /* Ajusta el color de fondo según tu diseño */
-    padding: 10px 0;
-    text-align: center;
-}
+
