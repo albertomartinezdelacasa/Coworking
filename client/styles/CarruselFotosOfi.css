@@ -16,11 +16,6 @@
   border-radius: 8px;
 }
 
-.carrusel {
-  width: 50%;
-  padding-right: 20px;
-  margin-top:1px;
-}
 
 /* Estilos para los nuevos controles de navegación */
 .carrusel-container .carrusel-controls {

@@ -59,7 +59,7 @@
 }
 
 .office-details button {
-  background-color: #6433A7
+  background-color: #6433A7;
   border: none;
   padding: 10px 20px;
   margin: 10px 5px;
@@ -94,6 +94,11 @@
   margin-right: 10px;
 }
 
+.carrusel {
+  width: 50%;
+  padding-right: 20px;
+  margin-top:1px;
+}
 
 
 .office-details-content {
@@ -137,6 +142,7 @@
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
+    overflow-x: hidden; /* Asegura que no haya scroll horizontal */
   }
 
   .carrusel,
@@ -144,6 +150,7 @@
   .admin-buttons {
     width: 100%;
     padding-right: 0;
+    box-sizing: border-box;
   }
 
   .carrusel {
@@ -481,11 +488,11 @@
     width: 18px;
     height: 18px;
   }
-}
 
-
-footer {
-  flex-shrink: 0;
+    .office-details-content .edit-button {
+    display: block;
+    margin: 0 auto; /* Centra el botón horizontalmente */
+  }
 }
 
 /* Nuevos estilos añadidos */
