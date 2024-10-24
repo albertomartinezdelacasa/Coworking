@@ -14,6 +14,7 @@ import '/styles/NotFound.css';
 import '/styles/AddOfficeAdminPage.css';
 import '/styles/BookingListPage.css';
 import '/styles/BookingDetailsPage.css';
+import '/styles/BookAnOfficePage.css'
 
 // Importamos los componentes
 
