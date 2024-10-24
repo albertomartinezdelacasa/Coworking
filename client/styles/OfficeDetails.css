@@ -1,0 +1,533 @@
+.office-details {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  color: #333;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.office-details  h2 {
+  font-size: 16px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  letter-spacing: 0.5px;
+  font-weight: 500; /* regular */
+  color: #6433A7;
+  margin-bottom: 20px;
+  text-align: left; /* Alineado a la izquierda */
+  width: 100%;
+}
+
+.office-details ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.office-details li {
+  margin-bottom: 15px;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.office-details li label {
+  font-weight: bold;
+  color: #1a5f7a;
+  margin-bottom: 5px;
+}
+
+.office-details li .value {
+  font-size: 1rem;
+}
+
+.office-details strong {
+  color: #1a5f7a;
+}
+
+.office-details input[type="text"],
+.office-details input[type="number"],
+.office-details select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  display: none;
+}
+
+.office-details button {
+  background-color: #6433A7
+  border: none;
+  padding: 10px 20px;
+  margin: 10px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.office-details button:hover {
+   background-color: #7A4CBF;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+
+.office-details button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.equipments-list {
+  margin-top: 20px;
+}
+
+.equipment-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.equipment-item input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+
+
+.office-details-content {
+  width: 50%;
+  height: calc(50vh - 75px); /* Mantenemos la altura que definimos anteriormente */
+  overflow-y: auto; /* Cambiamos a auto para que el scroll aparezca solo si es necesario */
+  border: 1px solid lightgrey;
+  border-radius: 8px;
+  padding: 15px;
+}
+
+.editing .office-details li .value {
+  display: none;
+}
+
+.editing .office-details input[type="text"],
+.editing .office-details input[type="number"],
+.editing .office-details select {
+  display: block;
+}
+
+.office-details .input-wrapper {
+  position: relative;
+  display: none;
+  width: 100%;
+}
+
+.office-details .input-wrapper input[type="number"] {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.editing .office-details .input-wrapper {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .office-details,
+  .office-header {
+    flex-direction: column;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .carrusel,
+  .office-details-content,
+  .admin-buttons {
+    width: 100%;
+    padding-right: 0;
+  }
+
+  .carrusel {
+    margin-bottom: 20px;
+  }
+
+  .office-details-content {
+    height: auto;
+    overflow-y: visible;
+    border: none;
+    padding: 0;
+  }
+
+  .office-header {
+    align-items: stretch;
+    margin: 0;
+  }
+
+  .admin-buttons,
+  .edit-button {
+    margin-top: 10px;
+  }
+
+  .save-button, .edit-button {
+    flex: 1;
+  }
+
+  .office-details {
+    padding: 10px;
+  }
+
+  .office-details h2 {
+    font-size: 1.5rem;
+  }
+
+  .office-details li {
+    font-size: 0.9rem;
+  }
+
+  .office-details button {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+
+  .office-details-content .equipments-list .equipment-checkbox {
+    width: 100%;
+  }
+  
+  .office-details-content .equipments-list .equipment-checkbox label {
+    font-size: 13px;
+  }
+
+  .office-details-content .equipments-list h2 {
+    font-size: 14px;
+  }
+  
+  .office-details-content .equipments-list .equipment-checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+  }
+
+  .office-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .admin-buttons {
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  .save-button, .edit-button {
+    flex: 1;
+  }
+
+  .office-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .edit-button {
+    margin-top: 10px;
+  }
+
+  .office-details-content .equipments-list .equipment-checkbox {
+    width: 100%; /* 1 columna en pantallas más pequeñas */
+  }
+  
+  .office-details-content .equipments-list .equipment-checkbox label {
+    font-size: 13px;
+  }
+}
+
+
+
+@media (max-width: 600px) {
+  .office-details {
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .office-details h2 {
+    font-size: 1.5rem;
+  }
+
+  .office-details li {
+    font-size: 0.9rem;
+  }
+
+  .office-details button {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+}
+
+.office-details-content ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.office-details-content li {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: right;
+}
+
+.office-details-content label {
+  font-weight: bold;
+  margin-right: 10px;
+  min-width: 150px;
+  text-align: left;
+}
+
+.office-details-content input,
+.office-details-content select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.office-details-content .input-wrapper {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.office-details-content .input-wrapper input {
+  flex: 1;
+  margin-right: 5px;
+}
+
+.office-title h2 {
+  font-size: 39px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+  color: #6433A7;
+  text-transform: uppercase; /* Añadimos esta línea para convertir el texto a mayúsculas */
+  margin: 0;
+  padding: 0;
+}
+
+.office-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+.admin-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-button, .save-button {
+  background-color: #6433A7;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.edit-button:hover, .save-button:hover {
+  background-color: #7A4CBF;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.save-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.save-button {
+  order: 2; /* Esto moverá el botón "Guardar cambios" a la derecha */
+}
+
+
+.office-title h2 {
+  margin: 0;
+  padding: 0; /* Eliminamos cualquier padding que pueda afectar la alineación */
+}
+
+.edit-button {
+  background-color: #6433A7;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Espacio entre el icono y el texto */
+}
+
+.edit-button img {
+  width: 16px; /* Ajusta según el tamaño deseado del icono */
+  height: 16px;
+}
+
+.edit-button:hover {
+  background-color: #7A4CBF;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+
+
+.office-details-content .equipments-list {
+  margin-top: 20px;
+}
+
+.office-details-content .equipments-list h2 {
+  font-size: 16px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: bold;
+  color: #1a5f7a;
+  margin-bottom: 10px;
+}
+
+.office-details-content .equipments-list .equipment-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.office-details-content .equipments-list .equipment-checkbox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  width: calc(50% - 5px); /* 2 columnas en pantallas más grandes */
+}
+
+.office-details-content .equipments-list .equipment-checkbox input[type="checkbox"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #6433A7;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  margin-right: 10px;
+  position: relative;
+  background-color: white;
+  flex-shrink: 0;
+}
+
+.office-details-content .equipments-list .equipment-checkbox input[type="checkbox"]:checked {
+  background-color: #6433A7;
+}
+
+.office-details-content .equipments-list .equipment-checkbox input[type="checkbox"]:checked::after {
+  content: '\2714';
+  font-size: 14px;
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.office-details-content .equipments-list .equipment-checkbox label {
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  word-break: break-word;
+}
+
+.office-details-content .equipments-list .equipment-item {
+  background-color: #f0f0f0;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.office-details-content .reserve-button {
+  width: 100%;
+  background-color: #6433A7;
+  color: white;
+  border: none;
+  padding: 15px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  margin-top: 20px; /* Añade un poco de espacio arriba del botón */
+  letter-spacing: 0.5px;
+}
+
+.office-details-content .reserve-button:hover {
+  background-color: #7A4CBF;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+
+@media (max-width: 480px) {
+  .office-details-content .equipments-list h2 {
+    font-size: 14px;
+  }
+  
+  .office-details-content .equipments-list .equipment-checkbox label {
+    font-size: 12px;
+  }
+  
+  .office-details-content .equipments-list .equipment-checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+
+footer {
+  flex-shrink: 0;
+}
+
+/* Nuevos estilos añadidos */
+.details-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.details-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.details-row li {
+  flex: 1;
+  margin-right: 1rem;
+}
+
+.details-row li:last-child {
+  margin-right: 0;
+}
+
+.details-row label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper input {
+  flex: 1;
+  margin-right: 0.5rem;
+}
+
+.capacity-unit,
+.euro-symbol {
+  white-space: nowrap;
+}
+
+
+

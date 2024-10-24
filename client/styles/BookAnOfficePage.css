@@ -16,13 +16,7 @@
     justify-content: center; /* Centra los elementos hijos verticalmente */
 }
 
-/* Estilos para el footer permanente */
-main {
-    display: flex;
-    flex-direction: column;
-    min-height: 70vh;
-    margin: 0;
-}
+
 
 .book-an-office-main,
 h3 {
@@ -107,33 +101,4 @@ label {
     border-color: var(--primary-color);
 }
 
-.book-an-office-price-button {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
 
-.book-an-office-form input[type="date"] {
-    padding: 10px 0;
-}
-
-footer {
-    position: sticky;
-    bottom: 0;
-    width: 100%;
-    background-color: #f8f8f8; /* Ajusta el color de fondo según tu diseño */
-    padding: 10px 0;
-    text-align: center;
-}
-
-@media (max-width: 480px) {
-    .book-an-office-container {
-        padding: 10px;
-    }
-
-    .form-row {
-        gap: 10px;
-    }
-}
