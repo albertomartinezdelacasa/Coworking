@@ -109,12 +109,14 @@ const BookAnOfficePage = () => {
     }
 
     return (
-        <main className="book-and-office-main">
+        <main className="book-an-office-main">
             <h1>Reservar Oficina</h1>
-            <form onSubmit={handleSubmit} className="book-and-office-form">
+            <form onSubmit={handleSubmit} className="book-an-office-form">
                 <ul>
                     <li>
-                        <label htmlFor="checkInDate">Fecha de reserva:</label>
+                        <label className="calendar" htmlFor="checkInDate">
+                            Fecha de reserva:
+                        </label>
                         <input
                             type="date"
                             id="checkInDate"
@@ -173,11 +175,11 @@ const BookAnOfficePage = () => {
                         />
                     </li>
                 </ul>
-                <div className="book-and-office-price-button">
+                <div className="book-an-office-price-button">
                     <div className="book-and-office-price">
                         <strong>Precio total: {totalPrice.toFixed(2)} €</strong>
                     </div>
-                    <div className="book-and-office-button">
+                    <div className="book-an-office-button">
                         <button type="submit">Reservar</button>
                     </div>
                 </div>
