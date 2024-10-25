@@ -290,6 +290,10 @@
     width: 100%;
   }
 
+  .section-3 {
+    flex-direction: column-reverse;
+  }
+
   .section-4 .logos {
     flex-wrap: wrap;
     justify-content: center;

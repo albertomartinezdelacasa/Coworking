@@ -120,16 +120,21 @@ const updateOfficeController = async (req, res, next) => {
             ]);
         }
 
-        // Validamos y guardamos los equipamientos asociados a la oficina en `officesEquipments`.
-        //const equipmentValues = [];
-        for (const idEquipment of equipmentsArray) {
-            // Preparamos los valores a insertar en la relación.
-            //equipmentValues.push([idOffice, idEquipment]);
-            // Insertamos todas las relaciones de `officesEquipments` de una sola vez.
+        // Manejamos los equipamientos
+        if (equipmentsArray) {
+            // Primero, eliminamos todas las relaciones existentes
             await pool.query(
-                `INSERT INTO officesEquipments (idOffice, idEquipment) VALUES (?,?) `,
-                [idOffice, idEquipment],
+                `DELETE FROM officesEquipments WHERE idOffice = ?`,
+                [idOffice],
             );
+
+            // Luego, insertamos las nuevas relaciones
+            for (const idEquipment of equipmentsArray) {
+                await pool.query(
+                    `INSERT INTO officesEquipments (idOffice, idEquipment) VALUES (?, ?)`,
+                    [idOffice, idEquipment],
+                );
+            }
         }
 
         // Enviamos una respuesta al cliente.
@@ -137,7 +142,7 @@ const updateOfficeController = async (req, res, next) => {
             status: 'ok',
             message: 'Oficina actualizada',
             data: {
-                product: {
+                office: {
                     name,
                     price,
                     description,
@@ -146,6 +151,7 @@ const updateOfficeController = async (req, res, next) => {
                     capacity,
                     opening,
                     closing,
+                    equipments: equipmentsArray,
                 },
             },
         });

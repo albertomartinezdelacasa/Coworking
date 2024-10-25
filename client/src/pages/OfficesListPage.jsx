@@ -147,7 +147,6 @@ const OfficeListPage = () => {
   return (
     <main className="list-page">
       <h1>Coworking Spaces</h1>
-
       {/* Formulario para filtros */}
       <form>
         <div className="office-list-form1">
@@ -201,8 +200,7 @@ const OfficeListPage = () => {
           <li
             className="element"
             key={office.id}
-            onClick={() => navigate(`/office/details/${office.id}`)}
-          >
+            onClick={() => navigate(`/office/details/${office.id}`)}>
             <div className="photo">
               {office.photos && office.photos.length > 0 ? (
                 <img

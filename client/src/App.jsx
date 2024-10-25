@@ -1,18 +1,23 @@
-import { Routes, Route } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
-import "/styles/General.css";
-import "/styles/Home.css";
-import "/styles/Header.css";
-import "/styles/LoginPage.css";
-import "/styles/Footer.css";
-import "/styles/RegisterPage.css";
-import "/styles/Main.css";
-import "/styles/UserProfilePage.css";
-import "/styles/RecoverPass.css";
+import { Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+import '/styles/General.css';
+import '/styles/Home.css';
+import '/styles/Header.css';
+import '/styles/LoginPage.css';
+import '/styles/Footer.css';
+import '/styles/RegisterPage.css';
+import '/styles/Main.css';
+import '/styles/UserProfilePage.css';
+import '/styles/RecoverPass.css';
 import "/styles/OfficesListPage.css";
-import "/styles/NotFound.css";
-import "/styles/AddOfficeAdminPage.css";
-import "/styles/BookingListPage.css";
+import '/styles/NotFound.css';
+import '/styles/AddOfficeAdminPage.css';
+import '/styles/BookingDetailsPage.css';
+import '/styles/BookAnOfficePage.css';
+import '/styles/BookingListPage.css';
+import '/styles/OfficeDetails.css';
+import '/styles/CarruselFotosOfi.css';
+import '/styles/ActivateUserPage.css';
 
 // Importamos los componentes
 
