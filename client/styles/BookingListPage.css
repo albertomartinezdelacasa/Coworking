@@ -1,8 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&display=swap");
 
 .bookings-list-page {
   padding: 20px;
-  min-height: calc(100vh - 60px); /* Ajusta el 60px según la altura de tu header */
+  min-height: calc(
+    100vh - 60px
+  ); /* Ajusta el 60px según la altura de tu header */
   display: flex;
   flex-direction: column;
 }
@@ -49,7 +51,7 @@
 .booking-info h2 {
   margin-top: 0;
   margin-bottom: 10px;
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
   font-size: 24px;
   font-weight: 600;
   color: black;
@@ -64,7 +66,7 @@
 
 .booking-info li {
   margin-bottom: 5px;
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
   font-size: 16px;
   font-weight: 400;
   color: black;
@@ -72,7 +74,7 @@
 }
 
 .booking-info .booking-status {
-  color: #6433A7;
+  color: #6433a7;
 }
 
 .admin-info {
@@ -97,7 +99,7 @@ footer {
 }
 
 .page-title {
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
   font-size: 24px;
   font-weight: 600;
   color: black;
@@ -116,7 +118,7 @@ footer {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
   font-size: 16px;
   font-weight: 400;
   color: black;
@@ -132,7 +134,7 @@ footer {
 }
 
 .status-filter-wrapper::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 10px;
   top: 50%;
@@ -147,7 +149,7 @@ footer {
 }
 
 .status-filter-wrapper::after {
-  content: '\25BC';
+  content: "\25BC";
   position: absolute;
   right: 10px;
   top: 50%;
@@ -156,12 +158,12 @@ footer {
 }
 
 #statusFilter:hover {
-  background-color: #CBC5EA;
+  background-color: #cbc5ea;
 }
 
 #statusFilter:focus {
   outline: none;
-  border-color: #6433A7;
+  border-color: #6433a7;
   box-shadow: 0 0 0 2px rgba(100, 51, 167, 0.2);
 }
 
