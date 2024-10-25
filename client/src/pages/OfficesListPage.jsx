@@ -145,11 +145,11 @@ const OfficeListPage = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <main className="list-page">
+    <main className="office-list-page">
       <h1>Coworking Spaces</h1>
       {/* Formulario para filtros */}
       <form>
-        <div className="office-list-form1">
+        <fieldset className="ol-fields1">
           <input
             type="number"
             name="capacity"
@@ -173,37 +173,37 @@ const OfficeListPage = () => {
             <option value="OFFICE">Office</option>
             <option value="DESK">Desk</option>
           </select>
-        </div>
+        </fieldset>
         {/* Filtro de equipamientos */}
-        <div className="office-list-form2">
-          <fieldset>
-            <legend>Equipamientos:</legend>
-            {equipments.map((equipment) => (
-              <label key={equipment}>
-                <input
-                  type="checkbox"
-                  name="equipments"
-                  value={equipment}
-                  onChange={handleFilterChange}
-                  checked={filters.equipments.includes(equipment)}
-                />
-                {equipment}
-              </label>
-            ))}
-          </fieldset>
-        </div>
+        <fieldset className="ol-fields2">
+          <legend>Equipamientos:</legend>
+          {equipments.map((equipment) => (
+            <label key={equipment}>
+              <input
+                type="checkbox"
+                name="equipments"
+                value={equipment}
+                onChange={handleFilterChange}
+                checked={filters.equipments.includes(equipment)}
+              />
+              {equipment}
+            </label>
+          ))}
+        </fieldset>
       </form>
 
       {/* Lista de oficinas */}
-      <ul>
+      <ul className="ol-list">
         {filteredOffices.map((office) => (
           <li
-            className="element"
+            className="ol-card"
             key={office.id}
-            onClick={() => navigate(`/office/details/${office.id}`)}>
-            <div className="photo">
+            onClick={() => navigate(`/office/details/${office.id}`)}
+          >
+            <div className="olc-imgcontainer">
               {office.photos && office.photos.length > 0 ? (
                 <img
+                  className="olcc-img"
                   src={`${VITE_API_URL}/${office.photos[0].name}`}
                   alt={`Foto ${office.photos[0].name}`}
                 />
@@ -211,49 +211,51 @@ const OfficeListPage = () => {
                 <p>No hay fotos disponibles.</p>
               )}
             </div>
-            <div className="element-texts">
+            <div className="olc-info">
               <h2>{office.name}</h2>
-              <ul className="element-details">
-                <li>
-                  <strong>Dirección:</strong> {office.address}
-                </li>
-                <li>
-                  {" "}
-                  <strong>Capacidad: </strong> {office.capacity}
-                </li>
-                <li>
-                  <strong>Precio: </strong>
-                  {office.price}€/h
-                </li>
-                <li>
-                  <strong>Tipo de espacio: </strong> {office.workspace}
-                </li>
-                <li>
-                  <strong>Horario:</strong> {office.opening.slice(0, 5)} -{" "}
-                  {office.closing.slice(0, 5)}
-                </li>
-                <li>
-                  <strong>Valoración: </strong>
-                  {Number(office.votesAvg).toFixed(1)} / 5
-                </li>
-                <li>
-                  <strong>Cantidad de valoraciones: </strong>
-                  {office.totalVotes}
-                </li>
-              </ul>
-              <div className="element-equipments">
-                <h3>Equipamientos:</h3>
-                <ul>
-                  {office.equipments && office.equipments.length > 0 ? (
-                    office.equipments.map((equipment, index) => (
-                      <li key={`${office.id}-${equipment.name}-${index}`}>
-                        {equipment.name}
-                      </li>
-                    ))
-                  ) : (
-                    <li>No hay equipamientos disponibles.</li>
-                  )}
+              <div className="olci-text">
+                <ul className="olci-office">
+                  <li>
+                    <strong>Dirección:</strong> {office.address}
+                  </li>
+                  <li>
+                    {" "}
+                    <strong>Capacidad: </strong> {office.capacity}
+                  </li>
+                  <li>
+                    <strong>Precio: </strong>
+                    {office.price}€/h
+                  </li>
+                  <li>
+                    <strong>Tipo de espacio: </strong> {office.workspace}
+                  </li>
+                  <li>
+                    <strong>Horario:</strong> {office.opening.slice(0, 5)} -{" "}
+                    {office.closing.slice(0, 5)}
+                  </li>
+                  <li>
+                    <strong>Valoración: </strong>
+                    {Number(office.votesAvg).toFixed(1)} / 5
+                  </li>
+                  <li>
+                    <strong>Cantidad de valoraciones: </strong>
+                    {office.totalVotes}
+                  </li>
                 </ul>
+                <div className="olci-equipments">
+                  <h3>Equipamientos:</h3>
+                  <ul className="olcie-list">
+                    {office.equipments && office.equipments.length > 0 ? (
+                      office.equipments.map((equipment, index) => (
+                        <li key={`${office.id}-${equipment.name}-${index}`}>
+                          {equipment.name}
+                        </li>
+                      ))
+                    ) : (
+                      <li>No hay equipamientos disponibles.</li>
+                    )}
+                  </ul>
+                </div>
               </div>
             </div>
           </li>
