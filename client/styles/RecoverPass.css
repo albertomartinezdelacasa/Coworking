@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 90vh;
   background-color: #FFFFFF;
   padding: 20px;
 }
@@ -69,6 +69,16 @@
   color: #999;
 }
 
+.recover-pass-info {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 14px;
+  color: black;
+  font-weight: 400;
+  margin-bottom: 15px;
+  text-align: left;
+  width: 100%;
+}
+
 .recover-pass-form button {
   width: 200px;
   height: 48px;
@@ -82,11 +92,19 @@
   cursor: pointer;
   margin-top: 10px;
   align-self: center;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.recover-pass-form button:hover,
+.recover-pass-form button:focus {
+  background-color: #7A4CBF;
+  box-shadow: 0 0 10px rgba(100, 51, 167, 0.5);
 }
 
 .recover-pass-form button:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 .recover-pass-form input:focus,
@@ -100,6 +118,10 @@
   .recover-pass-form {
     width: 90%;
     max-width: 500px;
+  }
+  
+  .recover-pass-container {
+    min-height: auto;
   }
 }
 
