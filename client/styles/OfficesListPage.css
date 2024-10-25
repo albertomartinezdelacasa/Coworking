@@ -1,0 +1,247 @@
+.list-page {
+  padding: 20px;
+  min-height: calc(
+    100vh - 60px
+  ); /* Ajusta el 60px según la altura de tu header */
+  display: flex;
+  flex-direction: column;
+  font-family: "IBM Plex Sans", sans-serif;
+}
+
+h1 {
+  font-size: 24px;
+  font-weight: 600;
+  color: black;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+  margin-right: 20px;
+  flex-grow: 1;
+}
+
+/* Estilos del formulario de filtros */
+form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.office-list-form1 {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.office-list-form1 input,
+.office-list-form1 select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: black;
+  padding: 8px 12px 8px 35px;
+  padding-right: 30px; /* Espacio para la flecha */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: white;
+  cursor: pointer;
+  width: auto;
+  max-width: 200px;
+  transition: background-color 0.3s ease;
+}
+
+.office-list-form1 select:hover,
+.office-list-form1 input:hover {
+  background-color: #cbc5ea;
+}
+
+.office-list-form1 select:focus,
+.office-list-form1 input:focus {
+  outline: none;
+  border-color: #6433a7;
+  box-shadow: 0 0 0 2px rgba(100, 51, 167, 0.2);
+}
+
+.office-list-form2 fieldset {
+  border: none;
+  padding: 15px;
+  border-radius: 5px;
+  background-color: #fafafa;
+}
+
+.office-list-form2 legend {
+  font-size: 17px;
+  color: #555;
+  font-style: italic;
+}
+
+.office-list-form2 label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-right: 10px;
+  font-size: 16px;
+  font-style: italic;
+}
+
+/* Estilos de la lista de oficinas */
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.element {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: row;
+  margin: 1rem;
+}
+
+.element:hover {
+  transform: translateX(5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* Estilos de la foto de la oficina */
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo p {
+  font-size: 16px;
+  color: #777;
+}
+
+/* Detalles de cada oficina */
+.element-texts {
+  list-style-type: none;
+  padding: 0;
+  margin: 1rem;
+  display: flex;
+  flex: 1;
+}
+
+.element-texts {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+  justify-content: center;
+}
+.element-details {
+  flex: 2;
+}
+
+.element-details li {
+  padding-left: 20px;
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #555;
+}
+
+/* Equipamientos */
+.element-equipments {
+  flex: 1;
+  position: relative;
+}
+
+.element-equipments h3 {
+  font-size: 16px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.element-equipments ul {
+  padding-left: 20px;
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+.element-equipments li {
+  font-size: 15px;
+  color: #777;
+}
+
+/* Para pantallas de tabletas (768px) */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 22px;
+    margin-right: 0;
+  }
+
+  .office-list-form1 {
+    flex-direction: row;
+    gap: 15px;
+  }
+
+  .element {
+    flex-direction: column; /* Apila foto y detalles uno encima del otro */
+  }
+
+  .element-details {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #element-texts {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .photo img {
+    height: auto;
+  }
+
+  .element-title {
+    font-size: 20px;
+  }
+}
+
+/* Para pantallas de móviles (480px) */
+@media (max-width: 480px) {
+  .list-page {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+
+  .office-list-form1 input,
+  .office-list-form1 select {
+    font-size: 14px;
+    padding: 8px;
+    max-width: 100%;
+  }
+  .office-list-form1 {
+    flex-direction: column;
+  }
+
+  .element {
+    margin: 0.5rem;
+  }
+
+  .element-title {
+    font-size: 18px;
+  }
+  .element-texts {
+    margin: 1rem;
+  }
+
+  .element-details li,
+  .element-equipments li {
+    font-size: 14px;
+  }
+}
