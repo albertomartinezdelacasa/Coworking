@@ -146,50 +146,52 @@ const OfficeListPage = () => {
 
   return (
     <main className="list-page">
-      <h1>Coworking Spaces :</h1>
-
+      <h1>Coworking Spaces</h1>
       {/* Formulario para filtros */}
       <form>
-        <input
-          type="number"
-          name="capacity"
-          placeholder="Capacidad mínima"
-          value={filters.capacity}
-          onChange={handleFilterChange}
-        />
-        <input
-          type="number"
-          name="price"
-          placeholder="Precio máximo"
-          value={filters.price}
-          onChange={handleFilterChange}
-        />
-        <select
-          name="workspace"
-          value={filters.workspace}
-          onChange={handleFilterChange}
-        >
-          <option value="">Todos los espacios</option>
-          <option value="OFFICE">Office</option>
-          <option value="DESK">Desk</option>
-        </select>
-
+        <div className="office-list-form1">
+          <input
+            type="number"
+            name="capacity"
+            placeholder="Capacidad mínima"
+            value={filters.capacity}
+            onChange={handleFilterChange}
+          />
+          <input
+            type="number"
+            name="price"
+            placeholder="Precio máximo"
+            value={filters.price}
+            onChange={handleFilterChange}
+          />
+          <select
+            name="workspace"
+            value={filters.workspace}
+            onChange={handleFilterChange}
+          >
+            <option value="">Todos los espacios</option>
+            <option value="OFFICE">Office</option>
+            <option value="DESK">Desk</option>
+          </select>
+        </div>
         {/* Filtro de equipamientos */}
-        <fieldset>
-          <legend>Equipamientos:</legend>
-          {equipments.map((equipment) => (
-            <label key={equipment}>
-              <input
-                type="checkbox"
-                name="equipments"
-                value={equipment}
-                onChange={handleFilterChange}
-                checked={filters.equipments.includes(equipment)}
-              />
-              {equipment}
-            </label>
-          ))}
-        </fieldset>
+        <div className="office-list-form2">
+          <fieldset>
+            <legend>Equipamientos:</legend>
+            {equipments.map((equipment) => (
+              <label key={equipment}>
+                <input
+                  type="checkbox"
+                  name="equipments"
+                  value={equipment}
+                  onChange={handleFilterChange}
+                  checked={filters.equipments.includes(equipment)}
+                />
+                {equipment}
+              </label>
+            ))}
+          </fieldset>
+        </div>
       </form>
 
       {/* Lista de oficinas */}
@@ -198,53 +200,49 @@ const OfficeListPage = () => {
           <li
             className="element"
             key={office.id}
-            onClick={() => navigate(`/office/details/${office.id}`)}
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              gap: "2rem",
-              alignItems: "center",
-              boxShadow: "11px 10px 5px -8px rgba(0,0,0,0.11)",
-              padding: "10px",
-              margin: "10px 30px",
-              width: "500px",
-              cursor: "pointer",
-            }}
-          >
+            onClick={() => navigate(`/office/details/${office.id}`)}>
             <div className="photo">
               {office.photos && office.photos.length > 0 ? (
                 <img
                   src={`${VITE_API_URL}/${office.photos[0].name}`}
                   alt={`Foto ${office.photos[0].name}`}
-                  style={{
-                    width: "200px",
-                    height: "200px",
-                    objectFit: "cover",
-                    boxShadow: "11px 10px 5px -8px rgba(0,0,0,0.11)",
-                    borderRadius: "10px",
-                  }}
                 />
               ) : (
                 <p>No hay fotos disponibles.</p>
               )}
             </div>
-            <ul
-              className="element-details"
-              style={{ listStyleType: "none", padding: "0", margin: "0" }}
-            >
-              <li className="element-title">
-                <strong>{office.name}</strong>
-              </li>
-              <li>{office.address}</li>
-              <li>Capacidad: {office.capacity}</li>
-              <li>€{office.price}</li>
-              <li>{office.workspace}</li>
-              <li>Horario de Apertura: {office.opening}</li>
-              <li>Horario de Cierre: {office.closing}</li>
-              <li>Valoración: {Number(office.votesAvg).toFixed(1)}/5</li>
-              <li>Cantidad de valoraciones: {office.totalVotes}</li>
-              <li>
-                <strong>Equipamientos:</strong>
+            <div className="element-texts">
+              <h2>{office.name}</h2>
+              <ul className="element-details">
+                <li>
+                  <strong>Dirección:</strong> {office.address}
+                </li>
+                <li>
+                  {" "}
+                  <strong>Capacidad: </strong> {office.capacity}
+                </li>
+                <li>
+                  <strong>Precio: </strong>
+                  {office.price}€/h
+                </li>
+                <li>
+                  <strong>Tipo de espacio: </strong> {office.workspace}
+                </li>
+                <li>
+                  <strong>Horario:</strong> {office.opening.slice(0, 5)} -{" "}
+                  {office.closing.slice(0, 5)}
+                </li>
+                <li>
+                  <strong>Valoración: </strong>
+                  {Number(office.votesAvg).toFixed(1)} / 5
+                </li>
+                <li>
+                  <strong>Cantidad de valoraciones: </strong>
+                  {office.totalVotes}
+                </li>
+              </ul>
+              <div className="element-equipments">
+                <h3>Equipamientos:</h3>
                 <ul>
                   {office.equipments && office.equipments.length > 0 ? (
                     office.equipments.map((equipment, index) => (
@@ -256,8 +254,8 @@ const OfficeListPage = () => {
                     <li>No hay equipamientos disponibles.</li>
                   )}
                 </ul>
-              </li>
-            </ul>
+              </div>
+            </div>
           </li>
         ))}
       </ul>

@@ -2,6 +2,7 @@
 import { useContext, useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import useSingleBooking from '../hooks/useSingleBooking';
+import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 const { VITE_API_URL } = import.meta.env;
@@ -134,50 +135,87 @@ const BookingDetailsPage = () => {
 
   return (
     booking && (
-      <main className='booking-details-page'>
-        <h1 className='page-title'>Gestión Reservas</h1>
+      <main className='booking-details'>
+        <h1>Gestión Reservas</h1>
         <div className='booking-details-card'>
-          {<Carrusel images={booking.photos}></Carrusel>}
+          <div className='carrusel'>
+            {<Carrusel images={booking.photos}></Carrusel>}
+          </div>
           <ul>
             <li>
               <h2>{booking.officeName}</h2>
             </li>
             <li>
-              Check In:{' '}
-              {moment(booking.checkIn).format('DD/MM/YYYY [a las] HH:mm')}
+              <strong>Check In:</strong>
+              <span>
+                {' '}
+                {moment(booking.checkIn).format('DD/MM/YYYY [a las] HH:mm')}
+              </span>
             </li>
             <li>
-              Check Out:{' '}
-              {moment(booking.checkOut).format('DD/MM/YYYY [a las] HH:mm')}
+              <strong>Check Out:</strong>
+              <span>
+                {' '}
+                {moment(booking.checkOut).format('DD/MM/YYYY [a las] HH:mm')}
+              </span>
             </li>
-            <li>Numero de usuarios: {booking.guests}</li>
-            <li>Estado de reserva: {booking.status}</li>
             <li>
-              Creado el{' '}
-              {moment(booking.createdAt).format('DD/MM/YYYY [a las] HH:mm')}
+              <strong>Numero de usuarios:</strong>
+              <span> {booking.guests}</span>
             </li>
+            <li>
+              <strong>Estado de reserva:</strong>
+              <span> {booking.status}</span>
+            </li>
+            <li>
+              <strong>Fecha de reserva:</strong>
+              <span>
+                {' '}
+                {moment(booking.createdAt).format('DD/MM/YYYY [a las] HH:mm')}
+              </span>
+            </li>
+            <li>
+              <Link to='/booking/list'>Volver a reservas</Link>
+            </li>
+            {canVote && <li></li>}
           </ul>
-          {booking.status !== 'CANCELED' && booking.status !== 'REJECTED' && (
-            <>
-              {authUser.role === 'ADMIN' && booking.status !== 'CONFIRMED' && (
-                <button onClick={() => handleConfirmBooking('aprobada')}>
-                  Confirmar reserva
+        </div>
+        {booking.status !== 'CANCELED' && booking.status !== 'REJECTED' && (
+          <div>
+            {authUser.role === 'ADMIN' && booking.status !== 'CONFIRMED' && (
+              <button
+                className='bookingButton'
+                onClick={() => handleConfirmBooking('aprobada')}
+              >
+                Confirmar reserva
+              </button>
+            )}
+            {new Date(booking.checkOut) > new Date() &&
+              (authUser.role === 'ADMIN' ? (
+                <button
+                  className='bookingButton'
+                  onClick={() => handleConfirmBooking('rechazada')}
+                >
+                  Rechazar reserva
                 </button>
-              )}
-              {new Date(booking.checkOut) > new Date() &&
-                (authUser.role === 'ADMIN' ? (
-                  <button onClick={() => handleConfirmBooking('rechazada')}>
-                    Rechazar reserva
-                  </button>
-                ) : (
-                  <button onClick={() => handleDeleteBooking()}>
-                    Cancelar reserva
-                  </button>
-                ))}
-            </>
-          )}
+              ) : (
+                <button
+                  className='bookingButton'
+                  onClick={() => handleDeleteBooking()}
+                >
+                  Cancelar reserva
+                </button>
+              ))}
+          </div>
+        )}
 
-          {/* Comprobamos si se puede votar. */}
+        {/* <p>
+          {' '}
+          Nos encantaría conocer tu opinión sobre:
+          <strong>{booking.officeName}</strong>
+        </p> */}
+
+        <div className='can-vote'>
           {canVote && (
             <AddVoteForm
               idBooking={idBooking}

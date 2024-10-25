@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&display=swap");
 
 /* Variables CSS para colores y estilos comunes */
 :root {
@@ -11,6 +11,7 @@
 /* Estilos generales */
 .bookings-list-page {
   padding: 20px;
+
   min-height: calc(100vh - 60px);
   display: flex;
   flex-direction: column;
@@ -58,6 +59,7 @@
 .booking-info {
   padding: 25px 15px 15px;
 }
+
 
 .booking-info h2,
 .page-title {
