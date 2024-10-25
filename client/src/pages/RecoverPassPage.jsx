@@ -54,10 +54,13 @@ const RecoverPassPage = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            placeholder="Ingresa tu email"
+            placeholder="example@example.com"
           />
+          <p className="recover-pass-info">
+            Te enviaremos un link de recuperación a tu dirección de Email.
+          </p>
           <button type="submit" disabled={loading}>
-            Enviar código de recuperación
+            Enviar link
           </button>
         </form>
       </div>

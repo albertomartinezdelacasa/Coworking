@@ -83,11 +83,19 @@
     cursor: pointer;
     margin-top: 10px;
     align-self: center;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.register-form-container button:hover,
+.register-form-container button:focus {
+    background-color: #7A4CBF;
+    box-shadow: 0 0 10px rgba(100, 51, 167, 0.5);
 }
 
 .register-form-container button:disabled {
     background-color: #cccccc;
     cursor: not-allowed;
+    box-shadow: none;
 }
 
 .register-form-container input:focus,
@@ -98,6 +106,10 @@
 
 /* Media queries para diseño responsive */
 @media (max-width: 480px) {
+    .register-page {
+        min-height: auto;
+    }
+
     .register-form-container {
         width: 100%;
         padding: 15px;
