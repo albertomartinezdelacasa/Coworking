@@ -110,7 +110,9 @@ const BookAnOfficePage = () => {
 
     return (
         <main className="book-an-office-main">
-            <h1>Reservar Oficina</h1>
+            <h1 className="book-an-office-title">
+                ¿Cuándo quieres tu reserva?
+            </h1>
             <form onSubmit={handleSubmit} className="book-an-office-form">
                 <ul>
                     <li>
