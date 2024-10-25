@@ -8,7 +8,7 @@
   font-family: "IBM Plex Sans", sans-serif;
 }
 
-h1 {
+.list-page h1 {
   font-size: 24px;
   font-weight: 600;
   color: black;
@@ -19,7 +19,7 @@ h1 {
 }
 
 /* Estilos del formulario de filtros */
-form {
+.list-page form {
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
@@ -88,7 +88,7 @@ form {
 }
 
 /* Estilos de la lista de oficinas */
-ul {
+.list-page ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
@@ -175,7 +175,7 @@ ul {
 
 /* Para pantallas de tabletas (768px) */
 @media (max-width: 768px) {
-  h1 {
+  .list-page h1 {
     font-size: 22px;
     margin-right: 0;
   }
@@ -214,7 +214,7 @@ ul {
     padding: 10px;
   }
 
-  h1 {
+  .list-page h1 {
     font-size: 20px;
     margin-bottom: 15px;
   }
