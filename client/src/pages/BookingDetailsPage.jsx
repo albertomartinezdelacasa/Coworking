@@ -135,12 +135,19 @@ const BookingDetailsPage = () => {
 
   return (
     booking && (
+<<<<<<< HEAD
       <main className="booking-details">
         <div className="booking-title">
           <h1>Gestionar Reserva</h1>
         </div>
         <div className="booking-details-card">
           <div className="carrusel">
+=======
+      <main className='booking-details'>
+        <div className='booking-details-card'>
+          {/* <h1>Gestión Reservas</h1> */}
+          <div className='carrusel'>
+>>>>>>>  trayendome lo del main sin acabar lo mio
             {<Carrusel images={booking.photos}></Carrusel>}
           </div>
           <ul>
