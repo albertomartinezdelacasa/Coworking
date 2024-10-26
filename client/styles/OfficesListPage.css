@@ -1,247 +1,222 @@
-.list-page {
-  padding: 20px;
-  min-height: calc(
-    100vh - 60px
-  ); /* Ajusta el 60px según la altura de tu header */
-  display: flex;
-  flex-direction: column;
-  font-family: "IBM Plex Sans", sans-serif;
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&display=swap");
+
+/* Variables CSS para colores y estilos comunes */
+:root {
+  --primary-color: #6433a7;
+  --border-color: #ddd;
+  --hover-bg-color: #cbc5ea;
+  --font-family: "IBM Plex Sans", sans-serif;
 }
 
-.list-page h1 {
+/* Estilos generales */
+.office-list-page {
+  padding: 20px;
+  min-height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--font-family);
+  word-wrap: break-word;
+}
+/* Estilo del titulo */
+.office-list-page h1 {
+  font-family: var(--font-family);
   font-size: 24px;
   font-weight: 600;
   color: black;
   letter-spacing: 0.5px;
+  margin-top: 0;
   margin-bottom: 10px;
-  margin-right: 20px;
-  flex-grow: 1;
 }
-
-/* Estilos del formulario de filtros */
-.list-page form {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-}
-
-.office-list-form1 {
+/* Estilos de los filtros */
+.office-list-page form {
   display: flex;
-  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
   margin-bottom: 20px;
+  flex-wrap: wrap;
 }
-
-.office-list-form1 input,
-.office-list-form1 select {
+.ol-fields1,
+.ol-fields2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: none;
+  width: 100%;
+}
+.ol-fields1 input {
+  width: 300px;
+  height: 44px;
+  padding: 0 10px;
+  margin-bottom: 15px;
+  font-family: var(--font-family);
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.ol-fields1 select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: var(--font-family);
   font-size: 16px;
   font-weight: 400;
   color: black;
-  padding: 8px 12px 8px 35px;
-  padding-right: 30px; /* Espacio para la flecha */
-  border: 1px solid #ddd;
+  padding: 8px 12px 8px 40px;
+  border: 1px solid var(--border-color);
   border-radius: 5px;
   background-color: white;
   cursor: pointer;
   width: auto;
   max-width: 200px;
   transition: background-color 0.3s ease;
+  margin-bottom: 1rem;
 }
-
-.office-list-form1 select:hover,
-.office-list-form1 input:hover {
-  background-color: #cbc5ea;
-}
-
-.office-list-form1 select:focus,
-.office-list-form1 input:focus {
-  outline: none;
-  border-color: #6433a7;
-  box-shadow: 0 0 0 2px rgba(100, 51, 167, 0.2);
-}
-
-.office-list-form2 fieldset {
-  border: none;
-  padding: 15px;
-  border-radius: 5px;
-  background-color: #fafafa;
-}
-
-.office-list-form2 legend {
-  font-size: 17px;
-  color: #555;
+.ol-fields2 {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
   font-style: italic;
 }
-
-.office-list-form2 label {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  margin-right: 10px;
+.ol-fields2 legend {
+  margin-bottom: 0.5rem;
+}
+.ol-fields2 > label {
+  width: 50%;
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
   font-size: 16px;
-  font-style: italic;
+  cursor: pointer;
 }
 
 /* Estilos de la lista de oficinas */
-.list-page ul {
+.ol-list {
   list-style-type: none;
   padding: 0;
-  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
 }
 
-.element {
-  border: 1px solid #ddd;
+/* Estilos de la tarjeta de oficinas */
+.ol-card {
+  border: 1px solid var(--border-color);
   border-radius: 10px;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
-  flex-direction: row;
-  margin: 1rem;
+  flex-direction: column;
 }
 
-.element:hover {
-  transform: translateX(5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+/* Estilos de la imagen de la reserva */
+.olc-imgcontainer {
+  height: 200px;
+  overflow: hidden;
 }
 
-/* Estilos de la foto de la oficina */
-.photo img {
+.olc-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.photo p {
-  font-size: 16px;
-  color: #777;
+/* Estilo de la info de las oficinas */
+.olc-info {
+  padding: 1 rem;
+  margin: 0 1rem 0 1rem;
 }
-
-/* Detalles de cada oficina */
-.element-texts {
-  list-style-type: none;
-  padding: 0;
-  margin: 1rem;
-  display: flex;
-  flex: 1;
+.olc-info h2 {
+  text-transform: uppercase;
+  max-width: fit-content;
 }
-
-.element-texts {
-  font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #333;
-  justify-content: center;
-}
-.element-details {
-  flex: 2;
-}
-
-.element-details li {
-  padding-left: 20px;
-  margin-bottom: 8px;
-  font-size: 16px;
-  color: #555;
-}
-
-/* Equipamientos */
-.element-equipments {
-  flex: 1;
-  position: relative;
-}
-
-.element-equipments h3 {
-  font-size: 16px;
-  margin-bottom: 5px;
-  color: #333;
-}
-
-.element-equipments ul {
-  padding-left: 20px;
-  list-style-type: disc;
-  padding-left: 20px;
-}
-
-.element-equipments li {
+.olci-text {
   font-size: 15px;
-  color: #777;
+}
+.olci-office {
+  list-style: none;
+}
+.olci-office strong {
+  font-style: bold;
+}
+.olci-equipments {
+  font-style: italic;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: space-around;
+  border-top: 1px solid var(--primary-color);
+}
+.olci-equipments h3 {
+  font-size: 16px;
+}
+.olcie-list {
+  list-style: none;
 }
 
-/* Para pantallas de tabletas (768px) */
-@media (max-width: 768px) {
-  .list-page h1 {
-    font-size: 22px;
-    margin-right: 0;
+/* media query para tablets 768px */
+@media screen and (min-width: 450px) {
+  .ol-fields2 legend {
+    text-align: center;
   }
-
-  .office-list-form1 {
-    flex-direction: row;
-    gap: 15px;
+  .ol-fields2 > label {
+    width: 33%;
   }
-
-  .element {
-    flex-direction: column; /* Apila foto y detalles uno encima del otro */
-  }
-
-  .element-details {
+  .ol-list {
     display: flex;
     flex-direction: column;
   }
-
-  #element-texts {
+  .ol-card {
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
+    width: 100%;
   }
-
-  .photo img {
+  .olc-imgcontainer {
     height: auto;
+    width: 50%;
   }
-
-  .element-title {
-    font-size: 20px;
+  .olc-info {
+    width: 50%;
+    align-items: center;
+  }
+  .olci-text {
+    display: flex;
+    flex-direction: row;
+  }
+  .olci-office {
+    width: 50%;
+  }
+  .olci-office li {
+    padding: 2px;
+  }
+  .olci-equipments {
+    width: 50%;
+    padding: 5px;
+    border-top: none;
+    border-left: 2px solid var(--primary-color);
+    justify-content: center;
   }
 }
 
-/* Para pantallas de móviles (480px) */
-@media (max-width: 480px) {
-  .list-page {
-    padding: 10px;
+/* media query para pc 1024px*/
+@media screen and (min-width: 1020px) {
+  .office-list-page {
+    width: 80%;
+    margin: auto;
+  }
+  .ol-fields1 {
+    flex-direction: row;
+    justify-content: space-evenly;
   }
 
-  .list-page h1 {
-    font-size: 20px;
-    margin-bottom: 15px;
+  .ol-fields2 > label {
+    width: 20%;
   }
-
-  .office-list-form1 input,
-  .office-list-form1 select {
-    font-size: 14px;
-    padding: 8px;
-    max-width: 100%;
-  }
-  .office-list-form1 {
-    flex-direction: column;
-  }
-
-  .element {
-    margin: 0.5rem;
-  }
-
-  .element-title {
-    font-size: 18px;
-  }
-  .element-texts {
-    margin: 1rem;
-  }
-
-  .element-details li,
-  .element-equipments li {
-    font-size: 14px;
+  .ol-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   }
 }
