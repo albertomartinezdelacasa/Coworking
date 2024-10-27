@@ -9,15 +9,15 @@ import '/styles/RegisterPage.css';
 import '/styles/Main.css';
 import '/styles/UserProfilePage.css';
 import '/styles/RecoverPass.css';
-import "/styles/OfficesListPage.css";
 import '/styles/NotFound.css';
 import '/styles/AddOfficeAdminPage.css';
-import '/styles/BookingDetailsPage.css';
-import '/styles/BookAnOfficePage.css';
 import '/styles/BookingListPage.css';
-import '/styles/OfficeDetails.css';
-import '/styles/CarruselFotosOfi.css';
-import '/styles/ActivateUserPage.css';
+import '/styles/BookingDetailsPage.css';
+import '/styles/BookAnOfficePage.css'
+import "/styles/OfficeDetails.css";
+import "/styles/CarruselFotosOfi.css";
+import "/styles/OfficeListPage.css"
+
 
 // Importamos los componentes
 

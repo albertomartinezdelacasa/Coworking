@@ -71,7 +71,7 @@ const LoginPage = () => {
   // En este caso utilizaremos el componente Navigate (en lugar de la función).
   if (authUser) {
     console.log("Login exitoso, redirigiendo a la página principal");
-    return <Navigate to="/users/profile" />;
+    return <Navigate to="/" />;
   }
 
   return (

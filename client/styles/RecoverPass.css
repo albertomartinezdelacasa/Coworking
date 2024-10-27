@@ -70,20 +70,25 @@
     color: #999;
 }
 
-.register-form-container button {
-    width: 92px;
-    height: 48px;
-    background-color: #6433A7;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-family: "IBM Plex Sans", sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    cursor: pointer;
-    margin-top: 10px;
-    align-self: center;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+.recover-pass-form button {
+  width: 200px;
+  height: 48px;
+  background-color: #6433A7;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+  margin-top: 10px;
+  align-self: center;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.recover-pass-form button:hover {
+  background-color: #7A4CBF;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .register-form-container button:hover,
@@ -98,10 +103,23 @@
     box-shadow: none;
 }
 
-.register-form-container input:focus,
-.register-form-container input:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 2px #6433A7;
+p.recover-pass-info { 
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 14px;
+    color: rgb(44, 39, 39);
+    font-weight: 400;
+}
+
+/* Diseño responsive */
+@media (max-width: 768px) {
+  .recover-pass-container {
+    min-height: auto;
+  }
+
+  .recover-pass-form {
+    width: 90%;
+    max-width: 500px;
+  }
 }
 
 /* Media queries para diseño responsive */

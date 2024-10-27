@@ -1,6 +1,28 @@
-html,
-body {
-  height: 100%;
+.booking-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+  min-height: 100vh;
+  padding: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.booking-title {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.booking-title h1 {
+  font-size: 24px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+  color: #6433a7;
   margin: 0;
 }
 
@@ -36,152 +58,104 @@ h2 {
   font-size: 1rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
-.booking-details-card strong {
-  font-weight: bold;
-  color: #1a5f7a;
-  margin-bottom: 5px;
-}
-.booking-details p strong {
-  color: #1a5f7a;
+
+.carrusel {
+  width: 100%;
+  max-width: 600px;
   margin-bottom: 20px;
 }
 
-/* Contenedor para la sección de estrellitas y el textarea */
-.text-area-container {
+.booking-details-card ul {
+  list-style-type: none;
+  border: 1px solid rgba(128, 128, 128, 0.321);
+  padding: 20px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 600px;
+  box-sizing: border-box;
+}
+
+.booking-details-card li {
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.booking-details-card li strong {
+  color: #1a5f7a;
+}
+
+.booking-buttons {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px; /* Espacio entre las estrellitas y el textarea */
-}
-
-.estrellitas {
-  width: 40px;
-
-  margin: 20px 0 10px 0;
-  transition: width 0.3s ease;
-  flex-shrink: 0; /* Evita que las estrellitas se reduzcan */
-}
-
-.estrellitas:hover {
-  width: 60px; /* Aumenta el tamaño al pasar el ratón */
-}
-
-.text-area {
+  gap: 10px;
+  margin-top: 20px;
   width: 100%;
-  height: 150px;
-  padding: 10px;
-  font-size: 16px;
-  font-family: 'Arial', sans-serif;
-  color: #333;
-  background-color: #f9f9f9;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  resize: horizontal; /* Solo permite el cambio de tamaño horizontal */
-  flex-grow: 1; /* Permite que el textarea crezca ocupando espacio disponible */
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.text-area:hover {
-  border-color: #999;
-}
-
-.text-area:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 10px rgba(0, 123, 255, 0.25);
-  outline: none;
-}
-
-.text-area::placeholder {
-  color: #aaa;
-  font-style: italic;
-}
-
-/*.bookingButton,
-button {
+.button-primary {
   background-color: #6433a7;
   color: white;
   border: none;
-  /*padding: 10px 20px; Afecta a demas elementos de otras Paginas*/
- /* border-radius: 4px;
+  padding: 10px 20px;
+  border-radius: 4px;
   cursor: pointer;
   font-size: 1rem;
-  transition: background-color 0.3s ease;
-  margin: 20px 0 20px 0;
-}/*
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  max-width: 250px;
+}
 
-.bookingButton:hover {
+.button-primary:hover {
   background-color: #7a4cbf;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Ajustes para tablets */
-@media (min-width: 768px) and (max-width: 1024px) {
+.button-primary:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(100, 51, 167, 0.5);
+}
+
+.button-primary:active {
+  transform: translateY(1px);
+}
+
+/* Media queries para hacer el diseño responsive */
+@media (min-width: 768px) {
   .booking-details {
-    width: 90vw;
-    margin: 0 auto;
+    padding: 20px 40px;
   }
+
   .booking-details-card {
-    display: flex;
-    width: 100vw;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .carrusel {
+    width: 48%;
+    margin-bottom: 0;
   }
 
   .booking-details-card ul {
-    width: 360px;
-    height: 380px;
-  }
-  .can-vote {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .estrellitas {
-    margin-left: 20px;
+    width: 48%;
   }
 
-  .text-area {
-    width: 500px;
-    height: 150px;
-    font-size: 18px;
-    resize: horizontal;
+  .booking-buttons {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .button-primary {
+    width: auto;
   }
 }
 
-/* Ajustes para pantallas grandes (escritorio) */
 @media (min-width: 1024px) {
   .booking-details {
-    /* width: 100vw; */
-    margin: 0 auto;
-  }
-  .booking-details-card {
-    display: flex;
-    justify-content: center;
-    width: 100vw;
-    gap: 0.5rem;
-  }
-
-  .booking-details-card ul {
-    width: 600px;
-    height: 400px;
-    padding-left: ;
-  }
-  .booking-details-card li {
-    padding-left: 10px;
-  }
-  .can-vote {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .estrellitas {
-    margin-left: 20px;
-  }
-
-  .text-area {
-    width: 500px;
-    height: 150px;
-    font-size: 18px;
-    resize: horizontal;
+    padding: 20px 80px;
   }
 }

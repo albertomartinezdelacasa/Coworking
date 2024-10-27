@@ -44,7 +44,7 @@ const Header = () => {
                   />
                 )}
               </NavLink>
-              
+
               {/* Botón de cerrar sesión */}
               <button
                 onClick={() => {
@@ -75,7 +75,7 @@ const Header = () => {
                   <NavLink to="/office/create">Añadir Espacio</NavLink>
                 </li>
                 <li>
-                  <NavLink to="/office/list">Lista de espacios</NavLink>
+                  <NavLink to="/office/list">Lista de Espacios</NavLink>
                 </li>
               </>
             ) : (
@@ -84,7 +84,7 @@ const Header = () => {
                   <NavLink to="/booking/list">Mis Reservas</NavLink>
                 </li>
                 <li>
-                  <NavLink to="office/list">Reservar</NavLink>
+                  <NavLink to="office/list">Lista de Espacios</NavLink>
                 </li>
               </>
             )}

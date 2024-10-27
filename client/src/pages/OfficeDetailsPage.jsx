@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import useSingleOffice from "../hooks/useSingleOffice";
 import { AuthContext } from "../contexts/AuthContext";
 import toast from "react-hot-toast";
-import Carrusel from "../components/CarruselFotosOfi"; // Asegúrate de tener este archivo en tu proyecto
+import Carrusel from "../components/CarruselFotosOfi";
 
 const { VITE_API_URL } = import.meta.env;
 
@@ -311,14 +311,21 @@ const OfficeDetailsPage = () => {
                     <li>
                       <label htmlFor="workspace">Tipo de espacio:</label>
                       {isEditing ? (
-                        <select
-                          id="workspace"
-                          value={workspace}
-                          onChange={(e) => setWorkspace(e.target.value)}
-                        >
-                          <option value="OFFICE">Oficina</option>
-                          <option value="DESK">Escritorio</option>
-                        </select>
+                        <div className="select-wrapper">
+                          <select
+                            id="workspace"
+                            value={workspace}
+                            onChange={(e) => setWorkspace(e.target.value)}
+                          >
+                            <option value="OFFICE">Oficina</option>
+                            <option value="DESK">Escritorio</option>
+                          </select>
+                          <img
+                            src="/arrowdown.png"
+                            alt="Flecha abajo"
+                            className="select-arrow"
+                          />
+                        </div>
                       ) : (
                         <span>{displayWorkspace(workspace)}</span>
                       )}
@@ -327,39 +334,53 @@ const OfficeDetailsPage = () => {
                       <label>Horario:</label>
                       {isEditing ? (
                         <>
-                          <select
-                            id="opening"
-                            value={opening}
-                            onChange={(e) => setOpening(e.target.value)}
-                          >
-                            {Array.from({ length: 24 }, (_, i) => {
-                              const time = `${i
-                                .toString()
-                                .padStart(2, "0")}:00`;
-                              return (
-                                <option key={i} value={time}>
-                                  {formatTime(time)}
-                                </option>
-                              );
-                            })}
-                          </select>
+                          <div className="select-wrapper">
+                            <select
+                              id="opening"
+                              value={opening}
+                              onChange={(e) => setOpening(e.target.value)}
+                            >
+                              {Array.from({ length: 24 }, (_, i) => {
+                                const time = `${i
+                                  .toString()
+                                  .padStart(2, "0")}:00`;
+                                return (
+                                  <option key={i} value={time}>
+                                    {formatTime(time)}
+                                  </option>
+                                );
+                              })}
+                            </select>
+                            <img
+                              src="/arrowdown.png"
+                              alt="Flecha abajo"
+                              className="select-arrow"
+                            />
+                          </div>
                           <span> - </span>
-                          <select
-                            id="closing"
-                            value={closing}
-                            onChange={(e) => setClosing(e.target.value)}
-                          >
-                            {Array.from({ length: 24 }, (_, i) => {
-                              const time = `${i
-                                .toString()
-                                .padStart(2, "0")}:00`;
-                              return (
-                                <option key={i} value={time}>
-                                  {formatTime(time)}
-                                </option>
-                              );
-                            })}
-                          </select>
+                          <div className="select-wrapper">
+                            <select
+                              id="closing"
+                              value={closing}
+                              onChange={(e) => setClosing(e.target.value)}
+                            >
+                              {Array.from({ length: 24 }, (_, i) => {
+                                const time = `${i
+                                  .toString()
+                                  .padStart(2, "0")}:00`;
+                                return (
+                                  <option key={i} value={time}>
+                                    {formatTime(time)}
+                                  </option>
+                                );
+                              })}
+                            </select>
+                            <img
+                              src="/arrowdown.png"
+                              alt="Flecha abajo"
+                              className="select-arrow"
+                            />
+                          </div>
                         </>
                       ) : (
                         <span>{formatSchedule(opening, closing)}</span>

@@ -97,32 +97,26 @@ const BookingsListPage = () => {
 
   return (
     <main className="bookings-list-page">
+      <h1 className="page-title">Listado de reservas</h1>
+
       <div className="filter-container">
-        <h1 className="page-title">Listado de reservas</h1>
-        <select
-          id="statusFilter"
-          value={filterStatus}
-          onChange={handleStatusChange}
-        >
-          <option value="">Todas</option>
-          <option value="CONFIRMED">Confirmadas</option>
-          <option value="CANCELED">Canceladas</option>
-          <option value="PENDING">Pendientes</option>
-          <option value="REJECTED">Rechazadas</option>
-        </select>
+        <div className="select-wrapper">
+          <img src="/filter.png" alt="Filtrar" className="filter-icon" />
+          <select
+            id="statusFilter"
+            value={filterStatus}
+            onChange={handleStatusChange}
+          >
+            <option value="">Todas</option>
+            <option value="CONFIRMED">Confirmadas</option>
+            <option value="CANCELED">Canceladas</option>
+            <option value="PENDING">Pendientes</option>
+            <option value="REJECTED">Rechazadas</option>
+          </select>
+        </div>
       </div>
 
-      {filteredBookings.length === 0 ? (
-        <div>
-          <p>
-            No hay reservas disponibles. Haz click en el siguiente enlace para
-            hacer una reserva:
-          </p>
-          <NavLink to="/office/list">
-            Ver listado de oficinas disponibles
-          </NavLink>
-        </div>
-      ) : (
+      {filteredBookings.length > 0 ? (
         <ul className="bookings-list">
           {filteredBookings.map((booking) => (
             <li
@@ -173,6 +167,16 @@ const BookingsListPage = () => {
             </li>
           ))}
         </ul>
+      ) : (
+        <div className="no-bookings-message">
+          <p>
+            No hay reservas disponibles. Haz click en el siguiente enlace para
+            hacer una reserva:
+          </p>
+          <NavLink to="/office/list">
+            Ver listado de oficinas disponibles
+          </NavLink>
+        </div>
       )}
     </main>
   );

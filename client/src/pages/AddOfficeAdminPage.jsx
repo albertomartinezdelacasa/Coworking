@@ -100,7 +100,7 @@ const AddOfficeAdminPage = () => {
 
       // Mostrar mensaje de éxito y navegar a la página principal
       toast.success(body.message);
-      navigate("/");
+      navigate(`/office/list`);
     } catch (err) {
       toast.error(err.message);
     }
