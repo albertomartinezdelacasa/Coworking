@@ -52,33 +52,39 @@ const cancelBookingController = async (req, res, next) => {
 
         const emailSubject = 'Reserva cancelada con éxito';
         const emailBody = `
-                Hola ${userData[0].name},
+                <p>Hola ${userData[0].name},</p>
 
-                Tu reserva para la oficina #${booking[0].idOffice} ha sido cancelada con éxito.
+                <p>Tu reserva con Innovaspace ha sido cancelada con éxito.</p>
 
-                Gracias por usar nuestro servicio.
+                <p>Gracias por usar nuestro servicio.</p>
             `;
-        await sendMailUtil(userData[0].email, emailSubject, emailBody);
+        await sendMailUtil(userData[0].email, emailSubject, emailBody, true);
 
         // Obtenemos el correo del administrador
         const [adminData] = await pool.query(
-            'SELECT email FROM users WHERE role = "ADMIN" LIMIT 1',
+            'SELECT email, username FROM users WHERE role = ?  LIMIT 1',
+            ['ADMIN'],
         );
 
         // Enviamos un correo al administrador
         const adminEmailBody = `
-            Hola Administrador,
+            <p>Hola ${adminData.username},</p>
 
-            Un usuario ha cancelado su reserva.
+             <p>Un usuario ha cancelado su reserva.</p>
 
-            Reserva: ${idBooking}
-            Usuario: ${userData[0].name} (ID: ${idUser})
-            Oficina: #${booking[0].idOffice}
+             <p>Reserva: ${idBooking}</p>
+             <p>Usuario: ${userData[0].name} (ID: ${idUser})</p>
+             <p>Oficina: #${booking[0].idOffice}</p>
 
-            Gracias.
+             <p>Gracias.</p>
             `;
 
-        await sendMailUtil(adminData[0].email, emailSubject, adminEmailBody);
+        await sendMailUtil(
+            adminData[0].email,
+            emailSubject,
+            adminEmailBody,
+            true,
+        );
 
         // Cambiamos a CANCELED el status de la reserva de la base de datos.
         await pool.query('UPDATE bookings SET status = ? WHERE id = ?', [
