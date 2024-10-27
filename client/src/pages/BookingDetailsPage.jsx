@@ -215,6 +215,8 @@ const BookingDetailsPage = () => {
 
         {authUser?.role === 'CLIENT' && canVote && (
           <div className='can-vote'>
+            <img src='/innovaspace-favicon.png' alt='logo de innovaspace' />
+            <p>Valora tu experiencia</p>
             <AddVoteForm
               idBooking={idBooking}
               onVoteSubmit={() => {
