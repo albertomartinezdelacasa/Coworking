@@ -196,4 +196,29 @@
     }
 }
 
+.book-an-office-main h2 {
+    font-size: 16px;
+    font-family: "IBM Plex Sans", sans-serif;
+    letter-spacing: 0.5px;
+    font-weight: 500; /* regular */
+    color: #6433a7;
+    margin-bottom: 20px;
+    text-align: left; /* Alineado a la izquierda */
+    width: 100%;
+}
 
+.book-an-office-form ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.book-an-office-form li label {
+    font-weight: bold;
+    color: #1a5f7a;
+    margin-bottom: 5px;
+}
+
+.book-an-office-form strong {
+    color: #1a5f7a;
+}

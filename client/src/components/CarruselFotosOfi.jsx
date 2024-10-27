@@ -1,12 +1,10 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import Slider from 'react-slick'; // Importamos el componente Slider
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-
 // Importamos la URL del servidor.
 const { VITE_API_URL } = import.meta.env;
-
 
 const Carrusel = ({ images }) => {
   const sliderRef = useRef(null);
@@ -31,24 +29,24 @@ const Carrusel = ({ images }) => {
   };
 
   return (
-    <div className="carrusel-container">
+    <div className='carrusel-container'>
       <Slider ref={sliderRef} {...settings}>
         {images.map((image) => (
-          <div key={image.id} className="carrusel-slide">
+          <div key={image.id} className='carrusel-slide'>
             <img
               src={`${VITE_API_URL}/${image.name}`}
-              alt={"Imagen del carrusel"}
-              className="carrusel-image"
+              alt={'Imagen del carrusel'}
+              className='carrusel-image'
             />
           </div>
         ))}
       </Slider>
-      <div className="carrusel-controls">
-        <button className="carrusel-button prev" onClick={goToPrev}>
-          <img src="/flecha-izquierda.png" alt="Anterior" />
+      <div className='carrusel-controls'>
+        <button className='carrusel-button prev' onClick={goToPrev}>
+          <img src='/flecha-izquierda.png' alt='Anterior' />
         </button>
-        <button className="carrusel-button next" onClick={goToNext}>
-          <img src="/flecha-derecha.png" alt="Siguiente" />
+        <button className='carrusel-button next' onClick={goToNext}>
+          <img src='/flecha-derecha.png' alt='Siguiente' />
         </button>
       </div>
     </div>
