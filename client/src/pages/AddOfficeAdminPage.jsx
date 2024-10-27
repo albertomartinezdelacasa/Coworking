@@ -100,7 +100,7 @@ const AddOfficeAdminPage = () => {
 
       // Mostrar mensaje de éxito y navegar a la página principal
       toast.success(body.message);
-      navigate("/");
+      navigate(`/office/list`);
     } catch (err) {
       toast.error(err.message);
     }
@@ -161,29 +161,28 @@ const AddOfficeAdminPage = () => {
     <div className="add-office-container">
       <h1>Crear Nuevo Espacio</h1>
       <form onSubmit={handleAddSpace} className="add-office-form">
-        <div className="form-row">
-          <div className="form-group">
-            <label htmlFor="name">Nombre del Espacio</label>
-            <input
-              id="name"
-              type="text"
-              placeholder="Nombre"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="description">Descripción</label>
-            <input
-              id="description"
-              type="text"
-              placeholder="Descripción"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              required
-            />
-          </div>
+        <div className="form-group full-width">
+          <label htmlFor="name">Nombre del Espacio</label>
+          <input
+            id="name"
+            type="text"
+            placeholder="Nombre"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="form-group full-width">
+          <label htmlFor="description">Descripción</label>
+          <textarea
+            id="description"
+            placeholder="Describe las características del espacio, como la iluminación, el ambiente, las vistas, el mobiliario, etc. Menciona también cualquier detalle único o atractivo especial."
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+            rows="4"
+          />
         </div>
 
         <div className="form-row">
