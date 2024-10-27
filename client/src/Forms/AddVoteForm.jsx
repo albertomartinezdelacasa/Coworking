@@ -56,7 +56,7 @@ const AddVoteForm = ({ idBooking, onVoteSubmit }) => {
 
       {/* Contenedor para las estrellas y el textarea */}
       <div className='text-area-container'>
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <div>
           {[...Array(5)].map((_, index) => {
             const starValue = index + 1;
             return (
@@ -88,7 +88,6 @@ const AddVoteForm = ({ idBooking, onVoteSubmit }) => {
           })}
         </div>
 
-        {/* Textarea */}
         <textarea
           className='text-area'
           value={comment}
@@ -96,9 +95,9 @@ const AddVoteForm = ({ idBooking, onVoteSubmit }) => {
           placeholder='Deja un comentario (opcional)'
         />
       </div>
-
-      <br />
-      <button type='submit'>Enviar</button>
+      <button id='submit-vote-button' type='submit'>
+        Enviar review
+      </button>
     </form>
   );
 };
