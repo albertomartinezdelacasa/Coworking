@@ -1,5 +1,5 @@
-import { useEffect, useState, useRef } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useState, useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 // Importamos la URL del servidor.
 const { VITE_API_URL } = import.meta.env;
@@ -14,22 +14,22 @@ const OfficeListPage = () => {
 
   // Estado para los filtros
   const [filters, setFilters] = useState({
-    capacity: "",
-    priceSort: "",
-    workspace: "",
+    capacity: '',
+    priceSort: '',
+    workspace: '',
     equipments: [],
   });
 
   // Equipamientos disponibles
   const equipments = [
-    "Pizarra",
-    "Proyector",
-    "Catering",
-    "Cafetera",
-    "Monitor",
-    "Equipo de Sonido",
-    "TV",
-    "Dispensador de Agua",
+    'Pizarra',
+    'Proyector',
+    'Catering',
+    'Cafetera',
+    'Monitor',
+    'Equipo de Sonido',
+    'TV',
+    'Dispensador de Agua',
   ];
 
   // Estado para el desplegable de equipamientos
@@ -42,7 +42,7 @@ const OfficeListPage = () => {
       try {
         const res = await fetch(`${VITE_API_URL}/api/office/list`);
         if (!res.ok) {
-          throw new Error("Error al cargar las oficinas");
+          throw new Error('Error al cargar las oficinas');
         }
         const body = await res.json();
 
@@ -59,7 +59,7 @@ const OfficeListPage = () => {
 
         // Aplicar filtro inicial basado en el parámetro de la URL
         const params = new URLSearchParams(location.search);
-        const workspaceParam = params.get("workspace");
+        const workspaceParam = params.get('workspace');
         if (workspaceParam) {
           setFilters((prevFilters) => ({
             ...prevFilters,
@@ -80,7 +80,7 @@ const OfficeListPage = () => {
   const handleFilterChange = (e) => {
     const { name, value, type } = e.target;
 
-    if (name === "equipments") {
+    if (name === 'equipments') {
       const selectedEquipments = filters.equipments.includes(value)
         ? filters.equipments.filter((item) => item !== value)
         : [...filters.equipments, value];
@@ -95,6 +95,10 @@ const OfficeListPage = () => {
         [name]: value,
       }));
     }
+  };
+  // para evitar que al pulsar enter se resetee el formulario
+  const handleSubmit = (e) => {
+    e.preventDefault();
   };
 
   const toggleEquipmentDropdown = () => {
@@ -111,9 +115,9 @@ const OfficeListPage = () => {
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
@@ -150,7 +154,7 @@ const OfficeListPage = () => {
         filtered.sort((a, b) => {
           const priceA = parseFloat(a.price);
           const priceB = parseFloat(b.price);
-          if (filters.priceSort === "asc") {
+          if (filters.priceSort === 'asc') {
             return priceA - priceB;
           } else {
             return priceB - priceA;
@@ -177,90 +181,90 @@ const OfficeListPage = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <main className="office-list-page">
+    <main className='office-list-page'>
       <h1>Nuestros Espacios</h1>
-      <form>
-        <fieldset className="ol-fields1">
-          <div className="filter-group">
-            <label htmlFor="capacity">Capacidad</label>
-            <div className="input-with-icon">
+      <form onSubmit={handleSubmit}>
+        <fieldset className='ol-fields1'>
+          <div className='filter-group'>
+            <label htmlFor='capacity'>Capacidad</label>
+            <div className='input-with-icon'>
               <input
-                id="capacity"
-                type="number"
-                name="capacity"
-                placeholder="0"
+                id='capacity'
+                type='number'
+                name='capacity'
+                placeholder='0'
                 value={filters.capacity}
                 onChange={handleFilterChange}
               />
               <img
-                src="/person.png"
-                alt="Icono de persona"
-                className="input-icon"
+                src='/person.png'
+                alt='Icono de persona'
+                className='input-icon'
               />
             </div>
           </div>
-          <div className="filter-group">
-            <label htmlFor="workspace">Tipo de espacio</label>
-            <div className="select-wrapper">
+          <div className='filter-group'>
+            <label htmlFor='workspace'>Tipo de espacio</label>
+            <div className='select-wrapper'>
               <select
-                id="workspace"
-                name="workspace"
+                id='workspace'
+                name='workspace'
                 value={filters.workspace}
                 onChange={handleFilterChange}
               >
-                <option value="">Todos los espacios</option>
-                <option value="OFFICE">Oficina</option>
-                <option value="DESK">Escritorio</option>
+                <option value=''>Todos los espacios</option>
+                <option value='OFFICE'>Oficina</option>
+                <option value='DESK'>Escritorio</option>
               </select>
               <img
-                src="/arrowdown.png"
-                alt="Flecha abajo"
-                className="select-arrow"
+                src='/arrowdown.png'
+                alt='Flecha abajo'
+                className='select-arrow'
               />
             </div>
           </div>
-          <div className="filter-group">
-            <label htmlFor="priceSort">Ordenar</label>
-            <div className="select-wrapper">
+          <div className='filter-group'>
+            <label htmlFor='priceSort'>Ordenar</label>
+            <div className='select-wrapper'>
               <select
-                id="priceSort"
-                name="priceSort"
+                id='priceSort'
+                name='priceSort'
                 value={filters.priceSort}
                 onChange={handleFilterChange}
               >
-                <option value="">Añadidos recientemente</option>
-                <option value="asc">Precio más bajo</option>
-                <option value="desc">Precio más alto</option>
+                <option value=''>Añadidos recientemente</option>
+                <option value='asc'>Precio más bajo</option>
+                <option value='desc'>Precio más alto</option>
               </select>
               <img
-                src="/arrowdown.png"
-                alt="Flecha abajo"
-                className="select-arrow"
+                src='/arrowdown.png'
+                alt='Flecha abajo'
+                className='select-arrow'
               />
             </div>
           </div>
-          <div className="filter-group" ref={equipmentDropdownRef}>
-            <label htmlFor="equipments">Equipamientos</label>
-            <div className="custom-select select-wrapper">
+          <div className='filter-group' ref={equipmentDropdownRef}>
+            <label htmlFor='equipments'>Equipamientos</label>
+            <div className='custom-select select-wrapper'>
               <div
-                className="select-selected"
+                className='select-selected'
                 onClick={toggleEquipmentDropdown}
               >
                 {filters.equipments.length > 0
                   ? `${filters.equipments.length} seleccionados`
-                  : "Seleccionar"}
+                  : 'Seleccionar'}
               </div>
               <img
-                src="/arrowdown.png"
-                alt="Flecha abajo"
-                className="select-arrow"
+                src='/arrowdown.png'
+                alt='Flecha abajo'
+                className='select-arrow'
               />
               {isEquipmentDropdownOpen && (
-                <div className="select-items">
+                <div className='select-items'>
                   {equipments.map((equipment) => (
-                    <label key={equipment} className="checkbox-label">
+                    <label key={equipment} className='checkbox-label'>
                       <input
-                        type="checkbox"
+                        type='checkbox'
                         checked={filters.equipments.includes(equipment)}
                         onChange={() => handleEquipmentChange(equipment)}
                       />
@@ -275,17 +279,17 @@ const OfficeListPage = () => {
       </form>
 
       {/* Lista de oficinas */}
-      <ul className="ol-list">
+      <ul className='ol-list'>
         {filteredOffices.map((office) => (
           <li
-            className="ol-card"
+            className='ol-card'
             key={office.id}
             onClick={() => navigate(`/office/details/${office.id}`)}
           >
-            <div className="olc-imgcontainer">
+            <div className='olc-imgcontainer'>
               {office.photos && office.photos.length > 0 ? (
                 <img
-                  className="olc-img"
+                  className='olc-img'
                   src={`${VITE_API_URL}/${office.photos[0].name}`}
                   alt={`Foto ${office.photos[0].name}`}
                 />
@@ -293,14 +297,14 @@ const OfficeListPage = () => {
                 <p>No hay fotos disponibles.</p>
               )}
             </div>
-            <div className="olc-info">
+            <div className='olc-info'>
               <h2>{office.name}</h2>
-              <div className="olci-text">
-                <ul className="olci-office">
+              <div className='olci-text'>
+                <ul className='olci-office'>
                   <li>
                     <strong>Dirección:</strong> {office.address}
                   </li>
-                  <li className="olci-row">
+                  <li className='olci-row'>
                     <span>
                       <strong>Capacidad: </strong> {office.capacity} Personas
                     </span>
@@ -309,25 +313,25 @@ const OfficeListPage = () => {
                       {office.price}€/h
                     </span>
                   </li>
-                  <li className="olci-row">
+                  <li className='olci-row'>
                     <span>
                       <strong>Tipo de espacio: </strong>
-                      {office.workspace === "OFFICE"
-                        ? "Oficina"
-                        : office.workspace === "DESK"
-                        ? "Escritorio"
+                      {office.workspace === 'OFFICE'
+                        ? 'Oficina'
+                        : office.workspace === 'DESK'
+                        ? 'Escritorio'
                         : office.workspace}
                     </span>
                     <span>
-                      <strong>Horario:</strong> {office.opening.slice(0, 5)}h -{" "}
+                      <strong>Horario:</strong> {office.opening.slice(0, 5)}h -{' '}
                       {office.closing.slice(0, 5)}h
                     </span>
                   </li>
-                  <li className="olci-row">
+                  <li className='olci-row'>
                     <span>
                       <strong>Valoración: </strong>
                       <div
-                        className="star-rating"
+                        className='star-rating'
                         title={`${Number(office.votesAvg).toFixed(
                           1
                         )} de 5 estrellas`}
@@ -337,8 +341,8 @@ const OfficeListPage = () => {
                             key={index}
                             className={
                               index < Math.round(office.votesAvg)
-                                ? "star filled"
-                                : "star"
+                                ? 'star filled'
+                                : 'star'
                             }
                           >
                             ★
@@ -352,9 +356,9 @@ const OfficeListPage = () => {
                     </span>
                   </li>
                 </ul>
-                <div className="olci-equipments">
+                <div className='olci-equipments'>
                   <h3>Equipamientos:</h3>
-                  <ul className="olcie-list">
+                  <ul className='olcie-list'>
                     {office.equipments && office.equipments.length > 0 ? (
                       office.equipments.map((equipment, index) => (
                         <li key={`${office.id}-${equipment.name}-${index}`}>
