@@ -73,7 +73,7 @@ const voteOfficeAfterUseController = async (req, res, next) => {
         // Enviamos una respuesta al cliente.
         res.status(201).send({
             status: 'ok',
-            message: 'Voto agregado',
+            message: 'Gracias por tu valoración',
             data: {
                 votesAvg: Number(votesAvg[0]).avg,
                 totalVotes: Number(totalVotes[0]).avg,
