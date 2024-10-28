@@ -45,21 +45,21 @@ const adminBookingsController = async (req, res, next) => {
         ]);
 
         // Preparamos el correo para el usuario
-        const emailSubject = `Actualización de tu reserva para la oficina #${booking[0].idOffice}`;
+        const emailSubject = `Actualización de tu reserva con Innovaspace`;
         const emailBody = `
-            Hola ${booking[0].name},
+           <p> Hola ${booking[0].name},</p>
 
-            Tu reserva para la oficina #${booking[0].idOffice} ha sido ${action}.
-            Detalles de la reserva:
-            - Check-in: ${booking[0].checkIn}
-            - Check-out: ${booking[0].checkOut}
-            - Número de invitados: ${booking[0].guests}
+            <p> Tu reserva para la oficina #${booking[0].idOffice} ha sido ${action}.</p>
+            <p> Detalles de la reserva:</p>
+            <p> - Check-in: ${booking[0].checkIn}</p>
+            <p> - Check-out: ${booking[0].checkOut}</p>
+            <p> - Número de invitados: ${booking[0].guests}</p>
 
-            Gracias por usar nuestro servicio.
+            <p> Gracias por usar nuestro servicio.</p>
             `;
 
         // Enviamos el correo al usuario
-        await sendMailUtil(booking[0].email, emailSubject, emailBody);
+        await sendMailUtil(booking[0].email, emailSubject, emailBody, true);
 
         // Enviamos la respuesta
         res.send({
