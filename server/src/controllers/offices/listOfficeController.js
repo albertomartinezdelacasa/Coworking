@@ -21,8 +21,8 @@ const listOfficeController = async (req, res, next) => {
                 o.createdAt,
                 o.opening,      
                 o.closing,     
-                AVG(b.vote) AS votesAvg,
-                COUNT(b.vote) AS totalVotes
+                AVG(CASE WHEN b.vote != 0 THEN b.vote END) AS votesAvg,
+                COUNT(CASE WHEN b.vote != 0 THEN 1 END) AS totalVotes
             FROM offices o
             LEFT JOIN bookings b ON b.idOffice = o.id  
             GROUP BY o.id
