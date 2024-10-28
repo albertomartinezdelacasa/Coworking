@@ -32,7 +32,7 @@ const getBookingByIdController = async (req, res, next) => {
                 o.name,
                 o.workspace,
                 o.capacity,
-                o.price
+                b.price
 
             FROM bookings b
             INNER JOIN users u ON u.id = b.idUser
