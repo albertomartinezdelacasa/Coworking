@@ -1,0 +1,222 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&display=swap");
+
+/* Variables CSS para colores y estilos comunes */
+:root {
+  --primary-color: #6433a7;
+  --border-color: #ddd;
+  --hover-bg-color: #cbc5ea;
+  --font-family: "IBM Plex Sans", sans-serif;
+}
+
+/* Estilos generales */
+.office-list-page {
+  padding: 20px;
+  min-height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--font-family);
+  word-wrap: break-word;
+}
+/* Estilo del titulo */
+.office-list-page h1 {
+  font-family: var(--font-family);
+  font-size: 24px;
+  font-weight: 600;
+  color: black;
+  letter-spacing: 0.5px;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+/* Estilos de los filtros */
+.office-list-page form {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.ol-fields1,
+.ol-fields2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: none;
+  width: 100%;
+}
+.ol-fields1 input {
+  width: 300px;
+  height: 44px;
+  padding: 0 10px;
+  margin-bottom: 15px;
+  font-family: var(--font-family);
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.ol-fields1 select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font-family: var(--font-family);
+  font-size: 16px;
+  font-weight: 400;
+  color: black;
+  padding: 8px 12px 8px 40px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background-color: white;
+  cursor: pointer;
+  width: auto;
+  max-width: 200px;
+  transition: background-color 0.3s ease;
+  margin-bottom: 1rem;
+}
+.ol-fields2 {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+.ol-fields2 legend {
+  margin-bottom: 0.5rem;
+}
+.ol-fields2 > label {
+  width: 50%;
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Estilos de la lista de oficinas */
+.ol-list {
+  list-style-type: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Estilos de la tarjeta de oficinas */
+.ol-card {
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Estilos de la imagen de la reserva */
+.olc-imgcontainer {
+  height: 200px;
+  overflow: hidden;
+}
+
+.olc-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Estilo de la info de las oficinas */
+.olc-info {
+  padding: 1 rem;
+  margin: 0 1rem 0 1rem;
+}
+.olc-info h2 {
+  text-transform: uppercase;
+  max-width: fit-content;
+}
+.olci-text {
+  font-size: 15px;
+}
+.olci-office {
+  list-style: none;
+}
+.olci-office strong {
+  font-style: bold;
+}
+.olci-equipments {
+  font-style: italic;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: space-around;
+  border-top: 1px solid var(--primary-color);
+}
+.olci-equipments h3 {
+  font-size: 16px;
+}
+.olcie-list {
+  list-style: none;
+}
+
+/* media query para tablets 768px */
+@media screen and (min-width: 450px) {
+  .ol-fields2 legend {
+    text-align: center;
+  }
+  .ol-fields2 > label {
+    width: 33%;
+  }
+  .ol-list {
+    display: flex;
+    flex-direction: column;
+  }
+  .ol-card {
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100%;
+  }
+  .olc-imgcontainer {
+    height: auto;
+    width: 50%;
+  }
+  .olc-info {
+    width: 50%;
+    align-items: center;
+  }
+  .olci-text {
+    display: flex;
+    flex-direction: row;
+  }
+  .olci-office {
+    width: 50%;
+  }
+  .olci-office li {
+    padding: 2px;
+  }
+  .olci-equipments {
+    width: 50%;
+    padding: 5px;
+    border-top: none;
+    border-left: 2px solid var(--primary-color);
+    justify-content: center;
+  }
+}
+
+/* media query para pc 1024px*/
+@media screen and (min-width: 1020px) {
+  .office-list-page {
+    width: 80%;
+    margin: auto;
+  }
+  .ol-fields1 {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+
+  .ol-fields2 > label {
+    width: 20%;
+  }
+  .ol-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+}

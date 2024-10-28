@@ -56,6 +56,13 @@
   cursor: pointer;
 }
 
+.equipment-item label {
+  display: flex;
+  align-items: center;
+  line-height: 20px;
+  text-transform: capitalize;
+}
+
 .form-group input,
 .form-group select,
 .form-group textarea {
@@ -65,6 +72,21 @@
   border-radius: 4px;
   font-family: var(--font-family);
   font-size: 16px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:hover,
+.form-group select:hover,
+.form-group textarea:hover {
+  border-color: var(--primary-color);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(100, 51, 167, 0.2);
 }
 
 .add-office-form input[type="file"] {
@@ -80,25 +102,24 @@
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
-  margin-top: 20px;
   align-self: flex-start;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .add-office-form button:hover {
-  background-color: var(--secondary-color);
+  background-color: #7a3fc8;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .equipment-list {
   display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .equipment-item {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
 }
 
 .equipment-item input[type="checkbox"] {
@@ -109,7 +130,7 @@
   border-radius: 4px;
   outline: none;
   cursor: pointer;
-  margin-right: 10px;
+  margin-right: 5px;
   position: relative;
   background-color: white;
   flex-shrink: 0;
@@ -127,12 +148,6 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-}
-
-.equipment-item label {
-  display: flex;
-  align-items: center;
-  line-height: 20px;
 }
 
 .add-office-form select {
@@ -166,29 +181,43 @@
   font-family: var(--font-family);
 }
 
-.price-input-container {
+.price-input-container,
+.capacity-input-container {
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
-.price-input-container input {
-  padding-right: 25px;
+.price-input-container input,
+.capacity-input-container input {
+  padding-right: 70px;
+  moz-appearance: textfield;
 }
 
-.euro-symbol {
+.price-input-container input::-webkit-outer-spin-button,
+.price-input-container input::-webkit-inner-spin-button,
+.capacity-input-container input::-webkit-outer-spin-button,
+.capacity-input-container input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.euro-symbol,
+.people-symbol {
   position: absolute;
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
   color: var(--primary-color);
   font-family: var(--font-family);
+  pointer-events: none;
 }
 
-.photo-upload-container,
-.photo-preview-item {
+.photo-upload-container {
   position: relative;
   width: 100px;
   height: 100px;
-  margin-bottom: 10px;
+  cursor: pointer;
   border-radius: 8px;
   overflow: hidden;
 }
@@ -208,16 +237,21 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--secondary-color);
+  background-color: #d8d3f0;
   border: 2px dashed var(--primary-color);
+  border-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1;
+  transition: background-color 0.3s ease;
+}
+
+.photo-upload-container:hover .photo-upload-button {
+  background-color: var(--secondary-color);
 }
 
 .photo-upload-button span {
-  font-size: 40px;
+  font-size: 24px;
   color: var(--primary-color);
 }
 
@@ -225,7 +259,15 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 10px;
+  align-items: flex-start;
+}
+
+.photo-preview-item {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .photo-preview-item img {
@@ -238,16 +280,16 @@
   position: absolute;
   top: 5px;
   right: 5px;
-  width: 20px;
-  height: 20px;
+  transform: none;
+  width: 24px;
+  height: 24px;
   background-color: rgba(100, 51, 167, 0.7);
-  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  transition: background-color 0.3s ease;
   opacity: 0;
-  transition: opacity 0.3s ease;
 }
 
 .photo-preview-item:hover .photo-remove-button {
@@ -259,9 +301,22 @@
 }
 
 .photo-remove-button span {
-  font-size: 16px;
+  font-size: 18px;
   color: var(--secondary-color);
   font-weight: bold;
+  line-height: 1;
+}
+
+.photo-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.photo-upload-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
 }
 
 @media (max-width: 768px) {
@@ -308,4 +363,28 @@
   .equipment-item {
     margin-right: 0;
   }
+}
+
+.form-group.full-width {
+  flex: 1 1 100%;
+  min-width: 100%;
+}
+
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: var(--font-family);
+  font-size: 16px;
+  resize: vertical;
+  min-height: 100px;
+}
+
+.photo-preview-item img {
+  transition: filter 0.3s ease;
+}
+
+.photo-preview-item:hover img {
+  filter: brightness(70%);
 }

@@ -16,13 +16,16 @@ const ResetPassPage = () => {
     setLoading(true);
 
     try {
-      const res = await fetch(`${VITE_API_URL}/api/users/password/reset/${recoverPassCode}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ newPassword, repeatNewPassword }),
-      });
+      const res = await fetch(
+        `${VITE_API_URL}/api/users/password/reset/${recoverPassCode}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ newPassword, repeatNewPassword }),
+        }
+      );
 
       const body = await res.json();
 
@@ -40,29 +43,32 @@ const ResetPassPage = () => {
   };
 
   return (
-    <main>
-      <h2>Restablecer Contraseña</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="newPassword">Nueva contraseña:</label>
-        <input
-          type="password"
-          id="newPassword"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-          required
-        />
-        <label htmlFor="repeatNewPassword">Repetir nueva contraseña:</label>
-        <input
-          type="password"
-          id="repeatNewPassword"
-          value={repeatNewPassword}
-          onChange={(e) => setRepeatNewPassword(e.target.value)}
-          required
-        />
-        <button type="submit" disabled={loading}>
-          Restablecer contraseña
-        </button>
-      </form>
+    <main className='recover-pass-container'>
+      <div className='recover-pass-form'>
+        <img src='/Logo-limpio.png' alt='Logo' className='recover-pass-logo' />
+        <form onSubmit={handleSubmit}>
+          <h2>Restablecer Contraseña</h2>
+          <label htmlFor='newPassword'>Nueva contraseña:</label>
+          <input
+            type='password'
+            id='newPassword'
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            required
+          />
+          <label htmlFor='repeatNewPassword'>Repetir nueva contraseña:</label>
+          <input
+            type='password'
+            id='repeatNewPassword'
+            value={repeatNewPassword}
+            onChange={(e) => setRepeatNewPassword(e.target.value)}
+            required
+          />
+          <button type='submit' disabled={loading}>
+            Restablecer contraseña
+          </button>
+        </form>
+      </div>
     </main>
   );
 };

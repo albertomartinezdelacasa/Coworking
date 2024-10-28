@@ -3,12 +3,12 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   padding: 20px;
 }
 
 .recover-pass-form {
-  background-color: #CBC5EA;
+  background-color: #cbc5ea;
   width: 500px;
   height: 550px;
   display: flex;
@@ -27,7 +27,7 @@
 }
 
 .recover-pass-form h2 {
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: 'IBM Plex Sans', sans-serif;
   font-size: 16px;
   color: black;
   font-weight: 500;
@@ -42,7 +42,7 @@
 }
 
 .recover-pass-form label {
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: 'IBM Plex Sans', sans-serif;
   font-size: 14px;
   color: black;
   font-weight: 400;
@@ -54,7 +54,7 @@
   height: 44px;
   padding: 0 10px;
   margin-bottom: 15px;
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: 'IBM Plex Sans', sans-serif;
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -72,16 +72,22 @@
 .recover-pass-form button {
   width: 200px;
   height: 48px;
-  background-color: #6433A7;
+  background-color: #6433a7;
   color: white;
   border: none;
   border-radius: 8px;
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: 'IBM Plex Sans', sans-serif;
   font-size: 14px;
   font-weight: 400;
   cursor: pointer;
   margin-top: 10px;
   align-self: center;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.recover-pass-form button:hover {
+  background-color: #7a4cbf;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .recover-pass-form button:disabled {
@@ -92,11 +98,22 @@
 .recover-pass-form input:focus,
 .recover-pass-form input:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px #6433A7;
+  box-shadow: 0 0 0 2px #6433a7;
 }
 
-/* Diseño responsive */
+p.recover-pass-info {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 14px;
+  color: rgb(44, 39, 39);
+  font-weight: 400;
+}
+
+/* DiseÃ±o responsive */
 @media (max-width: 768px) {
+  .recover-pass-container {
+    min-height: auto;
+  }
+
   .recover-pass-form {
     width: 90%;
     max-width: 500px;

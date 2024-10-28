@@ -87,42 +87,49 @@ const bookOfficeByIdController = async (req, res, next) => {
         // Enviamos un correo al usuario
         const emailSubject = 'Reserva realizada con éxito';
         const emailBody = `
-        Hola ${userData[0].name},
+        <p>Hola ${userData[0].name},</p>
 
-        Tu reserva para la oficina #${idOffice} ha sido realizada con éxito y está pendiente de confirmación por un administrador.
+        <p>Tu reserva en Innovaspace ha sido realizada con éxito y está pendiente de confirmación por un administrador.</p>
+      
+       <p>Te notificaremos cuando tu reserva sea confirmada.</p>
 
-        Te notificaremos cuando tu reserva sea confirmada.
-
-        Gracias por usar nuestro servicio.
+       <p>Gracias por usar nuestro servicio.</p>
         `;
-        await sendMailUtil(userData[0].email, emailSubject, emailBody);
+        await sendMailUtil(userData[0].email, emailSubject, emailBody, true);
 
         // Obtenemos el correo del administrador
         const [adminData] = await pool.query(
-            'SELECT email FROM users WHERE role = "ADMIN" LIMIT 1',
+            'SELECT email, username FROM users WHERE role = "ADMIN" LIMIT 1',
         );
 
         if (adminData.length > 0) {
             // Enviamos un correo al administrador
             const adminEmailSubject = 'Nueva reserva pendiente de confirmación';
             const adminEmailBody = `
-            Hola Administrador,
+            <p>Hola ${adminData.username},</p>
 
-            Se ha realizado una nueva reserva que requiere tu confirmación:
+           <p> Se ha realizado una nueva reserva que requiere tu confirmación:</p>
 
-            Usuario: ${userData[0].name} (ID: ${idUser})
-            Oficina: #${idOffice}
-            Precio: €${price}
 
-            Por favor, accede al panel de administración para confirmar o rechazar esta reserva.
+           <p> Usuario: ${userData[0].name} (ID: ${idUser})</p>
 
-            Gracias.
+           <p> Oficina: #${idOffice}</p>
+
+           <p> Precio: €${price}</p>
+
+
+           <p> Por favor, accede al panel de administración para confirmar o rechazar esta reserva.</p>
+
+
+           <p> Gracias.</p>
+
             `;
 
             await sendMailUtil(
                 adminData[0].email,
                 adminEmailSubject,
                 adminEmailBody,
+                true,
             );
             // Creamos la reserva con estado 'PENDING'
             await pool.query(

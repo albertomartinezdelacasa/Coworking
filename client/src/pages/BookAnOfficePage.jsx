@@ -3,21 +3,21 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import toast from 'react-hot-toast';
 import useAnOffice from '../hooks/useAnOffice';
+
 const { VITE_API_URL } = import.meta.env;
 
 const BookAnOfficePage = () => {
   const { authUser, authToken } = useContext(AuthContext);
   const { idOffice } = useParams();
-
-  const { oficina, loading } = useAnOffice(idOffice);
+  const { oficina, officeloading } = useAnOffice(idOffice);
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(false);
   const [checkInDate, setCheckInDate] = useState('');
   const [checkInTime, setCheckInTime] = useState('8');
-  const [checkOutDate, setCheckOutDate] = useState('');
   const [checkOutTime, setCheckOutTime] = useState('9');
   const [guests, setGuests] = useState(1);
-  const [totalPrice, setTotalPrice] = useState(0); // Estado para almacenar el precio calculado
+  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
     if (checkInDate) {
@@ -25,7 +25,7 @@ const BookAnOfficePage = () => {
     }
   }, [checkInDate, checkInTime, checkOutTime]);
 
-  if (loading) {
+  if (officeloading) {
     return <div>Cargando oficina...</div>;
   }
 
@@ -36,6 +36,7 @@ const BookAnOfficePage = () => {
   const open = parseInt(oficina.opening);
   const close = parseInt(oficina.closing);
   const horasAbierto = close - open;
+
   const calcularPrecio = () => {
     const precioPorHora = parseFloat(oficina.price);
 
@@ -47,23 +48,22 @@ const BookAnOfficePage = () => {
 
     const horaCheckIn = parseInt(checkInTime);
     const horaCheckOut = parseInt(checkOutTime);
-
-    // Calcular las horas reservadas
     const horasReservadas = horaCheckOut - horaCheckIn;
-
-    // Calcular el precio total
     const precioTotal = horasReservadas * precioPorHora;
-    if (horaCheckOut <= horaCheckIn) {
-      setTotalPrice(0);
-    } else {
-      setTotalPrice(precioTotal);
-    }
-  };
-  const handleSubmit = async (e) => {
-    try {
-      e.preventDefault();
 
-      // Combinar la fecha y la hora en un solo string para enviar al backend
+    setTotalPrice(horaCheckOut > horaCheckIn ? precioTotal : 0);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (!authUser) {
+      navigate('/login');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
       const checkIn = `${checkInDate}T${checkInTime.padStart(2, '0')}:00:00`;
       const checkOut = `${checkInDate}T${checkOutTime.padStart(2, '0')}:00:00`;
 
@@ -82,94 +82,111 @@ const BookAnOfficePage = () => {
       });
 
       const body = await res.json();
+      if (body.status === 'error') throw new Error(body.message);
 
-      if (body.status === 'error') {
-        throw new Error(body.message);
-      }
       navigate('/booking/list');
-
-      toast.success(body.message, {
-        id: 'newBooking',
-      });
+      toast.success(body.message, { id: 'newBooking' });
     } catch (err) {
-      toast.error(err.message, {
-        id: 'newBooking',
-      });
+      toast.error(err.message, { id: 'newBooking' });
+    } finally {
+      setLoading(false); // Stop loading state
     }
   };
 
-  if (!authUser) {
-    navigate('/login');
-  }
-
   return (
-    <main>
-      <h1>Reservar Oficina</h1>
-      <form onSubmit={handleSubmit}>
-        <ul>
-          <li>
-            <label htmlFor='checkInDate'>Fecha de reserva:</label>
-            <input
-              type='date'
-              id='checkInDate'
-              value={checkInDate}
-              onChange={(e) => setCheckInDate(e.target.value)}
-              required
-            />
-          </li>
-          <li>
-            <label htmlFor='checkInTime'>Check In - Hora:</label>
-            <select
-              id='checkInTime'
-              value={checkInTime}
-              onChange={(e) => setCheckInTime(e.target.value)}
-              required
-            >
-              {Array.from({ length: horasAbierto }, (_, i) => i + open).map(
-                (hour) => (
-                  <option key={hour} value={hour}>
-                    {`${hour}:00`}
-                  </option>
-                )
-              )}
-            </select>
-          </li>
-          <li>
-            <label htmlFor='checkOutTime'>Check Out - Hora:</label>
-            <select
-              id='checkOutTime'
-              value={checkOutTime}
-              onChange={(e) => setCheckOutTime(e.target.value)}
-              required
-            >
-              {Array.from({ length: horasAbierto + 1 }, (_, i) => i + open).map(
-                (hour) => (
-                  <option key={hour} value={hour}>
-                    {`${hour}:00`}
-                  </option>
-                )
-              )}
-            </select>
-          </li>
-          <li>
-            <label htmlFor='guests'>Número de invitados:</label>
-            <input
-              type='number'
-              id='guests'
-              name='guests'
-              value={guests}
-              onChange={(e) => setGuests(e.target.value)}
-              title='Introduce el número de invitados'
-              min='1'
-              required
-            />
-          </li>
-        </ul>
-        <div>
-          <strong>Precio total: {totalPrice.toFixed(2)} €</strong>
-        </div>
-        <button type='submit'>Reservar</button>
-      </form>
+    <main className='book-an-office-main'>
+      <div className='book-an-office-title-container'>
+        <h1 className='book-an-office-title'>Indica los datos de tu reserva</h1>
+      </div>
+
+      <div className='book-an-office-form-container'>
+        <form onSubmit={handleSubmit} className='book-an-office-form'>
+          <ul>
+            <li>
+              <label htmlFor='checkInDate'>Fecha de reserva:</label>
+              <div className='date-input-container'>
+                <input
+                  type='date'
+                  id='checkInDate'
+                  value={checkInDate}
+                  onChange={(e) => setCheckInDate(e.target.value)}
+                  required
+                />
+                <img
+                  src='/calendar.png'
+                  alt='Calendario'
+                  className='calendar-icon'
+                />
+              </div>
+            </li>
+            <li>
+              <label htmlFor='checkInTime'>Check In - Hora:</label>
+              <div className='select-container'>
+                <select
+                  id='checkInTime'
+                  value={checkInTime}
+                  onChange={(e) => setCheckInTime(e.target.value)}
+                  required
+                >
+                  {Array.from({ length: horasAbierto }, (_, i) => i + open).map(
+                    (hour) => (
+                      <option key={hour} value={hour}>{`${hour}:00h`}</option>
+                    )
+                  )}
+                </select>
+                <img
+                  src='/arrowdown.png'
+                  alt='Flecha abajo'
+                  className='select-icon'
+                />
+              </div>
+            </li>
+            <li>
+              <label htmlFor='checkOutTime'>Check Out - Hora:</label>
+              <div className='select-container'>
+                <select
+                  id='checkOutTime'
+                  value={checkOutTime}
+                  onChange={(e) => setCheckOutTime(e.target.value)}
+                  required
+                >
+                  {Array.from(
+                    { length: horasAbierto + 1 },
+                    (_, i) => i + open
+                  ).map((hour) => (
+                    <option key={hour} value={hour}>{`${hour}:00h`}</option>
+                  ))}
+                </select>
+                <img
+                  src='/arrowdown.png'
+                  alt='Flecha abajo'
+                  className='select-icon'
+                />
+              </div>
+            </li>
+            <li>
+              <label htmlFor='guests'>Número de invitados:</label>
+              <input
+                type='number'
+                id='guests'
+                name='guests'
+                value={guests}
+                onChange={(e) => setGuests(e.target.value)}
+                min='1'
+                required
+              />
+            </li>
+          </ul>
+          <div className='book-an-office-price'>
+            <strong>Precio total: {totalPrice.toFixed(2)} €</strong>
+          </div>
+          <div className='book-an-office-button-container'>
+            <button type='submit' disabled={loading}>
+              {loading ? 'Reservando...' : 'Reservar'}
+            </button>
+          </div>
+        </form>
+      </div>
     </main>
   );
 };
