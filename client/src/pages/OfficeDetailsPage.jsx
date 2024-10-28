@@ -78,8 +78,10 @@ const OfficeDetailsPage = () => {
       e.preventDefault();
       if (!authUser) {
         toast.error("Debes estar logeado para poder reservar.");
+        navigate("/login");
+      } else {
+        navigate(`/booking/${idOffice}`);
       }
-      navigate(`/booking/${idOffice}`);
     } catch (err) {
       toast(err.message);
     }
@@ -163,6 +165,49 @@ const OfficeDetailsPage = () => {
     }
   };
 
+  // Funcion para eliminar una oficina
+  const handleDeleteOffice = async (e) => {
+    e.preventDefault();
+    try {
+      // Si el usuario NO confirma que desea eliminar finalizamos la función.
+      if (!confirm("¿Quieres borrar ésta oficina?")) {
+        return;
+      }
+      if (
+        !confirm(
+          "Esto eliminará todo lo referente a esta oficina (reservas, fotos, equipamientos...) ¿Seguro que deseas continuar?"
+        )
+      ) {
+        return;
+      }
+      const res = await fetch(`${VITE_API_URL}/api/office/${idOffice}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: authToken,
+        },
+      });
+      // Obtenemos el body.
+      const body = await res.json();
+
+      // Si hay algún error lo lanzamos.
+      if (body.status === "error") {
+        throw new Error(body.message);
+      }
+
+      // Redirigimos a la lista de oficinas.
+      navigate("/office/list");
+
+      // Mostramos un mensaje satisfactorio al usuario.
+      toast.success(body.message, {
+        id: "OfficeDelete",
+      });
+    } catch (err) {
+      toast.error(err.message, {
+        id: "OfficeDelete",
+      });
+    }
+  };
+
   // Manejo de selección de equipamientos
   const handleEquipmentChange = (e) => {
     const { value, checked } = e.target;
@@ -214,6 +259,16 @@ const OfficeDetailsPage = () => {
                     className="save-button"
                   >
                     {loading ? "Enviando..." : "Guardar"}
+                  </button>
+                )}{" "}
+                {isEditing && (
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    onClick={handleDeleteOffice}
+                    className="delete-button"
+                  >
+                    {loading ? "Eliminando..." : "Eliminar"}
                   </button>
                 )}
                 <button className="edit-button" onClick={toggleEditMode}>
