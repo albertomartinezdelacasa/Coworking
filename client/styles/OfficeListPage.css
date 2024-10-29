@@ -282,6 +282,35 @@ fieldset {
   border-top: 1px solid var(--primary-color);
   margin-top: 10px;
   padding-top: 10px;
+  position: relative;
+}
+
+.olci-equipments-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.office-card-reserve-button {
+  padding: 8px 16px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: var(--font-family);
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  width: 200px;
+  min-width: 90px;
+  margin-top: 10px;
+}
+
+.office-card-reserve-button:hover {
+  background-color: #8344d5;
+  box-shadow: 0 4px 8px rgba(79, 40, 131, 0.3);
+  transition: all 0.3s ease;
 }
 
 .olci-equipments h3 {
@@ -297,6 +326,7 @@ fieldset {
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
+  padding-right: 100px;
 }
 
 .olcie-list li {
@@ -352,6 +382,33 @@ fieldset {
   .olci-office li {
     margin-bottom: 10px;
   }
+
+  .office-card-reserve-button {
+    position: static;
+    margin-top: 15px;
+    width: auto;
+    align-self: flex-end;
+  }
+
+  .olcie-list {
+    padding-right: 0; /* Eliminamos el padding en móvil */
+  }
+
+  .olci-equipments {
+    padding-bottom: 0; /* Eliminamos el padding inferior en móvil */
+  }
+
+  .olci-equipments-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .office-card-reserve-button {
+    align-self: center;
+    width: 100%;
+    margin-top:10px;
+  }
 }
 
 @media screen and (max-width: 1200px) {
@@ -377,13 +434,6 @@ fieldset {
     width: 100%;
     height: 200px;
   }
-}
-
-.ol-fields2 {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  width: 100%;
 }
 
 .select-wrapper {

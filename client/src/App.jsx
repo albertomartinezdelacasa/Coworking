@@ -17,6 +17,7 @@ import '/styles/BookAnOfficePage.css';
 import '/styles/OfficeDetails.css';
 import '/styles/CarruselFotosOfi.css';
 import '/styles/OfficeListPage.css';
+import "/styles/ActivateUserPage.css";
 
 // Importamos los componentes
 
