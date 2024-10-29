@@ -7,7 +7,7 @@ const { VITE_API_URL } = import.meta.env;
 const OfficeListPage = () => {
   const [offices, setOffices] = useState([]);
   const [filteredOffices, setFilteredOffices] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
@@ -39,6 +39,7 @@ const OfficeListPage = () => {
   // Fetch para obtener las oficinas
   useEffect(() => {
     const fetchOffices = async () => {
+      setLoading(true);
       try {
         const res = await fetch(`${VITE_API_URL}/api/office/list`);
         if (!res.ok) {
@@ -46,13 +47,15 @@ const OfficeListPage = () => {
         }
         const body = await res.json();
 
-        // Procesamos los equipamientos para eliminar duplicados
-        const processedOffices = body.data.offices.map((office) => ({
-          ...office,
-          equipments: [...new Set(office.equipments.map((eq) => eq.name))].map(
-            (name) => ({ name })
-          ),
-        }));
+        // Procesamos los equipamientos y ordenamos por ID descendente
+        const processedOffices = body.data.offices
+          .map((office) => ({
+            ...office,
+            equipments: [
+              ...new Set(office.equipments.map((eq) => eq.name)),
+            ].map((name) => ({ name })),
+          }))
+          .sort((a, b) => b.id - a.id); // Ordenamos de mayor a menor ID
 
         setOffices(processedOffices);
         setFilteredOffices(processedOffices);
@@ -177,7 +180,7 @@ const OfficeListPage = () => {
     });
   };
 
-  if (loading) return <p>Cargando...</p>;
+  // if (loading) return <p>Cargando...</p>;
   if (error) return <p>{error}</p>;
 
   return (
@@ -369,6 +372,15 @@ const OfficeListPage = () => {
                       <li>No hay equipamientos disponibles.</li>
                     )}
                   </ul>
+                  <button
+                    className="office-card-reserve-button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/booking/${office.id}`);
+                    }}
+                  >
+                    Reservar
+                  </button>
                 </div>
               </div>
             </div>
