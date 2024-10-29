@@ -33,9 +33,9 @@ const adminBookingsController = async (req, res, next) => {
         }
 
         // Verificamos si la reserva ya ha sido procesada
-        if (booking[0].status !== 'PENDING') {
+        /* if (booking[0].status !== 'PENDING') {
             generateErrorUtil('Esta reserva ya ha sido procesada', 400);
-        }
+        } */
 
         // Actualizamos el estado de la reserva según la acción
         const newStatus = action === 'aprobada' ? 'CONFIRMED' : 'REJECTED';
