@@ -1,10 +1,12 @@
 main {
-  background-color: #FFFFFF;
-  margin:0px;
+  background-color: #ffffff;
+  margin: 0px;
+  min-height: calc(100vh - 213px);
 }
 
 /* Mantener el header y .portada sin padding adicional */
-header, .portada {
+header,
+.portada {
   padding-left: 0;
   padding-right: 0;
 }

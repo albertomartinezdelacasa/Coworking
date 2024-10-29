@@ -13,18 +13,22 @@ const deleteOfficeController = async (req, res, next) => {
         // Obtenemos el ID de la entrada a eliminar.
         const { idOffice } = req.params;
 
+        const currentTime = new Date();
         // Obtenemos una conexión con la base de datos.
         const pool = await getPool();
 
-        /*   YA NO HACE FALTA COMPROBAR SI TIENE BOOKINGS  
-         const [bookings] = await pool.query(
-            `SELECT id FROM bookings WHERE idOffice = ?`,
-            [idOffice],
+        //  YA NO HACE FALTA COMPROBAR SI TIENE BOOKINGS
+        const [bookings] = await pool.query(
+            `SELECT id FROM bookings WHERE idOffice = ? AND status IN ('CONFIRMED', 'PENDING') AND checkOut > ?`,
+            [idOffice, currentTime],
         );
 
         if (bookings.length > 0) {
-            generateErrorUtil('No puedes borrar una oficina con reservas', 403);
-        } */
+            generateErrorUtil(
+                'No puedes borrar una oficina con reservas pendientes o confirmadas. Debes rechazarlas primero.',
+                403,
+            );
+        }
 
         // Eliminamos las reservas de la base de datos.
         await pool.query(`DELETE FROM bookings WHERE idOffice = ?`, [idOffice]);
