@@ -9,6 +9,7 @@ html {
   --color-marca-Secundario: #cbc5ea;
   --color-marca-apoyo: #313d5a;
   --color-marca-apoyo2: #183642;
+  height: 100%; /* Hace que el html y el body tengan una altura del 100% */
 }
 
 * {
@@ -19,6 +20,7 @@ html {
 
 body {
   font-family: 'IBM Plex Sans', sans-serif;
+  height: 100%; /* Hace que el html y el body tengan una altura del 100% */
 }
 
 h1 {
@@ -35,10 +37,11 @@ p {
 /* Estilos para inputs en foco */
 input:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px #6433A7;
+  box-shadow: 0 0 0 2px #6433a7;
 }
 
-h1, h2, h3 {
-    letter-spacing: 0.5px;
+h1,
+h2,
+h3 {
+  letter-spacing: 0.5px;
 }
-
