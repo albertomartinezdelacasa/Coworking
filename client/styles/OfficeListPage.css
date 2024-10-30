@@ -149,7 +149,7 @@ fieldset {
   border: 1px solid #ccc;
   border-top: none;
   border-radius: 0 0 4px 4px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .checkbox-label {
@@ -179,7 +179,7 @@ fieldset {
 }
 
 .checkbox-label input[type="checkbox"]:checked::before {
-  content: '\2714';
+  content: "\2714";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -208,7 +208,7 @@ fieldset {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: row;
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
   font-size: 14px;
   letter-spacing: 0.5px;
   color: black;
@@ -407,7 +407,7 @@ fieldset {
   .office-card-reserve-button {
     align-self: center;
     width: 100%;
-    margin-top:10px;
+    margin-top: 10px;
   }
 }
 
@@ -474,4 +474,17 @@ fieldset {
 
 .olci-text strong {
   color: #1a5f7a;
+}
+
+.no-offices-message {
+  margin: 3rem;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-content: center;
+}
+.no-offices-message a,
+p {
+  text-align: center;
 }
