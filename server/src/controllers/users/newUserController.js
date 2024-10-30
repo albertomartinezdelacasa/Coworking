@@ -58,7 +58,7 @@ const newUserController = async (req, res, next) => {
 
             // Enviamos el correo de activación
             await sendMailUtil(email, emailSubject, emailBody, true);
-        } catch {
+        } catch (err){
             console.log(err);
 
             // Eliminamos el usuario que acabamos de insertar, el cual dió un error al enviar el mail de validación
@@ -70,7 +70,7 @@ const newUserController = async (req, res, next) => {
         // Enviamos una respuesta exitosa
         res.status(201).send({
             status: 'ok',
-            message: 'Usuario registrado correctamente',
+            message: 'Usuario registrado correctamente, revisa el email que te hemos enviado para finalizar tu registro.',
         });
     } catch (err) {
         console.log(err);
