@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 // Importamos la URL del servidor.
 const { VITE_API_URL } = import.meta.env;
@@ -282,111 +283,118 @@ const OfficeListPage = () => {
       </form>
 
       {/* Lista de oficinas */}
-      <ul className="ol-list">
-        {filteredOffices.map((office) => (
-          <li
-            className="ol-card"
-            key={office.id}
-            onClick={() => navigate(`/office/details/${office.id}`)}
-          >
-            <div className="olc-imgcontainer">
-              {office.photos && office.photos.length > 0 ? (
-                <img
-                  className="olc-img"
-                  src={`${VITE_API_URL}/${office.photos[0].name}`}
-                  alt={`Foto ${office.photos[0].name}`}
-                />
-              ) : (
-                <p>No hay fotos disponibles.</p>
-              )}
-            </div>
-            <div className="olc-info">
-              <h2>{office.name}</h2>
-              <div className="olci-text">
-                <ul className="olci-office">
-                  <li>
-                    <strong>Dirección:</strong> {office.address}
-                  </li>
-                  <li className="olci-row">
-                    <span>
-                      <strong>Capacidad: </strong> {office.capacity} Personas
-                    </span>
-                    <span>
-                      <strong>Precio: </strong>
-                      {office.price}€/h
-                    </span>
-                  </li>
-                  <li className="olci-row">
-                    <span>
-                      <strong>Tipo de espacio: </strong>
-                      {office.workspace === "OFFICE"
-                        ? "Oficina"
-                        : office.workspace === "DESK"
-                        ? "Escritorio"
-                        : office.workspace}
-                    </span>
-                    <span>
-                      <strong>Horario:</strong> {office.opening.slice(0, 5)}h -{" "}
-                      {office.closing.slice(0, 5)}h
-                    </span>
-                  </li>
-                  <li className="olci-row">
-                    <span>
-                      <strong>Valoración: </strong>
-                      <div
-                        className="star-rating"
-                        title={`${Number(office.votesAvg).toFixed(
-                          1
-                        )} de 5 estrellas`}
-                      >
-                        {[...Array(5)].map((_, index) => (
-                          <span
-                            key={index}
-                            className={
-                              index < Math.round(office.votesAvg)
-                                ? "star filled"
-                                : "star"
-                            }
-                          >
-                            ★
-                          </span>
-                        ))}
-                      </div>
-                    </span>
-                    <span>
-                      <strong>Cantidad de valoraciones: </strong>
-                      {office.totalVotes}
-                    </span>
-                  </li>
-                </ul>
-                <div className="olci-equipments">
-                  <h3>Equipamientos:</h3>
-                  <ul className="olcie-list">
-                    {office.equipments && office.equipments.length > 0 ? (
-                      office.equipments.map((equipment, index) => (
-                        <li key={`${office.id}-${equipment.name}-${index}`}>
-                          {equipment.name}
-                        </li>
-                      ))
-                    ) : (
-                      <li>No hay equipamientos disponibles.</li>
-                    )}
+      {filteredOffices.length > 0 ? (
+        <ul className="ol-list">
+          {filteredOffices.map((office) => (
+            <li
+              className="ol-card"
+              key={office.id}
+              onClick={() => navigate(`/office/details/${office.id}`)}
+            >
+              <div className="olc-imgcontainer">
+                {office.photos && office.photos.length > 0 ? (
+                  <img
+                    className="olc-img"
+                    src={`${VITE_API_URL}/${office.photos[0].name}`}
+                    alt={`Foto ${office.photos[0].name}`}
+                  />
+                ) : (
+                  <p>No hay fotos disponibles.</p>
+                )}
+              </div>
+              <div className="olc-info">
+                <h2>{office.name}</h2>
+                <div className="olci-text">
+                  <ul className="olci-office">
+                    <li>
+                      <strong>Dirección:</strong> {office.address}
+                    </li>
+                    <li className="olci-row">
+                      <span>
+                        <strong>Capacidad: </strong> {office.capacity} Personas
+                      </span>
+                      <span>
+                        <strong>Precio: </strong>
+                        {office.price}€/h
+                      </span>
+                    </li>
+                    <li className="olci-row">
+                      <span>
+                        <strong>Tipo de espacio: </strong>
+                        {office.workspace === "OFFICE"
+                          ? "Oficina"
+                          : office.workspace === "DESK"
+                          ? "Escritorio"
+                          : office.workspace}
+                      </span>
+                      <span>
+                        <strong>Horario:</strong> {office.opening.slice(0, 5)}h
+                        - {office.closing.slice(0, 5)}h
+                      </span>
+                    </li>
+                    <li className="olci-row">
+                      <span>
+                        <strong>Valoración: </strong>
+                        <div
+                          className="star-rating"
+                          title={`${Number(office.votesAvg).toFixed(
+                            1
+                          )} de 5 estrellas`}
+                        >
+                          {[...Array(5)].map((_, index) => (
+                            <span
+                              key={index}
+                              className={
+                                index < Math.round(office.votesAvg)
+                                  ? "star filled"
+                                  : "star"
+                              }
+                            >
+                              ★
+                            </span>
+                          ))}
+                        </div>
+                      </span>
+                      <span>
+                        <strong>Cantidad de valoraciones: </strong>
+                        {office.totalVotes}
+                      </span>
+                    </li>
                   </ul>
-                  <button
-                    className="office-card-reserve-button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate(`/booking/${office.id}`);
-                    }}
-                  >
-                    Reservar
-                  </button>
+                  <div className="olci-equipments">
+                    <h3>Equipamientos:</h3>
+                    <ul className="olcie-list">
+                      {office.equipments && office.equipments.length > 0 ? (
+                        office.equipments.map((equipment, index) => (
+                          <li key={`${office.id}-${equipment.name}-${index}`}>
+                            {equipment.name}
+                          </li>
+                        ))
+                      ) : (
+                        <li>No hay equipamientos disponibles.</li>
+                      )}
+                    </ul>
+                    <button
+                      className="office-card-reserve-button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/booking/${office.id}`);
+                      }}
+                    >
+                      Reservar
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </li>
-        ))}
-      </ul>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div className="no-offices-message">
+          <p>No hay oficinas disponibles.</p>
+          <NavLink to="/">Volver a la página principal</NavLink>
+        </div>
+      )}
     </main>
   );
 };
