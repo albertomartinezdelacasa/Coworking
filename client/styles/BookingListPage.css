@@ -17,6 +17,9 @@
   align-items: flex-start;
   max-width: 1200px;
   margin: 0 auto;
+  width: 100%;
+  flex-shrink: 0;
+  box-sizing: border-box;
 }
 
 /* Estilos de la lista de reservas */

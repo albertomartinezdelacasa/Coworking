@@ -1,15 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import useSingleOffice from '../hooks/useSingleOffice';
-import { AuthContext } from '../contexts/AuthContext';
-import toast from 'react-hot-toast';
-import Carrusel from '../components/CarruselFotosOfi';
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import useSingleOffice from "../hooks/useSingleOffice";
+import { AuthContext } from "../contexts/AuthContext";
+import toast from "react-hot-toast";
+import Carrusel from "../components/CarruselFotosOfi";
 
 const { VITE_API_URL } = import.meta.env;
 
 const formatTime = (time) => {
-  if (!time) return '';
-  const [hours, minutes] = time.split(':');
+  if (!time) return "";
+  const [hours, minutes] = time.split(":");
   return `${hours}:${minutes}h`;
 };
 
@@ -20,14 +20,14 @@ const OfficeDetailsPage = () => {
   const [isEditing, setIsEditing] = useState(false); // Estado para habilitar la edición
   const navigate = useNavigate();
 
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [address, setAddress] = useState('');
-  const [workspace, setWorkspace] = useState('');
-  const [capacity, setCapacity] = useState('');
-  const [price, setPrice] = useState('');
-  const [opening, setOpening] = useState('');
-  const [closing, setClosing] = useState('');
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [address, setAddress] = useState("");
+  const [workspace, setWorkspace] = useState("");
+  const [capacity, setCapacity] = useState("");
+  const [price, setPrice] = useState("");
+  const [opening, setOpening] = useState("");
+  const [closing, setClosing] = useState("");
   const [equipments, setEquipments] = useState([]); // Estado para los equipamientos
 
   // Estados para edicion de equipamientos.
@@ -49,11 +49,11 @@ const OfficeDetailsPage = () => {
         console.log(body.data.equipments[0].name);
 
         setAllEquipments(body.data.equipments); // Todos los equipamientos
-        if (body.status === 'error') {
+        if (body.status === "error") {
           throw new Error(body.message);
         }
       } catch (err) {
-        toast.error('Error al cargar los equipamientos');
+        toast.error("Error al cargar los equipamientos");
       }
     };
 
@@ -77,8 +77,8 @@ const OfficeDetailsPage = () => {
     try {
       e.preventDefault();
       if (!authUser) {
-        toast.error('Debes estar logeado para poder reservar.');
-        navigate('/login');
+        toast.error("Debes estar logueado para poder reservar.");
+        navigate("/login");
       } else {
         navigate(`/booking/${idOffice}`);
       }
@@ -104,12 +104,12 @@ const OfficeDetailsPage = () => {
         },
       });
       const body = await res.json();
-      if (body.status === 'error') {
+      if (body.status === "error") {
         throw new Error(body.message);
       }
       setAllEquipments(body.data.equipments);
     } catch (err) {
-      toast.error('Error al cargar los equipamientos');
+      toast.error("Error al cargar los equipamientos");
     }
   };
 
@@ -123,23 +123,23 @@ const OfficeDetailsPage = () => {
     try {
       setLoading(true);
       const formData = new FormData();
-      formData.append('name', name);
-      formData.append('description', description);
-      formData.append('address', address);
-      formData.append('capacity', capacity);
-      formData.append('workspace', workspace);
-      formData.append('price', price);
-      formData.append('opening', formattedOpening);
-      formData.append('closing', formattedClosing);
+      formData.append("name", name);
+      formData.append("description", description);
+      formData.append("address", address);
+      formData.append("capacity", capacity);
+      formData.append("workspace", workspace);
+      formData.append("price", price);
+      formData.append("opening", formattedOpening);
+      formData.append("closing", formattedClosing);
 
       // Modificar esta línea para enviar el array de IDs de equipamientos seleccionados
       formData.append(
-        'equipments',
+        "equipments",
         JSON.stringify(Array.from(selectedEquipments))
       );
 
       const res = await fetch(`${VITE_API_URL}/api/office/${idOffice}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
           Authorization: authToken,
         },
@@ -148,10 +148,10 @@ const OfficeDetailsPage = () => {
 
       const body = await res.json();
 
-      if (body.status === 'error') {
+      if (body.status === "error") {
         throw new Error(body.message);
       }
-      toast.success('Oficina actualizada correctamente');
+      toast.success("Oficina actualizada correctamente");
       setIsEditing(false);
 
       // Actualizar el estado local con los nuevos equipamientos
@@ -170,18 +170,18 @@ const OfficeDetailsPage = () => {
     e.preventDefault();
     try {
       // Si el usuario NO confirma que desea eliminar finalizamos la función.
-      if (!confirm('¿Seguro que quieres eliminar ésta oficina?')) {
+      if (!confirm("¿Quieres borrar ésta oficina?")) {
         return;
       }
       if (
         !confirm(
-          'Esto eliminará todo lo referente a esta oficina (reservas, fotos, equipamientos...) ¿Seguro que deseas continuar?'
+          "Esto eliminará todo lo referente a esta oficina (reservas, fotos, equipamientos...) ¿Seguro que deseas continuar?"
         )
       ) {
         return;
       }
       const res = await fetch(`${VITE_API_URL}/api/office/${idOffice}`, {
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
           Authorization: authToken,
         },
@@ -190,20 +190,20 @@ const OfficeDetailsPage = () => {
       const body = await res.json();
 
       // Si hay algún error lo lanzamos.
-      if (body.status === 'error') {
+      if (body.status === "error") {
         throw new Error(body.message);
       }
 
       // Redirigimos a la lista de oficinas.
-      navigate('/office/list');
+      navigate("/office/list");
 
       // Mostramos un mensaje satisfactorio al usuario.
       toast.success(body.message, {
-        id: 'OfficeDelete',
+        id: "OfficeDelete",
       });
     } catch (err) {
       toast.error(err.message, {
-        id: 'OfficeDelete',
+        id: "OfficeDelete",
       });
     }
   };
@@ -227,10 +227,10 @@ const OfficeDetailsPage = () => {
   // Función para mostrar el tipo de espacio en español
   const displayWorkspace = (workspace) => {
     switch (workspace) {
-      case 'DESK':
-        return 'Escritorio';
-      case 'OFFICE':
-        return 'Oficina';
+      case "DESK":
+        return "Escritorio";
+      case "OFFICE":
+        return "Oficina";
       default:
         return workspace;
     }
@@ -242,41 +242,41 @@ const OfficeDetailsPage = () => {
   };
 
   return (
-    <div className={`office-details ${isEditing ? 'editing' : ''}`}>
+    <div className={`office-details ${isEditing ? "editing" : ""}`}>
       {office && (
-        <main className='office-details'>
-          <div className='office-header'>
-            <div className='office-title'>
+        <main className="office-details">
+          <div className="office-header">
+            <div className="office-title">
               <h2>{office.name}</h2>
             </div>
-            {authUser && authUser.role === 'ADMIN' && (
-              <div className='admin-buttons'>
+            {authUser && authUser.role === "ADMIN" && (
+              <div className="admin-buttons">
                 {isEditing && (
                   <button
-                    type='submit'
+                    type="submit"
                     disabled={loading}
                     onClick={handleUpdateOffice}
-                    className='save-button'
+                    className="save-button"
                   >
-                    {loading ? 'Enviando...' : 'Guardar'}
+                    {loading ? "Enviando..." : "Guardar"}
                   </button>
-                )}{' '}
+                )}{" "}
                 {isEditing && (
                   <button
-                    type='submit'
+                    type="submit"
                     disabled={loading}
                     onClick={handleDeleteOffice}
-                    className='delete-button'
+                    className="delete-button"
                   >
-                    {loading ? 'Eliminando...' : 'Eliminar'}
+                    {loading ? "Eliminando..." : "Eliminar"}
                   </button>
                 )}
-                <button className='edit-button' onClick={toggleEditMode}>
+                <button className="edit-button" onClick={toggleEditMode}>
                   {isEditing ? (
-                    'Cancelar'
+                    "Cancelar"
                   ) : (
                     <>
-                      <img src='/edit-pencil.png' alt='Editar' />
+                      <img src="/edit-pencil.png" alt="Editar" />
                       Editar
                     </>
                   )}
@@ -284,30 +284,30 @@ const OfficeDetailsPage = () => {
               </div>
             )}
           </div>
-          <div className='carrusel'>
+          <div className="carrusel">
             <Carrusel images={office.photos}></Carrusel>
           </div>
-          <div className='office-details-content'>
-            {authUser && authUser.role === 'ADMIN' ? (
+          <div className="office-details-content">
+            {authUser && authUser.role === "ADMIN" ? (
               <form onSubmit={handleUpdateOffice}>
-                <ul className='details-list'>
+                <ul className="details-list">
                   {isEditing && (
                     <li>
-                      <label htmlFor='name'>Nombre del espacio:</label>
+                      <label htmlFor="name">Nombre del espacio:</label>
                       <input
-                        type='text'
-                        id='name'
+                        type="text"
+                        id="name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                       />
                     </li>
                   )}
                   <li>
-                    <label htmlFor='description'>Descripción:</label>
+                    <label htmlFor="description">Descripción:</label>
                     {isEditing ? (
                       <input
-                        type='text'
-                        id='description'
+                        type="text"
+                        id="description"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                       />
@@ -317,11 +317,11 @@ const OfficeDetailsPage = () => {
                   </li>
 
                   <li>
-                    <label htmlFor='address'>Dirección:</label>
+                    <label htmlFor="address">Dirección:</label>
                     {isEditing ? (
                       <input
-                        type='text'
-                        id='address'
+                        type="text"
+                        id="address"
                         value={address}
                         onChange={(e) => setAddress(e.target.value)}
                       />
@@ -330,34 +330,33 @@ const OfficeDetailsPage = () => {
                     )}
                   </li>
 
-                  <div className='details-row'>
+                  <div className="details-row">
                     <li>
-                      <label htmlFor='capacity'>Capacidad:</label>
+                      <label htmlFor="capacity">Capacidad:</label>
                       {isEditing ? (
-                        <div className='input-wrapper'>
+                        <div className="input-wrapper">
                           <input
-                            type='number'
-                            id='capacity'
+                            type="number"
+                            id="capacity"
                             value={capacity}
                             onChange={(e) => setCapacity(e.target.value)}
                           />
-                          <span className='capacity-unit'>Personas</span>
+                          <span className="capacity-unit">Personas</span>
                         </div>
                       ) : (
                         <span>{capacity} Personas</span>
                       )}
                     </li>
                     <li>
-                      <label htmlFor='price'>Precio por hora:</label>
+                      <label htmlFor="price">Precio por hora:</label>
                       {isEditing ? (
-                        <div className='input-wrapper'>
+                        <div className="input-wrapper">
                           <input
-                            type='number'
-                            id='price'
+                            type="number"
+                            id="price"
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
                           />
-                          {/* Eliminamos el span con el símbolo del euro */}
                         </div>
                       ) : (
                         <span>{price}€</span>
@@ -365,23 +364,23 @@ const OfficeDetailsPage = () => {
                     </li>
                   </div>
 
-                  <div className='details-row'>
+                  <div className="details-row">
                     <li>
-                      <label htmlFor='workspace'>Tipo de espacio:</label>
+                      <label htmlFor="workspace">Tipo de espacio:</label>
                       {isEditing ? (
-                        <div className='select-wrapper'>
+                        <div className="select-wrapper">
                           <select
-                            id='workspace'
+                            id="workspace"
                             value={workspace}
                             onChange={(e) => setWorkspace(e.target.value)}
                           >
-                            <option value='OFFICE'>Oficina</option>
-                            <option value='DESK'>Escritorio</option>
+                            <option value="OFFICE">Oficina</option>
+                            <option value="DESK">Escritorio</option>
                           </select>
                           <img
-                            src='/arrowdown.png'
-                            alt='Flecha abajo'
-                            className='select-arrow'
+                            src="/arrowdown.png"
+                            alt="Flecha abajo"
+                            className="select-arrow"
                           />
                         </div>
                       ) : (
@@ -392,16 +391,16 @@ const OfficeDetailsPage = () => {
                       <label>Horario:</label>
                       {isEditing ? (
                         <>
-                          <div className='select-wrapper'>
+                          <div className="select-wrapper">
                             <select
-                              id='opening'
+                              id="opening"
                               value={opening}
                               onChange={(e) => setOpening(e.target.value)}
                             >
                               {Array.from({ length: 24 }, (_, i) => {
                                 const time = `${i
                                   .toString()
-                                  .padStart(2, '0')}:00`;
+                                  .padStart(2, "0")}:00`;
                                 return (
                                   <option key={i} value={time}>
                                     {formatTime(time)}
@@ -410,22 +409,22 @@ const OfficeDetailsPage = () => {
                               })}
                             </select>
                             <img
-                              src='/arrowdown.png'
-                              alt='Flecha abajo'
-                              className='select-arrow'
+                              src="/arrowdown.png"
+                              alt="Flecha abajo"
+                              className="select-arrow"
                             />
                           </div>
                           <span> - </span>
-                          <div className='select-wrapper'>
+                          <div className="select-wrapper">
                             <select
-                              id='closing'
+                              id="closing"
                               value={closing}
                               onChange={(e) => setClosing(e.target.value)}
                             >
                               {Array.from({ length: 24 }, (_, i) => {
                                 const time = `${i
                                   .toString()
-                                  .padStart(2, '0')}:00`;
+                                  .padStart(2, "0")}:00`;
                                 return (
                                   <option key={i} value={time}>
                                     {formatTime(time)}
@@ -434,9 +433,9 @@ const OfficeDetailsPage = () => {
                               })}
                             </select>
                             <img
-                              src='/arrowdown.png'
-                              alt='Flecha abajo'
-                              className='select-arrow'
+                              src="/arrowdown.png"
+                              alt="Flecha abajo"
+                              className="select-arrow"
                             />
                           </div>
                         </>
@@ -446,19 +445,19 @@ const OfficeDetailsPage = () => {
                     </li>
                   </div>
                 </ul>
-                <div className='equipments-list'>
+                <div className="equipments-list">
                   <h2>Equipamientos de la oficina</h2>
                   {isEditing ? (
                     allEquipments.length > 0 ? (
-                      <div className='equipment-container'>
+                      <div className="equipment-container">
                         {allEquipments.map((equipment) => (
                           <div
                             key={equipment.id}
-                            className='equipment-checkbox'
+                            className="equipment-checkbox"
                           >
                             <label>
                               <input
-                                type='checkbox'
+                                type="checkbox"
                                 value={equipment.id}
                                 onChange={handleEquipmentChange}
                                 checked={selectedEquipments.has(equipment.id)}
@@ -472,13 +471,13 @@ const OfficeDetailsPage = () => {
                       <p>Cargando equipamientos...</p>
                     )
                   ) : selectedEquipments.size > 0 ? (
-                    <div className='equipment-container'>
+                    <div className="equipment-container">
                       {Array.from(selectedEquipments).map((id) => {
                         const equipment = allEquipments.find(
                           (eq) => eq.id === id
                         );
                         return equipment ? (
-                          <div key={id} className='equipment-item'>
+                          <div key={id} className="equipment-item">
                             {equipment.name}
                           </div>
                         ) : null;
@@ -488,55 +487,50 @@ const OfficeDetailsPage = () => {
                     <p>Esta oficina no tiene equipamientos.</p>
                   )}
                 </div>
-                {!isEditing && (
-                  <button onClick={sendToBooking} className='reserve-button'>
-                    Reservar
-                  </button>
-                )}
               </form>
             ) : (
               <>
-                <ul className='details-list'>
+                <ul className="details-list">
                   <li>
                     <label>Dirección:</label> <span>{office.address}</span>
                   </li>
-                  <div className='details-row'>
+                  <div className="details-row">
                     <li>
-                      <label>Capacidad:</label>{' '}
+                      <label>Capacidad:</label>{" "}
                       <span>{office.capacity} Personas</span>
                     </li>
                     <li>
-                      <label>Precio por hora:</label>{' '}
+                      <label>Precio por hora:</label>{" "}
                       <span>{office.price}€</span>
                     </li>
                   </div>
-                  <div className='details-row'>
+                  <div className="details-row">
                     <li>
-                      <label>Tipo de espacio:</label>{' '}
+                      <label>Tipo de espacio:</label>{" "}
                       <span>{displayWorkspace(office.workspace)}</span>
                     </li>
                     <li>
-                      <label>Horario:</label>{' '}
+                      <label>Horario:</label>{" "}
                       <span>
                         {formatSchedule(office.opening, office.closing)}
                       </span>
                     </li>
                   </div>
                   <li>
-                    <label>Descripción:</label>{' '}
+                    <label>Descripción:</label>{" "}
                     <span>{office.description}</span>
                   </li>
                 </ul>
-                <div className='equipments-list'>
+                <div className="equipments-list">
                   <h2>Equipamientos de la oficina</h2>
                   {selectedEquipments.size > 0 ? (
-                    <div className='equipment-container'>
+                    <div className="equipment-container">
                       {Array.from(selectedEquipments).map((id) => {
                         const equipment = allEquipments.find(
                           (eq) => eq.id === id
                         );
                         return equipment ? (
-                          <div key={id} className='equipment-item'>
+                          <div key={id} className="equipment-item">
                             {equipment.name}
                           </div>
                         ) : null;
@@ -546,13 +540,16 @@ const OfficeDetailsPage = () => {
                     <p>Esta oficina no tiene equipamientos.</p>
                   )}
                 </div>
-
-                <button onClick={sendToBooking} className='reserve-button'>
-                  Reservar
-                </button>
               </>
             )}
           </div>
+          {!isEditing && (
+            <div className="reserve-button-container">
+              <button onClick={sendToBooking} className="reserve-button">
+                Reservar
+              </button>
+            </div>
+          )}
         </main>
       )}
     </div>

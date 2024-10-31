@@ -1,15 +1,15 @@
 // Importamos los hooks.
-import useBookings from '../hooks/UseBookings';
-import { useContext, useState, useEffect } from 'react';
+import useBookings from "../hooks/UseBookings";
+import { useContext, useState, useEffect } from "react";
 
 // Importamos los componentes.
-import { NavLink, Navigate, useNavigate } from 'react-router-dom';
+import { NavLink, Navigate, useNavigate } from "react-router-dom";
 
 // Importamos el contexto.
-import { AuthContext } from '../contexts/AuthContext';
+import { AuthContext } from "../contexts/AuthContext";
 
 // Importamos la librería moment
-import moment from 'moment';
+import moment from "moment";
 
 // Importamos la URL del servidor.
 const { VITE_API_URL } = import.meta.env;
@@ -20,7 +20,7 @@ const BookingsListPage = () => {
   // Estado para manejar errores
   const [error, setError] = useState(false);
   // Estado para gestionar el filtro de estado
-  const [filterStatus, setFilterStatus] = useState('');
+  const [filterStatus, setFilterStatus] = useState("");
   // Obtenemos los bookings del hook
   const { bookings, setBookings } = useBookings();
   // Obtenemos el token y usuario autenticado
@@ -31,47 +31,50 @@ const BookingsListPage = () => {
 
   // Redirigimos al login si no hay sesion iniciada
   if (!authToken) {
-    return <Navigate to='/login' />;
+    return <Navigate to="/login" />;
   }
 
   // useEffect para cargar las reservas
   useEffect(() => {
     const fetchBookings = async () => {
+      setLoading(true);
       try {
-        // Obtenmemos una respuesta del servidor.
         const res = await fetch(`${VITE_API_URL}/api/list/booking`, {
           headers: {
             Authorization: authToken,
           },
         });
 
-        // Obtenemos el body de la respuesta
         const body = await res.json();
 
-        if (body.status === 'error') {
+        if (body.status === "error") {
           throw new Error(body.message);
         }
 
-        setBookings(body.data.bookings); // Asumiendo que tu respuesta incluye esta estructura
+        // Ordenamos las reservas por ID de forma descendente
+        const sortedBookings = body.data.bookings.sort(
+          (a, b) => b.idBooking - a.idBooking
+        );
+        setBookings(sortedBookings);
       } catch (err) {
-        setError('Error al cargar las revesvas');
+        setError("Error al cargar las reservas");
       } finally {
-        setLoading(false); // Asegúrate de establecer loading en false al final
+        setLoading(false);
       }
     };
 
     fetchBookings();
-  }, []); // El array vacío hace que esto se ejecute solo una vez al montar el componente
+  }, []);
 
   // Mientras se está cargando, mostramos un mensaje de carga.
-  if (isLoading) {
-    return (
-      <main>
-        <h1>Obteniendo reservas...</h1>
-        <p>Por favor, espera un momento mientras procesamos tu solicitud.</p>
-      </main>
-    );
-  }
+  //  if (isLoading) {
+  //   return (
+  //      <main>
+  //       <h1>Obteniendo reservas...</h1>
+  //      <p>Por favor, espera un momento mientras procesamos tu solicitud.</p>
+  //    </main>
+  //  );
+  // }
 
   // Si hay un error, mostramos un mensaje de error.
   if (error) {
@@ -96,67 +99,67 @@ const BookingsListPage = () => {
   };
 
   return (
-    <main className='bookings-list-page'>
-      <h1 className='page-title'>Listado de reservas</h1>
+    <main className="bookings-list-page">
+      <h1 className="page-title">Listado de reservas</h1>
 
-      <div className='filter-container'>
-        <div className='select-wrapper'>
-          <img src='/filter.png' alt='Filtrar' className='filter-icon' />
+      <div className="filter-container">
+        <div className="select-wrapper">
+          <img src="/filter.png" alt="Filtrar" className="filter-icon" />
           <select
-            id='statusFilter'
+            id="statusFilter"
             value={filterStatus}
             onChange={handleStatusChange}
           >
-            <option value=''>Todas</option>
-            <option value='CONFIRMED'>Confirmadas</option>
-            <option value='CANCELED'>Canceladas</option>
-            <option value='PENDING'>Pendientes</option>
-            <option value='REJECTED'>Rechazadas</option>
+            <option value="">Todas</option>
+            <option value="CONFIRMED">Confirmadas</option>
+            <option value="CANCELED">Canceladas</option>
+            <option value="PENDING">Pendientes</option>
+            <option value="REJECTED">Rechazadas</option>
           </select>
         </div>
       </div>
 
       {filteredBookings.length > 0 ? (
-        <ul className='bookings-list'>
+        <ul className="bookings-list">
           {filteredBookings.map((booking) => (
             <li
               key={booking.idBooking}
-              className='booking-card'
+              className="booking-card"
               onClick={() =>
                 handleClikList(`/users/bookings/${booking.idBooking}`)
               }
             >
-              <div className='booking-image'>
+              <div className="booking-image">
                 {booking.photos && booking.photos.length > 0 ? (
                   <img
                     src={`${VITE_API_URL}/${booking.photos[0].name}`}
                     alt={`Foto ${booking.photos[0].name}`}
-                    className='booking-photo'
+                    className="booking-photo"
                   />
                 ) : (
                   <p>No hay fotos disponibles.</p>
                 )}
               </div>
-              <div className='booking-info'>
+              <div className="booking-info">
                 <h2>{booking.nameOffice}</h2>
                 <ul>
                   <li>
-                    Check In:{' '}
-                    {moment(booking.checkIn).format('DD/MM/YYYY [a las] HH:mm')}
+                    Check In:{" "}
+                    {moment(booking.checkIn).format("DD/MM/YYYY [a las] HH:mm")}
                   </li>
                   <li>
-                    Check Out:{' '}
+                    Check Out:{" "}
                     {moment(booking.checkOut).format(
-                      'DD/MM/YYYY [a las] HH:mm'
+                      "DD/MM/YYYY [a las] HH:mm"
                     )}
                   </li>
-                  <li className='booking-status'>
+                  <li className="booking-status">
                     Estado de reserva: {booking.status}
                   </li>
                   <li>Precio: {booking.price} €</li>
                 </ul>
-                {authUser.role === 'ADMIN' && (
-                  <ul className='admin-info'>
+                {authUser.role === "ADMIN" && (
+                  <ul className="admin-info">
                     <li>Usuario: {booking.username}</li>
                     <li>
                       {booking.guests} Invitados / {booking.capacity} Capacidad
@@ -168,12 +171,12 @@ const BookingsListPage = () => {
           ))}
         </ul>
       ) : (
-        <div className='no-bookings-message'>
+        <div className="no-bookings-message">
           <p>
             No hay reservas disponibles. Haz click en el siguiente enlace para
             hacer una reserva:
           </p>
-          <NavLink to='/office/list'>
+          <NavLink to="/office/list">
             Ver listado de oficinas disponibles
           </NavLink>
         </div>

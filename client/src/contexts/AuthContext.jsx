@@ -1,6 +1,6 @@
-import { createContext, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import toast from 'react-hot-toast';
+import { createContext, useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import toast from "react-hot-toast";
 
 const { VITE_AUTH_TOKEN, VITE_API_URL } = import.meta.env;
 
@@ -12,7 +12,7 @@ const AuthProvider = ({ children }) => {
   );
 
   const [authUser, setAuthUser] = useState(
-    localStorage.getItem('AuthUser') || null
+    localStorage.getItem("AuthUser") || null
   );
 
   // Declaramos una variable que indica que el fetch a los datos
@@ -35,13 +35,13 @@ const AuthProvider = ({ children }) => {
         const body = await res.json();
 
         // Si hay algún error lo lanzamos.
-        if (body.status === 'error') {
+        if (body.status === "error") {
           throw new Error(body.message);
         }
 
         // Actualizamos los datos del usuario en el State.
         setAuthUser(body.data.user);
-        localStorage.setItem('AuthUser', JSON.stringify(body.data.user));
+        localStorage.setItem("AuthUser", JSON.stringify(body.data.user));
       } catch (err) {
         // Si surge cualquier error eliminamos el token del State y del localStorage.
         authLogout();
@@ -80,6 +80,16 @@ const AuthProvider = ({ children }) => {
     });
   };
 
+  // Función que actualiza los datos del usuario
+  const authUpdateUserState = (userData) => {
+    const updatedUser = {
+      ...authUser,
+      ...userData,
+    };
+    setAuthUser(updatedUser);
+    localStorage.setItem("AuthUser", JSON.stringify(updatedUser));
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -88,6 +98,7 @@ const AuthProvider = ({ children }) => {
         authLogout,
         authUser,
         authUpdateAvatarState,
+        authUpdateUserState,
         authUserLoading,
       }}
     >

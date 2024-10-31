@@ -55,12 +55,7 @@ const listOfficeController = async (req, res, next) => {
             office.equipments = equipments;
         }
 
-        // Si no hay ninguna oficina coworking space, lanzamos un error
-        if (offices.length < 1) {
-            throw generateErrorUtil('No hay oficinas', 400);
-        }
-
-        // Enviamos una respuesta al cliente.
+        // Enviamos una respuesta al cliente. Si no hay oficinas, devuelve un array vacio que usaremos en el Front
         await res.send({
             status: 'ok',
             data: {
