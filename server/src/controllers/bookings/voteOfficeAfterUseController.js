@@ -61,7 +61,6 @@ const voteOfficeAfterUseController = async (req, res, next) => {
         // Obtenemos la nueva media de votos de la oficina para poder actualizar el State en el cliente.
         const votesAvg = await pool.query(
             `SELECT AVG(vote) AS avg FROM bookings WHERE idOffice = ? AND NOT vote = 0`,
-            // eslint-disable-next-line no-undef
             [bookingData.idOffice],
         );
 

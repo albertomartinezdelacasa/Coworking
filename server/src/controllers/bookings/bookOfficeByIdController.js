@@ -19,7 +19,7 @@ const bookOfficeByIdController = async (req, res, next) => {
         //Obtenemos una conexión con la base de datos
         const pool = await getPool();
 
-        // Verificamos si la oficina existe
+        // Verificamos si la oficina existe<
         const [office] = await pool.query(
             'SELECT id, capacity FROM offices WHERE id = ?',
             [idOffice],
@@ -35,7 +35,7 @@ const bookOfficeByIdController = async (req, res, next) => {
             new Date(checkIn) < new Date()
         ) {
             throw generateErrorUtil(
-                'El check-in tiene que ser antes que el check-out',
+                'Los horarios seleccionados son incorrectos',
                 400,
             );
         }

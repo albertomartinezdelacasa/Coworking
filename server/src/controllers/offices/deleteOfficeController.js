@@ -17,7 +17,6 @@ const deleteOfficeController = async (req, res, next) => {
         // Obtenemos una conexión con la base de datos.
         const pool = await getPool();
 
-        //  YA NO HACE FALTA COMPROBAR SI TIENE BOOKINGS
         const [bookings] = await pool.query(
             `SELECT id FROM bookings WHERE idOffice = ? AND status IN ('CONFIRMED', 'PENDING') AND checkOut > ?`,
             [idOffice, currentTime],
