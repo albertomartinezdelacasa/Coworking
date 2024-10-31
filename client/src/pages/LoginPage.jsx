@@ -1,6 +1,6 @@
 // Importamos los hooks.
 import { useContext, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 // Importamos el contexto.
 import { AuthContext } from "../contexts/AuthContext";
@@ -15,9 +15,6 @@ const { VITE_API_URL } = import.meta.env;
 const LoginPage = () => {
     // Importamos los datos del usuario y la función que almacena el token.
     const { authUser, authLogin } = useContext(AuthContext);
-
-    // Importamos la función navigate.
-    const navigate = useNavigate();
 
     // Declaramos una variable en el State para definir el valor de cada input.
     const [email, setEmail] = useState("");
@@ -59,8 +56,6 @@ const LoginPage = () => {
             authLogin(body.data.token);
 
             // Mostrar toast para que el usuario revise su email.
-        
-            
         } catch (err) {
             toast.error(err.message, {
                 id: "login",
