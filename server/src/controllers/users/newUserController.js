@@ -52,15 +52,14 @@ const newUserController = async (req, res, next) => {
             // Preparamos el cuerpo del correo de activación
             const emailBody = `
         <p>¡Bienvenid@ ${name}!</p>
-        <p>Gracias por registrarte en THE COWORKING. Para activar tu cuenta, haz click en el siguiente enlace:</p>
+        <p>Gracias por registrarte en INNOVASPACE.</p>
+        <p>Para activar tu cuenta, haz click en el siguiente enlace:</p>
         <p><a href="${process.env.CLIENT_URL}/users/activate/${registrationCode}">¡Activa tu usuario!</a></p>
         `;
 
             // Enviamos el correo de activación
             await sendMailUtil(email, emailSubject, emailBody, true);
-        } catch (err){
-            console.log(err);
-
+        } catch (err) {
             // Eliminamos el usuario que acabamos de insertar, el cual dió un error al enviar el mail de validación
             await pool.query(`DELETE FROM users WHERE email = ?`, [email]);
 
@@ -70,10 +69,10 @@ const newUserController = async (req, res, next) => {
         // Enviamos una respuesta exitosa
         res.status(201).send({
             status: 'ok',
-            message: 'Usuario registrado correctamente, revisa el email que te hemos enviado para finalizar tu registro.',
+            message:
+                'Usuario registrado correctamente, revisa el email que te hemos enviado para finalizar tu registro.',
         });
     } catch (err) {
-        console.log(err);
         // Si ocurre algún error, lo pasamos al siguiente middleware
         next(err);
     }

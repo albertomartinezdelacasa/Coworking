@@ -28,7 +28,6 @@ const getBookingByIdController = async (req, res, next) => {
                 b.createdAt,
                 u.id,
                 u.username,
-                -- u.email,
                 o.name,
                 o.workspace,
                 o.capacity,

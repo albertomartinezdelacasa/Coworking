@@ -25,14 +25,14 @@ const editProfileUserController = async (req, res, next) => {
         // obtenemos la conexion con la base de datos
         const pool = await getPool();
 
-        // obtenemos la informacion del usuar que queremos editar
+        // obtenemos la informacion del usuario que queremos editar
 
         const [users] = await pool.query(
             ` SELECT id FROM users WHERE id = ? `,
             [idUser],
         );
 
-        // si el usuario no existe lazamos un error
+        // si el usuario no existe lanzamos un error
 
         if (users.length < 1) {
             generateErrorUtil(' Usuario no encontrado ', 404);

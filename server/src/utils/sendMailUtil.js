@@ -16,7 +16,8 @@ const transport = nodemailer.createTransport({
         pass: SMTP_PASS,
     },
     tls: {
-        rejectUnauthorized: false, // Permitir certificados autofirmados (solo para desarrollo)
+        // Permitir certificados autofirmados (solo para desarrollo)
+        rejectUnauthorized: false,
     },
 });
 

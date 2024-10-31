@@ -7,8 +7,6 @@ import savePhotoUtil from '../../utils/savePhotoUtil.js';
 // Función que genera un error.
 import generateErrorUtil from '../../utils/generateErrorUtil.js';
 
-// importamos el auth controller que le da permisos al admin
-
 // Función controladora que permite registrar una oficina.
 const createOfficeController = async (req, res, next) => {
     try {
@@ -104,7 +102,6 @@ const createOfficeController = async (req, res, next) => {
         }
 
         // Validamos y guardamos los equipamientos asociados a la oficina en `officesEquipments`.
-        //const equipmentValues = [];
         for (const idEquipment of equipmentsArray) {
             // Validamos que el equipamiento exista en la tabla `equipments`.
             const [equipmentExists] = await pool.query(
@@ -118,9 +115,6 @@ const createOfficeController = async (req, res, next) => {
                     404,
                 );
             }
-
-            // Preparamos los valores a insertar en la relación.
-            //equipmentValues.push([idOffice, idEquipment]);
             // Insertamos todas las relaciones de `officesEquipments` de una sola vez.
             await pool.query(
                 `INSERT INTO officesEquipments (idOffice, idEquipment) VALUES (?,?) `,
@@ -128,7 +122,7 @@ const createOfficeController = async (req, res, next) => {
             );
         }
 
-        // Establecemos el código 201 (elemento creado) y enviamos una respuesta al cliente.
+        // Establecemos el código 201 y enviamos una respuesta al cliente.
         res.status(201).send({
             status: 'ok',
             message: 'Oficina creada con éxito',
