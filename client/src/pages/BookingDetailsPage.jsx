@@ -44,7 +44,8 @@ const BookingDetailsPage = () => {
             setCanVote(
                 now.isAfter(checkoutDate) &&
                     !booking.vote &&
-                    booking.status !== "CANCELED"
+                    booking.status !== "CANCELED" &&
+                    booking.status !== "PENDING"
             );
         }
     }, [booking]);
