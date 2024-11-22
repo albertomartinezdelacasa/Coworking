@@ -13,8 +13,6 @@ const {
     ADMIN_USER_PASSWORD,
     ADMIN_USER_NAME,
     ADMIN_USER_LASTNAME,
-    ADMIN_USER_ROLE,
-    ADMIN_USER_ACTIVE,
 } = process.env;
 
 // Función que genera las tablas.
@@ -120,7 +118,7 @@ const main = async () => {
         console.log('¡Tablas creadas!');
 
         console.log('Creando Usuario administrador...');
-        const hashedAdminPass = await bcrypt.hash(ADMIN_USER_PASSWORD, 10);
+        const hashedAdminPass = bcrypt.hash(ADMIN_USER_PASSWORD, 10);
         await pool.query(
             `INSERT INTO users(email, username, password, name, lastname, role, active)
             VALUES ("${ADMIN_USER_EMAIL}", "${ADMIN_USER_USERNAME}", ?, "${ADMIN_USER_NAME}", "${ADMIN_USER_LASTNAME}", "ADMIN", TRUE)`,

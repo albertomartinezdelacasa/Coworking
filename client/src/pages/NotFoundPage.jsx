@@ -6,7 +6,7 @@ const NotFoundPage = () => {
       <div className="not-found-content">
         <h2>
           Lo sentimos, parece que no hemos podido encontrar la página
-          solicitada!
+          solicitada.
         </h2>
         <Link to="/" className="btn btn-primary">
           Volver al Inicio

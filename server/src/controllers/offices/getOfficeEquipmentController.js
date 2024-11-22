@@ -32,9 +32,7 @@ const getOfficeEquipmentController = async (req, res, next) => {
         // Enviamos una respuesta al cliente con el estado "ok" y los equipamientos obtenidos
     } catch (err) {
         next(err);
-        // Si ocurre un error, lo pasamos al siguiente middleware para su manejo
     }
 };
 
 export default getOfficeEquipmentController;
-// Exportamos la función getEquipmentList como el export por defecto del módulo

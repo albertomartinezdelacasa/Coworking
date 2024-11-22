@@ -10,6 +10,7 @@ const resetUserPassController = async (req, res, next) => {
         const { recoverPassCode } = req.params;
         // Extraemos la nueva contraseña y su repetición del cuerpo de la solicitud
         const { newPassword, repeatNewPassword } = req.body;
+
         // Verificamos si se han proporcionado ambas contraseñas
         if (!newPassword || !repeatNewPassword) {
             generateErrorUtil('Faltan campos', 400);

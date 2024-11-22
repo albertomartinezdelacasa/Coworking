@@ -43,7 +43,6 @@ const cancelBookingController = async (req, res, next) => {
         }
 
         // Enviamos un correo al usuario
-
         // Obtenemos el correo del usuario
         const [userData] = await pool.query(
             'SELECT name, email FROM users WHERE id = ?',

@@ -1,6 +1,6 @@
 // Importamos la función que retorna una conexión con la base de datos.
 import getPool from '../../db/getPool.js';
-import generateErrorUtil from '../../utils/generateErrorUtil.js';
+
 
 // Función controladora que retorna el listado de oficinas.
 const listOfficeController = async (req, res, next) => {

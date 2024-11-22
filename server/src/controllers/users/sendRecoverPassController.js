@@ -42,11 +42,11 @@ const sendRecoverPassController = async (req, res, next) => {
             );
 
             // Asunto del email de verificación.
-            const emailSubject = 'Recuperación de contraseña - Coworking';
+            const emailSubject = 'Recuperación de contraseña - INNOVASPACE';
 
             // Modificamos el cuerpo del email de verificación.
             const emailBody = `
-           <p>Hemos recibido una solicitud para recuperar contraseña en tu cuenta de Coworking. Si no has sido tú, ignora este email.</p>
+           <p>Hemos recibido una solicitud para recuperar contraseña en tu cuenta de INNOVASPACE. Si no has sido tú, ignora este email.</p>
 
             <p>Para cambiar tu contraseña, haz clic en el siguiente enlace:</p>
 

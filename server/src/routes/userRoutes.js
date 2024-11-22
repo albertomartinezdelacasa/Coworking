@@ -15,7 +15,6 @@ import {
 
 // importamos las funciones controladoras intermedias
 import authUserController from '../middlewares/authUserController.js';
-import authAdminController from '../middlewares/authAdminController.js';
 
 // Aqui se importan los controladores.
 
@@ -26,7 +25,7 @@ const router = express.Router();
 //Controlador que permite registrar un usuario.
 router.post('/users/register', newUserController);
 
-// Controlador que permite activar un usuario. Inicialmente un PUT, pero sugerido que se cambiara a PATCH
+// Controlador que permite activar un usuario.
 router.patch('/users/activate/:registrationCode', activateUserController);
 
 // Controlador que permite loguear un usuario.
@@ -48,7 +47,7 @@ router.patch(
     changeUserPasswordController,
 );
 
-// Controlador que actualiza el avatar de un usuario. Inicialmente un put, pero sugerido que sea un PATCH
+// Controlador que actualiza el avatar de un usuario.
 router.patch('/users/avatar', authUserController, userAvatarController);
 
 // Middleware que permite enviar un correo de recuperación de contraseña.

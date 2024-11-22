@@ -55,9 +55,12 @@ const updateOfficeController = async (req, res, next) => {
             [idOffice],
         );
 
-        // Si la officina  no existe lanzamos un error.
+        // Si la oficina  no existe lanzamos un error.
         if (offices.length < 1) {
-            generateErrorUtil('Coworking space not found', 404);
+            generateErrorUtil(
+                'No existe esa oficina en nuestro Coworking',
+                404,
+            );
         }
 
         // Si el Admin ha enviado un nombre lo actualizamos.
@@ -91,28 +94,28 @@ const updateOfficeController = async (req, res, next) => {
             ]);
         }
 
-        // Si el Admin ha enviado un nuevo work space " officina o desk " la actualizamos.
+        // Si el Admin ha enviado un nuevo work space " oficina o desk " la actualizamos.
         if (workspace) {
             await pool.query(`UPDATE offices SET workspace = ? WHERE id = ?`, [
                 workspace,
                 idOffice,
             ]);
         }
-        // Si el Admin ha modifiado la capacidad del escpacio la actualizamos.
+        // Si el Admin ha modificado la capacidad del espacio la actualizamos.
         if (capacity) {
             await pool.query(`UPDATE offices SET capacity = ? WHERE id = ?`, [
                 capacity,
                 idOffice,
             ]);
         }
-        // Si el Admin ha modifiado el apertura del escpacio la actualizamos.
+        // Si el Admin ha modificado la apertura del espacio la actualizamos.
         if (opening) {
             await pool.query(`UPDATE offices SET opening = ? WHERE id = ?`, [
                 opening,
                 idOffice,
             ]);
         }
-        // Si el Admin ha modifiado la capacidad del escpacio la actualizamos.
+        // Si el Admin ha modificado la capacidad del espacio la actualizamos.
         if (closing) {
             await pool.query(`UPDATE offices SET closing = ? WHERE id = ?`, [
                 closing,
